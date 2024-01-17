@@ -6,12 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "elfingit/laravel_command_bus": "^1.0",
+        "elfingit/laravel_dto": "^1.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8"
     },
     "require-dev": {
+        "elfingit/cqrs_generator": "^1.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
@@ -62,5 +65,19 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:elfingit/laravel_dto.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:elfingit/laravel_command_bus.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:elfingit/cqrs_generator.git"
+        }
+    ]
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c491b8531eec05ba41a11d9276a5749",
+    "content-hash": "01f9e17cc3c7cb2641fbc856a51d0564",
     "packages": [
         {
             "name": "brick/math",
@@ -500,6 +500,103 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
+        },
+        {
+            "name": "elfingit/laravel_command_bus",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:elfingit/laravel_command_bus.git",
+                "reference": "89b5137f1bc521ad1322b5f43d52a7a8256c7e88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elfingit/laravel_command_bus/zipball/89b5137f1bc521ad1322b5f43d52a7a8256c7e88",
+                "reference": "89b5137f1bc521ad1322b5f43d52a7a8256c7e88",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.38",
+                "illuminate/queue": "^10.38",
+                "illuminate/support": "^10.38"
+            },
+            "require-dev": {
+                "laravel/framework": "^10.38"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elfin\\LaravelCommandBus\\Providers\\CommandBusProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elfin\\LaravelCommandBus\\": "src/"
+                }
+            },
+            "license": [
+                "Commercis"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Sergeev",
+                    "email": "andreylong@gmail.com"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/elfingit/laravel_command_bus/tree/v1.0.3",
+                "issues": "https://github.com/elfingit/laravel_command_bus/issues"
+            },
+            "time": "2023-12-25T11:35:47+00:00"
+        },
+        {
+            "name": "elfingit/laravel_dto",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:elfingit/laravel_dto.git",
+                "reference": "24c6682ce5862fd3a0b713360e80f6d517fe1662"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elfingit/laravel_dto/zipball/24c6682ce5862fd3a0b713360e80f6d517fe1662",
+                "reference": "24c6682ce5862fd3a0b713360e80f6d517fe1662",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^10.38",
+                "illuminate/support": "^10.38",
+                "php": "^8.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elfin\\LaravelDto\\LaravelDtoProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elfin\\LaravelDto\\": "src/"
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "authors": [
+                {
+                    "name": "Andrei Siarheyeu",
+                    "email": "andreylong@gmail.com"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/elfingit/laravel_dto/tree/v1.2.0",
+                "issues": "https://github.com/elfingit/laravel_dto/issues"
+            },
+            "time": "2023-12-24T15:28:00+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -5712,6 +5809,45 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "elfingit/cqrs_generator",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:elfingit/cqrs_generator.git",
+                "reference": "2aeaedc79a719f77e841a058f2d65e9efbe5b6a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elfingit/cqrs_generator/zipball/2aeaedc79a719f77e841a058f2d65e9efbe5b6a7",
+                "reference": "2aeaedc79a719f77e841a058f2d65e9efbe5b6a7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "*",
+                "illuminate/support": "*"
+            },
+            "require-dev": {
+                "laravel/framework": "10.41"
+            },
+            "type": "laravel-package",
+            "autoload": {
+                "psr-4": {
+                    "Elfin\\Generator\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Andrey Sergeev",
+                    "email": "andreylong@gmail.com"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/elfingit/cqrs_generator/tree/v1.0.0",
+                "issues": "https://github.com/elfingit/cqrs_generator/issues"
+            },
+            "time": "2024-01-17T14:16:49+00:00"
+        },
         {
             "name": "fakerphp/faker",
             "version": "v1.23.1",
