@@ -2,6 +2,8 @@
 
 namespace App\Library\Role\Handlers;
 
+use App\Library\Role\Results\CreatedRoleResult;
+use App\Models\Role;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
@@ -16,7 +18,12 @@ class CreateRoleHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
-        throw new \Exception('Not implemented');
+        $role = Role::create([
+            'title' => $command->titleValue->value(),
+            'title_slug' => \Str::slug($command->titleValue->value())
+        ]);
+
+        return new CreatedRoleResult($role);
     }
 
     public function isAsync(): bool

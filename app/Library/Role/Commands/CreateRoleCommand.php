@@ -18,4 +18,12 @@ class CreateRoleCommand extends AbstractCommand
 
         return $command;
     }
+
+    public static function createFromPrimitive(string $title): self
+    {
+        $command             = new self();
+        $command->titleValue = new TitleValue($title);
+
+        return $command;
+    }
 }
