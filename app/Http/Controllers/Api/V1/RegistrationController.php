@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Registration\AddRequest;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
+use App\Library\Registration\Results\RegistrationResult;
+use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 
 class RegistrationController extends Controller
 {
@@ -53,10 +56,22 @@ class RegistrationController extends Controller
         $dto = $request->getDto();
 
         $command = CreateRegistrationCommand::createFromDto($dto);
-        $res = \CommandBus::dispatch($command);
+        /** @var RegistrationResult $result */
+        $result = \CommandBus::dispatch($command);
+
+        $command = CreateUserDeviceCommand::createFromPrimitive(
+            Uuid::uuid7()->toString(),
+            $request->ip() ?? 'localhost',
+            $request->userAgent(),
+            $result->getResult()->id
+        );
+
+        \CommandBus::dispatch($command);
 
         return response()->json([
             'message' => 'Registration successful',
+            'user_id' => $result->getResult()->id,
+            'user_role' => $result->getResult()->role->title_slug,
         ]);
     }
 }

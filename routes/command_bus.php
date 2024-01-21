@@ -10,6 +10,8 @@ use App\Library\Registration\Commands\CreateRegistrationCommand;
 use App\Library\Registration\Handlers\CreateRegistrationHandler;
 use App\Library\Role\Commands\CreateRoleCommand;
 use App\Library\Role\Handlers\CreateRoleHandler;
+use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
+use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
 
 \CommandBus::addHandler(
     CreateRoleCommand::class,
@@ -19,4 +21,9 @@ use App\Library\Role\Handlers\CreateRoleHandler;
 \CommandBus::addHandler(
     CreateRegistrationCommand::class,
     CreateRegistrationHandler::class
+);
+
+\CommandBus::addHandler(
+    CreateUserDeviceCommand::class,
+    CreateUserDeviceHandler::class
 );

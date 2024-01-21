@@ -17,13 +17,17 @@
                     "type": "string",
                     "skip_in_store": false,
                     "can_be_search": true,
-                    "can_be_order": false
+                    "can_be_order": false,
+                    "min": 15,
+                    "max": 15
                 },
                 "user_agent": {
                     "type": "string",
                     "skip_in_store": false,
                     "can_be_search": true,
-                    "can_be_order": false
+                    "can_be_order": false,
+                    "min": 15,
+                    "max": 1024
                 }
             }
         }
