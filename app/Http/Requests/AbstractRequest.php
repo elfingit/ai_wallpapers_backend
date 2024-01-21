@@ -8,9 +8,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use \Elfin\LaravelDto\Http\Request\AbstractRequest as AbstractDtoRequest;
 
-abstract class AbstractRequest extends FormRequest
+abstract class AbstractRequest extends AbstractDtoRequest
 {
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Library\Registration\Handlers;
 
+use App\Models\User;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
@@ -16,7 +17,13 @@ class CreateRegistrationHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
-        throw new \Exception('Not implemented');
+        $user = User::create([
+            'email' => $command->emailValue->value(),
+            'password' => \Hash::make($command->passwordValue->value()),
+            'role' => $command->userRoleValue->value(),
+        ]);
+
+
     }
 
     public function isAsync(): bool
