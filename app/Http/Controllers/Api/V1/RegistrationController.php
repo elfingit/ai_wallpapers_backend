@@ -68,7 +68,7 @@ class RegistrationController extends Controller
         $result = \CommandBus::dispatch($command);
 
         $command = CreateUserDeviceCommand::createFromPrimitive(
-            Uuid::uuid7()->toString(),
+            $dto->device_id,
             $request->ip() ?? 'localhost',
             $request->userAgent(),
             $result->getResult()->id

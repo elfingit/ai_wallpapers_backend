@@ -14,7 +14,6 @@ class CreateRegistrationCommand extends AbstractCommand
 {
 	public EmailValue $emailValue;
 	public PasswordValue $passwordValue;
-	public DeviceIdValue $deviceIdValue;
     public UserRoleValue $userRoleValue;
 
     public static function createFromDto(AddDto $dto): self
@@ -22,8 +21,22 @@ class CreateRegistrationCommand extends AbstractCommand
         $command = new self();
 		$command->emailValue = new EmailValue($dto->email);
 		$command->passwordValue = new PasswordValue($dto->password);
-		$command->deviceIdValue = new DeviceIdValue($dto->device_id);
         $command->userRoleValue = new UserRoleValue('user');
+
+        return $command;
+    }
+
+    static public function createFromPrimitive(
+        string $email,
+        string $password,
+        string $user_role
+    ): self
+    {
+        $command = new self();
+
+        $command->emailValue = new EmailValue($email);
+        $command->passwordValue = new PasswordValue($password);
+        $command->userRoleValue = new UserRoleValue($user_role);
 
         return $command;
     }
