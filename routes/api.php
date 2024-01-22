@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +26,6 @@ Route::group(
     ],
     function () {
         Route::post('/registration', [RegistrationController::class, 'store']);
+        Route::post('/auth', [AuthController::class, 'store']);
     }
 );

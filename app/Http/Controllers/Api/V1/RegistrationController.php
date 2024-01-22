@@ -7,6 +7,7 @@ use App\Http\Requests\Registration\AddRequest;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
 use App\Library\Registration\Results\RegistrationResult;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 
@@ -59,7 +60,7 @@ class RegistrationController extends Controller
      *      "user_role": "user"
      *  }
      */
-    public function store(AddRequest $request)
+    public function store(AddRequest $request): JsonResponse
     {
         $dto = $request->getDto();
 
