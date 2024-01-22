@@ -50,6 +50,14 @@ class RegistrationController extends Controller
      *             ]
      *       }
      *   }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *  HTTP/1.1 200 OK
+     *  {
+     *      "message": "Registration successful",
+     *      "user_id": 6,
+     *      "user_role": "user"
+     *  }
      */
     public function store(AddRequest $request)
     {
