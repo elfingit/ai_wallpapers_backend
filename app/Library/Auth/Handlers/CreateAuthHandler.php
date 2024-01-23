@@ -2,6 +2,7 @@
 
 namespace App\Library\Auth\Handlers;
 
+use App\Library\Auth\Results\AuthResult;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Models\User;
@@ -43,7 +44,15 @@ class CreateAuthHandler implements CommandHandlerContract
             )->getResult();
         }
 
-        $token = $user->createToken($device->uuid)->plainTextToken;
+        $token = $user->createToken(
+            $device->uuid,
+            \AbilityProvider::getAbilitiesForRole($user->role->title_slug)
+        )->plainTextToken;
+
+        return new AuthResult(
+            $token,
+            $user
+        );
     }
 
     public function isAsync(): bool

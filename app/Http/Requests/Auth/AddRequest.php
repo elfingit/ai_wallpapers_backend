@@ -10,7 +10,7 @@ class AddRequest extends AbstractRequest
 {
     public function authorize(): bool
     {
-        throw new \Exception('You must implement authorize() method');
+        return true;
     }
 
     protected function getDtoClass(): ?string

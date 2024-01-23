@@ -17,5 +17,7 @@ class AuthController extends Controller
             $request->userAgent()
         );
         $result = \CommandBus::dispatch($command);
+
+        return response()->json($result->getResult());
     }
 }
