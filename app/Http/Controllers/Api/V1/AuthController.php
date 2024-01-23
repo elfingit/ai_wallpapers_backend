@@ -11,7 +11,11 @@ class AuthController extends Controller
 {
     public function store(AddRequest $request)
     {
-        $command = CreateAuthCommand::createFromDto($request->getDto());
+        $command = CreateAuthCommand::createFromDto(
+            $request->getDto(),
+            $request->ip(),
+            $request->userAgent()
+        );
         $result = \CommandBus::dispatch($command);
     }
 }

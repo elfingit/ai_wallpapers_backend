@@ -13,11 +13,11 @@ use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 
 class GetResult implements CommandResultContract
 {
-    public function __construct(readonly private UserDevice $userDevice)
+    public function __construct(readonly private ?UserDevice $userDevice)
     {
     }
 
-    public function getResult(): UserDevice
+    public function getResult(): ?UserDevice
     {
         return $this->userDevice;
     }

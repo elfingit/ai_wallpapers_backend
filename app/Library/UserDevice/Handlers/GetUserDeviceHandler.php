@@ -24,7 +24,7 @@ class GetUserDeviceHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
-        return new GetResult(UserDevice::findOrFail($command->id->value()));
+        return new GetResult(UserDevice::find($command->id->value()));
     }
 
     public function isAsync(): bool
