@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Library\Core\Acl\AbilitiesProvider;
+use App\Library\Core\Contracts\AbilitiesProviderContract;
 use Elfin\Generator\Providers\GeneratorProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,6 +17,11 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->isLocal()) {
             $this->app->register(GeneratorProvider::class);
         }
+
+        $this->app->bind(
+            AbilitiesProviderContract::class,
+            AbilitiesProvider::class
+        );
     }
 
     /**
