@@ -5,4 +5,9 @@
  * Date: 23.01.24
  * Time: 18:50
  */
-return [];
+
+use App\Library\Core\Acl\RulesEnum;
+
+return [
+    RulesEnum::ADD_TAG,
+];

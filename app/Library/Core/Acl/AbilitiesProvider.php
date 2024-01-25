@@ -14,6 +14,8 @@ class AbilitiesProvider implements AbilitiesProviderContract
 {
     public function getAbilitiesForRole(string $role): array
     {
-        return config('abilities.' . $role, []);
+        $abilities = config('abilities.' . $role, []);
+
+        return array_map(fn (RulesEnum $ability) => $ability->value(), $abilities);
     }
 }
