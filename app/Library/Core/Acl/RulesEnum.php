@@ -12,6 +12,7 @@ enum RulesEnum : string
 {
     case ADD_FILE_TO_GALLERY = 'add:gallery';
     case INDEX_OF_GALLERY = 'lst:gallery';
+    case PICTURE_PROMPT = 'pic:prompt';
     case ADD_TAG = 'add:tag';
 
     public function value(): string

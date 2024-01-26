@@ -18,7 +18,7 @@ class IndexGalleryHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
-        $query = Gallery::with('tags');
+        $query = Gallery::with('tags:title');
         $locale = $command->localeValue->value();
         $query->where('locale', $locale);
 

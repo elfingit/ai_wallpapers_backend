@@ -10,4 +10,5 @@ use App\Library\Core\Acl\RulesEnum;
 
 return [
     RulesEnum::ADD_TAG,
+    RulesEnum::INDEX_OF_GALLERY,
 ];

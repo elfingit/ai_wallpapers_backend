@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Gallery\AddRequest;
 use App\Http\Requests\Gallery\IndexRequest;
+use App\Http\Resources\Gallery\GalleryCollection;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
 use Illuminate\Http\Request;
@@ -82,8 +83,6 @@ class GalleryController extends Controller
         $command = IndexGalleryCommand::createFromDto($request->getDto(), $request->user()->id);
         $result = \CommandBus::dispatch($command);
 
-        dd($result);
-
-        return response()->json(status: 201);
+        return GalleryCollection::make($result->getResult());
     }
 }
