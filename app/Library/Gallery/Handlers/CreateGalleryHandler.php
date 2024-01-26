@@ -2,6 +2,7 @@
 
 namespace App\Library\Gallery\Handlers;
 
+use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Library\Tag\Commands\CreateTagCommand;
 use App\Models\Gallery;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -49,6 +50,9 @@ class CreateGalleryHandler implements CommandHandlerContract
         foreach ($tag_ids as $tag_id) {
             $gallery->tags()->attach($tag_id);
         }
+
+        $uploadedCommand = PictureUploadedCommand::createFromPrimitives($gallery->id);
+        \CommandBus::dispatch($uploadedCommand);
 
         return null;
     }

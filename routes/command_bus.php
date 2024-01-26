@@ -10,8 +10,10 @@ use App\Library\Auth\Commands\CreateAuthCommand;
 use App\Library\Auth\Handlers\CreateAuthHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
+use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Library\Gallery\Handlers\CreateGalleryHandler;
 use App\Library\Gallery\Handlers\IndexGalleryHandler;
+use App\Library\Gallery\Handlers\ThumbnailHandler;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
 use App\Library\Registration\Handlers\CreateRegistrationHandler;
 use App\Library\Role\Commands\CreateRoleCommand;
@@ -61,4 +63,10 @@ use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
 \CommandBus::addHandler(
     IndexGalleryCommand::class,
     IndexGalleryHandler::class
+);
+
+\CommandBus::addHandler(
+    PictureUploadedCommand::class, [
+        ThumbnailHandler::class
+    ]
 );
