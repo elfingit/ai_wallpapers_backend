@@ -8,7 +8,6 @@ use App\Http\Requests\Gallery\IndexRequest;
 use App\Http\Resources\Gallery\GalleryCollection;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class GalleryController extends Controller
