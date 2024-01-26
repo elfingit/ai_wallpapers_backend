@@ -3,6 +3,7 @@
 namespace App\Library\Gallery\Handlers;
 
 use App\Library\Tag\Commands\CreateTagCommand;
+use App\Models\Gallery;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
@@ -37,6 +38,16 @@ class CreateGalleryHandler implements CommandHandlerContract
                ->makeDirectory($path);
 
         $file->storeAs($path, $hashed_name, 'wallpaper');
+
+        $gallery = Gallery::create([
+            'prompt' => $command->promptValue->value(),
+            'file_path' => $path . DIRECTORY_SEPARATOR . $hashed_name,
+            'user_id' => $command->userIdValue?->value(),
+        ]);
+
+        foreach ($tag_ids as $tag_id) {
+            $gallery->tags()->attach($tag_id);
+        }
 
         return null;
     }
