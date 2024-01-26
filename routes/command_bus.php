@@ -14,6 +14,8 @@ use App\Library\Registration\Commands\CreateRegistrationCommand;
 use App\Library\Registration\Handlers\CreateRegistrationHandler;
 use App\Library\Role\Commands\CreateRoleCommand;
 use App\Library\Role\Handlers\CreateRoleHandler;
+use App\Library\Tag\Commands\CreateTagCommand;
+use App\Library\Tag\Handlers\CreateTagHandler;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
@@ -47,4 +49,9 @@ use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
 \CommandBus::addHandler(
     CreateGalleryCommand::class,
     CreateGalleryHandler::class
+);
+
+\CommandBus::addHandler(
+    CreateTagCommand::class,
+    CreateTagHandler::class
 );
