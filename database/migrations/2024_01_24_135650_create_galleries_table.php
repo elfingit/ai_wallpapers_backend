@@ -15,6 +15,7 @@ return new class extends Migration
 				$table->id();
                 $table->string('file_path');
 				$table->string('prompt', 1500);
+				$table->string('locale', 4);
                 $table->unsignedBigInteger('user_id')
                       ->nullable();
 				$table->timestamps();

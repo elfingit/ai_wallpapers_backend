@@ -15,6 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('tag_id');
             $table->unsignedBigInteger('taggable_id');
             $table->string('taggable_type');
+            $table->primary(['tag_id', 'taggable_id', 'taggable_type']);
         });
     }
 

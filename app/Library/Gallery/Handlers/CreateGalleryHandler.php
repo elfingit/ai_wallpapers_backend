@@ -43,6 +43,7 @@ class CreateGalleryHandler implements CommandHandlerContract
             'prompt' => $command->promptValue->value(),
             'file_path' => $path . DIRECTORY_SEPARATOR . $hashed_name,
             'user_id' => $command->userIdValue?->value(),
+            'locale' => $command->localeValue->value(),
         ]);
 
         foreach ($tag_ids as $tag_id) {
