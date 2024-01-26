@@ -35,6 +35,7 @@ Route::group(
             ],
             function () {
                 Route::post('/gallery', [GalleryController::class, 'store']);
+                Route::get('/gallery', [GalleryController::class, 'index']);
             }
         );
     }

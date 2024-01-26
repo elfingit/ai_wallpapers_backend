@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Gallery\AddRequest;
+use App\Http\Requests\Gallery\IndexRequest;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
+use App\Library\Gallery\Commands\IndexGalleryCommand;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -71,6 +73,16 @@ class GalleryController extends Controller
     {
         $command = CreateGalleryCommand::createFromDto($request->getDto());
         \CommandBus::dispatch($command);
+
+        return response()->json(status: 201);
+    }
+
+    public function index(IndexRequest $request)
+    {
+        $command = IndexGalleryCommand::createFromDto($request->getDto(), $request->user()->id);
+        $result = \CommandBus::dispatch($command);
+
+        dd($result);
 
         return response()->json(status: 201);
     }
