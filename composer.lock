@@ -503,16 +503,16 @@
         },
         {
             "name": "elfingit/laravel_command_bus",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:elfingit/laravel_command_bus.git",
-                "reference": "89b5137f1bc521ad1322b5f43d52a7a8256c7e88"
+                "reference": "e0063ae4e9035b611650f69e3d2b20c4b29f566f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elfingit/laravel_command_bus/zipball/89b5137f1bc521ad1322b5f43d52a7a8256c7e88",
-                "reference": "89b5137f1bc521ad1322b5f43d52a7a8256c7e88",
+                "url": "https://api.github.com/repos/elfingit/laravel_command_bus/zipball/e0063ae4e9035b611650f69e3d2b20c4b29f566f",
+                "reference": "e0063ae4e9035b611650f69e3d2b20c4b29f566f",
                 "shasum": ""
             },
             "require": {
@@ -546,10 +546,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/elfingit/laravel_command_bus/tree/v1.0.3",
+                "source": "https://github.com/elfingit/laravel_command_bus/tree/v1.0.4",
                 "issues": "https://github.com/elfingit/laravel_command_bus/issues"
             },
-            "time": "2023-12-25T11:35:47+00:00"
+            "time": "2024-01-26T19:04:42+00:00"
         },
         {
             "name": "elfingit/laravel_dto",

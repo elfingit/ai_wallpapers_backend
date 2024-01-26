@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('galleries', function (Blueprint $table) {
 				$table->id();
                 $table->string('file_path');
+                $table->string('thumbnail_path')->nullable();
 				$table->string('prompt', 1500);
 				$table->string('locale', 4);
                 $table->unsignedBigInteger('user_id')

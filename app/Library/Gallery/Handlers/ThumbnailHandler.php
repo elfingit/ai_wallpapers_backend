@@ -33,13 +33,21 @@ class ThumbnailHandler implements CommandHandlerContract
             '/',
             array_slice($path_parts, 0, 2)
         );
+        Storage::disk('thumbnail')
+               ->makeDirectory($sub_path);
+
         $thumbnail_path = Storage::disk('thumbnail')->path($sub_path);
+
         $file_name = $path_parts[array_key_last($path_parts)];
 
         $imageManager = new ImageManager(new Driver());
         $image = $imageManager->read($file_path);
-        $image->resize(height: 500);
+        $image->scale(height: 500);
+
         $image->save($thumbnail_path . DIRECTORY_SEPARATOR . $file_name);
+
+        $gallery->thumbnail_path = $sub_path . DIRECTORY_SEPARATOR . $file_name;
+        $gallery->save();
 
         return null;
     }
