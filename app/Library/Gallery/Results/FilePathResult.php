@@ -10,7 +10,7 @@ namespace App\Library\Gallery\Results;
 
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 
-class ThumbnailResult implements CommandResultContract
+class FilePathResult implements CommandResultContract
 {
     public function __construct(readonly string $path)
     {

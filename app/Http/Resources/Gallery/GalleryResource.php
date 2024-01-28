@@ -29,7 +29,8 @@ class GalleryResource extends JsonResource
 
             ),
             'tags' => $resource->tags->pluck('title'),
-            'thumbnail_url' => route('gallery.thumbnail', ['pic_id' => $resource->id]),
+            'thumbnail_url' => route('gallery.thumbnail', ['pic' => $resource->id]),
+            'download_url' => route('gallery.download', ['pic' => $resource->id]),
         ];
 
         return $data;

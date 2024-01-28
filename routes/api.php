@@ -38,7 +38,10 @@ Route::group(
                 Route::get('/gallery', [GalleryController::class, 'index']);
                 Route::get('/gallery/{pic}/thumbnail', [GalleryController::class, 'thumbnail'])
                     ->name('gallery.thumbnail')
-                    ->where('pic_id', '[0-9]+');
+                    ->where('pic', '[0-9]+');
+                Route::get('/gallery/{pic}/download', [GalleryController::class, 'download'])
+                     ->name('gallery.download')
+                     ->where('pic', '[0-9]+');
             }
         );
     }

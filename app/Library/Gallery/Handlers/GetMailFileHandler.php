@@ -3,12 +3,12 @@
  * Created by PhpStorm.
  * User: Andrei Siarheyeu <andreylong@gmail.com>
  * Date: 28.01.24
- * Time: 04:55
+ * Time: 11:57
  */
 
 namespace App\Library\Gallery\Handlers;
 
-use App\Library\Gallery\Commands\GetThumbnailCommand;
+use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Results\FilePathResult;
 use App\Models\Gallery;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
@@ -16,10 +16,10 @@ use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 use Illuminate\Support\Facades\Storage;
 
-class GetThumbnailHandler implements CommandHandlerContract
+class GetMailFileHandler implements CommandHandlerContract
 {
     /**
-     * @param GetThumbnailCommand $command
+     * @param GetMainFileCommand $command
      *
      * @return CommandResultContract|null
      */
@@ -29,10 +29,6 @@ class GetThumbnailHandler implements CommandHandlerContract
 
         if ($gallery === null) {
             return null;
-        }
-
-        if (!is_null($gallery->thumbnail_path)) {
-            return new FilePathResult(Storage::disk('thumbnail')->path($gallery->thumbnail_path));
         }
 
         return new FilePathResult(Storage::disk('wallpaper')->path($gallery->file_path));

@@ -8,6 +8,7 @@ use App\Http\Requests\Gallery\IndexRequest;
 use App\Http\Requests\Gallery\ThumbnailRequest;
 use App\Http\Resources\Gallery\GalleryCollection;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
+use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
 use App\Models\Gallery;
@@ -225,6 +226,17 @@ class GalleryController extends Controller
     public function thumbnail(ThumbnailRequest $request, Gallery $pic): BinaryFileResponse | JsonResponse
     {
         $result = \CommandBus::dispatch(GetThumbnailCommand::createFromPrimitives($pic->id));
+
+        if ($result === null) {
+            return response()->json(status: 404);
+        }
+
+        return response()->file($result->getResult());
+    }
+
+    public function download(ThumbnailRequest $request, Gallery $pic): BinaryFileResponse | JsonResponse
+    {
+        $result = \CommandBus::dispatch(GetMainFileCommand::createFromPrimitives($pic->id));
 
         if ($result === null) {
             return response()->json(status: 404);
