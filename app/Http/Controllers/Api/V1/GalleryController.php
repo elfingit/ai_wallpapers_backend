@@ -177,6 +177,51 @@ class GalleryController extends Controller
         return GalleryCollection::make($result->getResult());
     }
 
+    /**
+     * @api {get} /api/v1/gallery/:id/thumbnail Thumbnail of picture
+     * @apiName Thumbnail of picture
+     * @apiGroup Gallery
+     * @apiDescription Endpoint for get thumbnail of picture
+     * @apiVersion 1.0.0
+     *
+     * @apiHeader {String} Content-Type application/json
+     * @apiHeader {String} Accept application/json
+     * @apiHeader {String} X-App-Locale en
+     * @apiHeader {String} Authorization Bearer
+     *
+     * @apiParam {Numeric} id gallery id
+     *
+     * @apiHeaderExample {String} Header-Example:
+     *  {
+     *       Accept: application/json
+     *       Content-Type: application/json
+     *       X-App-Locale: pl
+     *       Authorization: Bearer 2|zXp0DMrIjSpyfdbJwO5CCjyn9loYjjcZ5GjZdjHVec126865
+     *  }
+     *
+     *
+     * @apiErrorExample {json} Forbidden:
+     *  HTTP/1.1 403 Forbidden
+     *  {
+     *      "message": "Forbidden."
+     *  }
+     *
+     * @apiErrorExample {json} Auth-Error:
+     *   HTTP/1.1 401
+     *   {
+     *       message: "Unauthenticated"
+     *   }
+     *
+     * @apiErrorExample {json} Not-Found:
+     *    HTTP/1.1 404
+     *    {
+     *        message: "Not found"
+     *    }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *  HTTP/1.1 200 OK
+     *    image/png
+     */
     public function thumbnail(ThumbnailRequest $request, Gallery $pic): BinaryFileResponse | JsonResponse
     {
         $result = \CommandBus::dispatch(GetThumbnailCommand::createFromPrimitives($pic->id));
