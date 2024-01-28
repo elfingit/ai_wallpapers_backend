@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Gallery\AddRequest;
 use App\Http\Requests\Gallery\IndexRequest;
+use App\Http\Requests\Gallery\ThumbnailRequest;
 use App\Http\Resources\Gallery\GalleryCollection;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
+use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Models\Gallery;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class GalleryController extends Controller
 {
@@ -165,11 +169,22 @@ class GalleryController extends Controller
      *  }
      * }
      */
-    public function index(IndexRequest $request)
+    public function index(IndexRequest $request): GalleryCollection
     {
         $command = IndexGalleryCommand::createFromDto($request->getDto(), $request->user()->id);
         $result = \CommandBus::dispatch($command);
 
         return GalleryCollection::make($result->getResult());
+    }
+
+    public function thumbnail(ThumbnailRequest $request, Gallery $pic): BinaryFileResponse | JsonResponse
+    {
+        $result = \CommandBus::dispatch(GetThumbnailCommand::createFromPrimitives($pic->id));
+
+        if ($result === null) {
+            return response()->json(status: 404);
+        }
+
+        return response()->file($result->getResult());
     }
 }

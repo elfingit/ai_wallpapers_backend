@@ -11,4 +11,5 @@ use App\Library\Core\Acl\RulesEnum;
 return [
     RulesEnum::ADD_TAG,
     RulesEnum::INDEX_OF_GALLERY,
+    RulesEnum::THUMBNAIL_OF_PICTURE,
 ];

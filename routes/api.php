@@ -36,7 +36,7 @@ Route::group(
             function () {
                 Route::post('/gallery', [GalleryController::class, 'store']);
                 Route::get('/gallery', [GalleryController::class, 'index']);
-                Route::get('/gallery/{pic_id}/thumbnail', [GalleryController::class, 'thumbnail'])
+                Route::get('/gallery/{pic}/thumbnail', [GalleryController::class, 'thumbnail'])
                     ->name('gallery.thumbnail')
                     ->where('pic_id', '[0-9]+');
             }

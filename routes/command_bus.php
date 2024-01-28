@@ -9,9 +9,11 @@
 use App\Library\Auth\Commands\CreateAuthCommand;
 use App\Library\Auth\Handlers\CreateAuthHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
+use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Library\Gallery\Handlers\CreateGalleryHandler;
+use App\Library\Gallery\Handlers\GetThumbnailHandler;
 use App\Library\Gallery\Handlers\IndexGalleryHandler;
 use App\Library\Gallery\Handlers\ThumbnailHandler;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
@@ -69,4 +71,9 @@ use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
     PictureUploadedCommand::class, [
         ThumbnailHandler::class
     ]
+);
+
+\CommandBus::addHandler(
+    GetThumbnailCommand::class,
+    GetThumbnailHandler::class
 );
