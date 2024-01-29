@@ -358,11 +358,69 @@ class GalleryController extends Controller
         return EditResource::make($result->getResult());
     }
 
+    /**
+     * @api {patch} /api/v1/gallery/:id Update picture
+     * @apiName Update picture
+     * @apiGroup Gallery
+     * @apiDescription Endpoint for update picture
+     * @apiVersion 1.0.0
+     *
+     * @apiHeader {String} Content-Type application/json
+     * @apiHeader {String} Accept application/json
+     * @apiHeader {String} X-App-Locale en
+     * @apiHeader {String} Authorization Bearer
+     *
+     * @apiBody {String} prompt picture prompt
+     * @apiBody {String[]} tag array of tags (max 10)
+     * @apiBody {String} locale
+     *
+     * @apiParam {Numeric} id gallery id
+     *
+     * @apiHeaderExample {String} Header-Example:
+     *  {
+     *       Accept: application/json
+     *       Content-Type: application/json
+     *       X-App-Locale: pl
+     *       Authorization: Bearer 2|zXp0DMrIjSpyfdbJwO5CCjyn9loYjjcZ5GjZdjHVec126865
+     *  }
+     *
+     * @apiErrorExample {json} Validation-Error:
+     *   HTTP/1.1 422
+     *   {
+     *       "message": "The file field is required. (and 2 more errors)",
+     *       "errors": {
+     *               "prompt": [
+     *                   "The prompt field is required."
+     *               ],
+     *              "tag": [
+     *                  "The tag field is required."
+     *             ],
+     *            "locale": [
+     *                "The locale field is required."
+     *           ]
+     *       }
+     *   }
+     *
+     * @apiErrorExample {json} Forbidden:
+     *  HTTP/1.1 403 Forbidden
+     *  {
+     *      "message": "Forbidden."
+     *  }
+     *
+     * @apiErrorExample {json} Auth-Error:
+     *   HTTP/1.1 401
+     *   {
+     *       message: "Unauthenticated"
+     *   }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *  HTTP/1.1 204 No Content
+     */
     public function update(UpdateRequest $request, Gallery $pic): JsonResponse
     {
         $command = UpdateGalleryCommand::createFromDto($request->getDto(), $pic->id);
         \CommandBus::dispatch($command);
 
-        return response()->json(status: 200);
+        return response()->json(status: 204);
     }
 }
