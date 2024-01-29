@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Gallery\AddRequest;
+use App\Http\Requests\Gallery\EditRequest;
 use App\Http\Requests\Gallery\IndexRequest;
 use App\Http\Requests\Gallery\ThumbnailRequest;
+use App\Http\Resources\Gallery\EditResource;
 use App\Http\Resources\Gallery\GalleryCollection;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
+use App\Library\Gallery\Commands\EditGalleryCommand;
 use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
@@ -288,5 +291,12 @@ class GalleryController extends Controller
         }
 
         return response()->file($result->getResult());
+    }
+
+    public function edit(EditRequest $request, Gallery $pic): EditResource
+    {
+        $result = \CommandBus::dispatch(EditGalleryCommand::instanceFromPrimitive($pic->id));
+
+        return EditResource::make($result->getResult());
     }
 }

@@ -9,11 +9,13 @@
 use App\Library\Auth\Commands\CreateAuthCommand;
 use App\Library\Auth\Handlers\CreateAuthHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
+use App\Library\Gallery\Commands\EditGalleryCommand;
 use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Library\Gallery\Handlers\CreateGalleryHandler;
+use App\Library\Gallery\Handlers\EditGalleryHandler;
 use App\Library\Gallery\Handlers\GetMailFileHandler;
 use App\Library\Gallery\Handlers\GetThumbnailHandler;
 use App\Library\Gallery\Handlers\IndexGalleryHandler;
@@ -83,4 +85,9 @@ use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
 \CommandBus::addHandler(
     GetMainFileCommand::class,
     GetMailFileHandler::class
+);
+
+\CommandBus::addHandler(
+    EditGalleryCommand::class,
+    EditGalleryHandler::class
 );
