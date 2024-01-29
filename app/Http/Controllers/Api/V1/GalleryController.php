@@ -415,6 +415,12 @@ class GalleryController extends Controller
      *       message: "Unauthenticated"
      *   }
      *
+     * @apiErrorExample {json} Not-Found:
+     *   HTTP/1.1 404
+     *   {
+     *      message: "Not found"
+     *   }
+     *
      * @apiSuccessExample {json} Success-Response:
      *  HTTP/1.1 204 No Content
      */
@@ -426,6 +432,49 @@ class GalleryController extends Controller
         return response()->json(status: 204);
     }
 
+    /**
+     * @api {delete} /api/v1/gallery/:id Delete picture
+     * @apiName Delete picture
+     * @apiGroup Gallery
+     * @apiDescription Endpoint for delete picture
+     * @apiVersion 1.0.0
+     *
+     * @apiHeader {String} Content-Type application/json
+     * @apiHeader {String} Accept application/json
+     * @apiHeader {String} X-App-Locale en
+     * @apiHeader {String} Authorization Bearer
+     *
+     * @apiParam {Numeric} id gallery id
+     *
+     * @apiHeaderExample {String} Header-Example:
+     *  {
+     *       Accept: application/json
+     *       Content-Type: application/json
+     *       X-App-Locale: pl
+     *       Authorization: Bearer 2|zXp0DMrIjSpyfdbJwO5CCjyn9loYjjcZ5GjZdjHVec126865
+     *  }
+     *
+     * @apiErrorExample {json} Forbidden:
+     *  HTTP/1.1 403 Forbidden
+     *  {
+     *      "message": "Forbidden."
+     *  }
+     *
+     * @apiErrorExample {json} Auth-Error:
+     *   HTTP/1.1 401
+     *   {
+     *       message: "Unauthenticated"
+     *   }
+     *
+     * @apiErrorExample {json} Not-Found:
+     *  HTTP/1.1 404
+     *  {
+     *      message: "Not found"
+     *  }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *  HTTP/1.1 204 No Content
+     */
     public function delete(DeleteRequest $request, Gallery $pic): JsonResponse
     {
         $command = DeleteGalleryCommand::instanceFromPrimitive($pic->id);
