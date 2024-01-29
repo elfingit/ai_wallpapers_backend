@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Gallery\AddRequest;
+use App\Http\Requests\Gallery\DeleteRequest;
 use App\Http\Requests\Gallery\EditRequest;
 use App\Http\Requests\Gallery\IndexRequest;
 use App\Http\Requests\Gallery\ThumbnailRequest;
@@ -11,6 +12,7 @@ use App\Http\Requests\Gallery\UpdateRequest;
 use App\Http\Resources\Gallery\EditResource;
 use App\Http\Resources\Gallery\GalleryCollection;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
+use App\Library\Gallery\Commands\DeleteGalleryCommand;
 use App\Library\Gallery\Commands\EditGalleryCommand;
 use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
@@ -419,6 +421,14 @@ class GalleryController extends Controller
     public function update(UpdateRequest $request, Gallery $pic): JsonResponse
     {
         $command = UpdateGalleryCommand::createFromDto($request->getDto(), $pic->id);
+        \CommandBus::dispatch($command);
+
+        return response()->json(status: 204);
+    }
+
+    public function delete(DeleteRequest $request, Gallery $pic): JsonResponse
+    {
+        $command = DeleteGalleryCommand::instanceFromPrimitive($pic->id);
         \CommandBus::dispatch($command);
 
         return response()->json(status: 204);

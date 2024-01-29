@@ -14,6 +14,7 @@ enum RulesEnum : string
     case EDIT_FILE_IN_GALLERY = 'edit:gallery';
     case UPDATE_FILE_IN_GALLERY = 'upd:gallery';
     case INDEX_OF_GALLERY = 'lst:gallery';
+    case DELETE_FILE_FROM_GALLERY = 'del:gallery';
     case THUMBNAIL_OF_PICTURE = 'pic:thumb';
     case PICTURE_PROMPT = 'pic:prompt';
     case ADD_TAG = 'add:tag';

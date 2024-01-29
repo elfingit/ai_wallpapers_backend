@@ -38,6 +38,8 @@ Route::group(
                 Route::get('/gallery', [GalleryController::class, 'index']);
                 Route::patch('/gallery/{pic}', [GalleryController::class, 'update'])
                      ->where('pic', '[0-9]+');
+                Route::delete('/gallery/{pic}', [GalleryController::class, 'delete'])
+                     ->where('pic', '[0-9]+');
                 Route::get('/gallery/{pic}/edit', [GalleryController::class, 'edit'])
                      ->where('pic', '[0-9]+');
                 Route::get('/gallery/{pic}/thumbnail', [GalleryController::class, 'thumbnail'])
