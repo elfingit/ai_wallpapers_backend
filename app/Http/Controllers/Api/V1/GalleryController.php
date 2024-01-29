@@ -7,6 +7,7 @@ use App\Http\Requests\Gallery\AddRequest;
 use App\Http\Requests\Gallery\EditRequest;
 use App\Http\Requests\Gallery\IndexRequest;
 use App\Http\Requests\Gallery\ThumbnailRequest;
+use App\Http\Requests\Gallery\UpdateRequest;
 use App\Http\Resources\Gallery\EditResource;
 use App\Http\Resources\Gallery\GalleryCollection;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
@@ -14,6 +15,7 @@ use App\Library\Gallery\Commands\EditGalleryCommand;
 use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
+use App\Library\Gallery\Commands\UpdateGalleryCommand;
 use App\Models\Gallery;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -354,5 +356,13 @@ class GalleryController extends Controller
         $result = \CommandBus::dispatch(EditGalleryCommand::instanceFromPrimitive($pic->id));
 
         return EditResource::make($result->getResult());
+    }
+
+    public function update(UpdateRequest $request, Gallery $pic): JsonResponse
+    {
+        $command = UpdateGalleryCommand::createFromDto($request->getDto(), $pic->id);
+        \CommandBus::dispatch($command);
+
+        return response()->json(status: 200);
     }
 }
