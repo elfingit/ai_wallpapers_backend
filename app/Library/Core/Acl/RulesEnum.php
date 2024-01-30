@@ -19,6 +19,7 @@ enum RulesEnum : string
     case PICTURE_PROMPT = 'pic:prompt';
     case ADD_TAG = 'add:tag';
 
+    case MAKE_WALLPAPER = 'make:wallpaper';
     public function value(): string
     {
         return $this->value;
