@@ -11,7 +11,7 @@ class AddRequest extends AbstractRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can(RulesEnum::MAKE_WALLPAPER);
+        return $this->checkAccess(RulesEnum::MAKE_WALLPAPER);
     }
 
     protected function getDtoClass(): ?string

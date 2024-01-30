@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\GalleryController;
 use App\Http\Controllers\Api\V1\RegistrationController;
+use App\Http\Controllers\Api\V1\WallpaperController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,7 @@ Route::group(
                 'middleware' => 'auth:sanctum',
             ],
             function () {
+                //Gallery
                 Route::post('/gallery', [GalleryController::class, 'store']);
                 Route::get('/gallery', [GalleryController::class, 'index']);
                 Route::patch('/gallery/{pic}', [GalleryController::class, 'update'])
@@ -48,6 +50,9 @@ Route::group(
                 Route::get('/gallery/{pic}/download', [GalleryController::class, 'download'])
                      ->name('gallery.download')
                      ->where('pic', '[0-9]+');
+
+                //Wallpaper
+                Route::post('/wallpaper', [WallpaperController::class, 'store']);
             }
         );
     }

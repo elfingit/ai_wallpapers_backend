@@ -11,17 +11,21 @@ use App\Library\Auth\Handlers\CreateAuthHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\DeleteGalleryCommand;
 use App\Library\Gallery\Commands\EditGalleryCommand;
+use App\Library\Gallery\Commands\GetImageByPromptCommand;
 use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
+use App\Library\Gallery\Commands\MakePictureCopyCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Library\Gallery\Commands\UpdateGalleryCommand;
 use App\Library\Gallery\Handlers\CreateGalleryHandler;
 use App\Library\Gallery\Handlers\DeleteGalleryHandler;
 use App\Library\Gallery\Handlers\EditGalleryHandler;
+use App\Library\Gallery\Handlers\GetImageByPromptHandler;
 use App\Library\Gallery\Handlers\GetMailFileHandler;
 use App\Library\Gallery\Handlers\GetThumbnailHandler;
 use App\Library\Gallery\Handlers\IndexGalleryHandler;
+use App\Library\Gallery\Handlers\MakePictureCopyHandler;
 use App\Library\Gallery\Handlers\ThumbnailHandler;
 use App\Library\Gallery\Handlers\UpdateGalleryHandler;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
@@ -34,6 +38,8 @@ use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
 use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
+use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
+use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 
 \CommandBus::addHandler(
     CreateRoleCommand::class,
@@ -104,4 +110,19 @@ use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
 \CommandBus::addHandler(
     DeleteGalleryCommand::class,
     DeleteGalleryHandler::class
+);
+
+\CommandBus::addHandler(
+    CreateWallpaperCommand::class,
+    CreateWallpaperHandler::class
+);
+
+\CommandBus::addHandler(
+    GetImageByPromptCommand::class,
+    GetImageByPromptHandler::class
+);
+
+\CommandBus::addHandler(
+    MakePictureCopyCommand::class,
+    MakePictureCopyHandler::class
 );
