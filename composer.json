@@ -8,7 +8,7 @@
         "php": "^8.1",
         "elfingit/laravel_command_bus": "^1.0",
         "elfingit/laravel_dto": "^1.2",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.8",
         "intervention/image": "^3.3",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",

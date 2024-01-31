@@ -30,10 +30,16 @@ class CreateWallpaperHandler implements CommandHandlerContract
         $prompt = $command->promptValue->value();
         $locale = $command->localeValue->value();
 
-        $gallery = \CommandBus::dispatch(GetImageByPromptCommand::instanceFromPrimitives(
+        $gallery = null;
+
+        $galleryResponse = \CommandBus::dispatch(GetImageByPromptCommand::instanceFromPrimitives(
             $prompt,
             $locale
-        ))->getResult();
+        ));
+
+        if ($galleryResponse) {
+            $gallery = $galleryResponse->getResult();
+        }
 
         if ($gallery) {
             $newGallery = \CommandBus::dispatch(
