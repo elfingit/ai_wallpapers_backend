@@ -2,6 +2,7 @@
 
 namespace App\Library\Gallery\Commands;
 
+use App\Library\Gallery\Values\FilePathValue;
 use App\Library\Gallery\Values\LocaleValue;
 use App\Library\Gallery\Values\TagsValue;
 use App\Library\Gallery\Values\UserIdValue;
@@ -13,12 +14,14 @@ use App\Library\Gallery\Dto\AddDto;
 
 class CreateGalleryCommand extends AbstractCommand
 {
-	public FileValue $fileValue;
+	public ?FileValue $fileValue = null;
 	public PromptValue $promptValue;
 
     public TagsValue $tagsValue;
     public LocaleValue $localeValue;
     public ?UserIdValue $userIdValue = null;
+
+    public ?FilePathValue $filePathValue = null;
 
     public static function createFromDto(AddDto $dto, int $user_id = null): self
     {
@@ -31,6 +34,25 @@ class CreateGalleryCommand extends AbstractCommand
         if (!is_null($user_id)) {
             $command->userIdValue = new UserIdValue($user_id);
         }
+
+        return $command;
+    }
+
+    public static function createFromPrimitives(
+        string $prompt,
+        array $tags,
+        string $locale,
+        int $user_id,
+        string $file_path
+    ): self
+    {
+        $command = new self();
+
+        $command->promptValue = new PromptValue($prompt);
+        $command->tagsValue = new TagsValue($tags);
+        $command->localeValue = new LocaleValue($locale);
+        $command->userIdValue = new UserIdValue($user_id);
+        $command->filePathValue = new FilePathValue($file_path);
 
         return $command;
     }

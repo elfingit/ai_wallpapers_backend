@@ -10,6 +10,8 @@ namespace App\Library\Wallpaper\Infrastructure;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Uuid;
 
 class DalleService
 {
@@ -26,7 +28,7 @@ class DalleService
         $this->api_key = config('openai.key');
     }
 
-    public function getImageByPrompt(string $prompt): array
+    public function getImageByPrompt(string $prompt): array | null
     {
         $url = 'images/generations';
 
@@ -43,10 +45,34 @@ class DalleService
             ]
         ]);
 
-        $data = json_decode($response->getBody()->getContents(), true);
+        $response = json_decode($response->getBody()->getContents(), true);
 
-        dd($data);
+        if (count($response['data'][0] ?? []) > 0) {
+            $data = $response['data'][0];
+            $revised_prompt = $data['revised_prompt'];
+            $file_url = $data['url'];
 
-        return [];
+            $original_name = Uuid::uuid7();
+
+            $path_parts = array_slice(str_split(md5($original_name), 2), 0, 2);
+            $path = implode(DIRECTORY_SEPARATOR, $path_parts);
+
+            Storage::disk('wallpaper')
+                   ->makeDirectory($path);
+
+            $file_name = $original_name . '.png';
+            $full_path = Storage::disk('wallpaper')->path($path . DIRECTORY_SEPARATOR . $file_name);
+
+            (new Client())->get($file_url, [
+                RequestOptions::SINK => $full_path
+            ]);
+
+            return [
+                'prompt' => $revised_prompt,
+                'file_path' => $path . DIRECTORY_SEPARATOR . $file_name
+            ];
+        }
+
+        return null;
     }
 }

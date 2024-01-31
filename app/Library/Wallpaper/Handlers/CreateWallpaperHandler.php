@@ -2,8 +2,11 @@
 
 namespace App\Library\Wallpaper\Handlers;
 
+use App\Library\Core\Logger\LoggerChannel;
+use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\GetImageByPromptCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
+use App\Library\Gallery\Handlers\CreateGalleryHandler;
 use App\Library\Wallpaper\Infrastructure\DalleService;
 use App\Library\Wallpaper\Results\GalleryResult;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -11,14 +14,17 @@ use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
+use Psr\Log\LoggerInterface;
 
 class CreateWallpaperHandler implements CommandHandlerContract
 {
     private DalleService $dalleService;
+    private LoggerInterface $logger;
 
     public function __construct()
     {
         $this->dalleService = new DalleService();
+        $this->logger = \LoggerService::getChannel(LoggerChannel::OPEN_AI);
     }
 
     /**
@@ -32,6 +38,14 @@ class CreateWallpaperHandler implements CommandHandlerContract
 
         $gallery = null;
 
+        $this->logger->info('trying create wallpaper', [
+            'prompt' => $prompt,
+            'locale' => $locale,
+            'user_id' => $command->userIdValue->value(),
+            'file' => __FILE__,
+            'line' => __LINE__
+        ]);
+
         $galleryResponse = \CommandBus::dispatch(GetImageByPromptCommand::instanceFromPrimitives(
             $prompt,
             $locale
@@ -42,6 +56,16 @@ class CreateWallpaperHandler implements CommandHandlerContract
         }
 
         if ($gallery) {
+            $this->logger->info('matched with prompt', [
+                'prompt' => $prompt,
+                'locale' => $locale,
+                'g_id' => $gallery->id,
+                'user_id' => $command->userIdValue->value(),
+                'file' => __FILE__,
+                'line' => __LINE__
+            ]);
+
+
             $newGallery = \CommandBus::dispatch(
                 MakePictureCopyCommand::instanceFromPrimitives(
                     $gallery->id,
@@ -51,7 +75,66 @@ class CreateWallpaperHandler implements CommandHandlerContract
             return new GalleryResult($newGallery);
         }
 
-        $image = $this->dalleService->getImageByPrompt($prompt);
+        $this->logger->info('no matches trying get from AI', [
+            'prompt' => $prompt,
+            'locale' => $locale,
+            'user_id' => $command->userIdValue->value(),
+            'file' => __FILE__,
+            'line' => __LINE__
+        ]);
+
+        try {
+            $image_data = $this->dalleService->getImageByPrompt($prompt);
+
+            if ($image_data) {
+
+                $this->logger->info('got it', [
+                    'prompt' => $prompt,
+                    'locale' => $locale,
+                    'user_id' => $command->userIdValue->value(),
+                    'image_data' => $image_data,
+                    'file' => __FILE__,
+                    'line' => __LINE__
+                ]);
+
+                $tags = array_filter(
+                    explode(' ', $command->promptValue->value()),
+                    fn($tag) => strlen($tag) > 2
+                );
+
+                $tags = array_slice($tags, 0, 10);
+
+                $gallery = \CommandBus::dispatch(
+                    CreateGalleryCommand::createFromPrimitives(
+                        $command->promptValue->value(),
+                        $tags,
+                        $command->localeValue->value(),
+                        $command->userIdValue->value(),
+                        $image_data['file_path']
+                    ))->getResult();
+
+                return new GalleryResult($gallery);
+            } else {
+                $this->logger->error('can\'t get AI response', [
+                    'prompt' => $prompt,
+                    'locale' => $locale,
+                    'user_id' => $command->userIdValue->value(),
+                    'file' => __FILE__,
+                    'line' => __LINE__
+                ]);
+            }
+
+        } catch (\Throwable $th) {
+            $this->logger->error('error while trying get an image', [
+                'prompt' => $prompt,
+                'locale' => $locale,
+                'user_id' => $command->userIdValue->value(),
+                'error' => $th->getMessage(),
+                'trace' => $th->getTraceAsString(),
+                'file' => __FILE__,
+                'line' => __LINE__
+            ]);
+        }
 
         return null;
     }

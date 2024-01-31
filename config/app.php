@@ -1,6 +1,7 @@
 <?php
 
 use App\Facades\AbilityProviderFacade;
+use App\Facades\LoggerServiceFacade;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -185,6 +186,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'AbilityProvider' => AbilityProviderFacade::class,
+        'LoggerService' => LoggerServiceFacade::class,
     ])->toArray(),
 
 ];

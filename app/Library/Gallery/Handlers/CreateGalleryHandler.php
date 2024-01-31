@@ -27,18 +27,26 @@ class CreateGalleryHandler implements CommandHandlerContract
             )
         )->getResult();
 
-        $file = $command->fileValue->value();
+        $path = '';
+        $hashed_name = '';
 
-        $original_name = $file->getClientOriginalName();
-        $hashed_name = $file->hashName();
+        if (!is_null($command->fileValue)) {
+            $file = $command->fileValue->value();
 
-        $path_parts = array_slice(str_split(md5($original_name), 2), 0, 2);
-        $path = implode(DIRECTORY_SEPARATOR, $path_parts);
+            $original_name = $file->getClientOriginalName();
+            $hashed_name = $file->hashName();
 
-        Storage::disk('wallpaper')
+            $path_parts = array_slice(str_split(md5($original_name), 2), 0, 2);
+            $path = implode(DIRECTORY_SEPARATOR, $path_parts);
+
+            Storage::disk('wallpaper')
                ->makeDirectory($path);
 
-        $file->storeAs($path, $hashed_name, 'wallpaper');
+            $file->storeAs($path, $hashed_name, 'wallpaper');
+        } elseif (!is_null($command->filePathValue)) {
+            $path = $command->filePathValue->value();
+            $hashed_name = basename($path);
+        }
 
         $gallery = Gallery::create([
             'prompt' => $command->promptValue->value(),

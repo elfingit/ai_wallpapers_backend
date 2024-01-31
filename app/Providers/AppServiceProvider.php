@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Library\Core\Acl\AbilitiesProvider;
 use App\Library\Core\Contracts\AbilitiesProviderContract;
+use App\Library\Core\Contracts\Services\LoggerServiceContract;
+use App\Library\Core\Services\LoggerService;
 use Elfin\Generator\Providers\GeneratorProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             AbilitiesProviderContract::class,
             AbilitiesProvider::class
+        );
+
+        $this->app->bind(
+            LoggerServiceContract::class,
+            LoggerService::class
         );
     }
 

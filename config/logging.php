@@ -1,11 +1,14 @@
 <?php
 
+use App\Library\Core\Logger\LoggerChannel;
+use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\NullHandler;
+use Monolog\Handler\RotatingFileHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
 
-return [
+$log_config = [
 
     /*
     |--------------------------------------------------------------------------
@@ -129,3 +132,19 @@ return [
     ],
 
 ];
+
+foreach (LoggerChannel::cases() as $appLog) {
+    $log_config['channels'][ $appLog->value ] = [
+        'driver'       => 'monolog',
+        'level'        => 'debug',
+        'handler'      => RotatingFileHandler::class,
+        'handler_with' => [
+            'filename' => storage_path( 'logs/' . $appLog->value . '.log' ),
+            'filePermission' => 0664
+        ],
+        'formatter'    => JsonFormatter::class,
+    ];
+}
+
+
+return $log_config;
