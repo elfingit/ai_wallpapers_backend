@@ -3,6 +3,7 @@
 namespace App\Library\Gallery\Handlers;
 
 use App\Library\Gallery\Commands\PictureUploadedCommand;
+use App\Library\Gallery\Results\GalleryResult;
 use App\Library\Tag\Commands\CreateTagCommand;
 use App\Models\Gallery;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -46,6 +47,7 @@ class CreateGalleryHandler implements CommandHandlerContract
         } elseif (!is_null($command->filePathValue)) {
             $path = $command->filePathValue->value();
             $hashed_name = basename($path);
+            $path = dirname($path);
         }
 
         $gallery = Gallery::create([
@@ -62,7 +64,7 @@ class CreateGalleryHandler implements CommandHandlerContract
         $uploadedCommand = PictureUploadedCommand::createFromPrimitives($gallery->id);
         \CommandBus::dispatch($uploadedCommand);
 
-        return null;
+        return new GalleryResult($gallery);
     }
 
     public function isAsync(): bool
