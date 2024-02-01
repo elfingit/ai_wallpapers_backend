@@ -12,4 +12,6 @@ class UserBalanceTransaction extends Model
     use HasUlids;
 
     protected $guarded = ['ulid', 'created_at', 'updated_at'];
+
+    protected $primaryKey = 'ulid';
 }

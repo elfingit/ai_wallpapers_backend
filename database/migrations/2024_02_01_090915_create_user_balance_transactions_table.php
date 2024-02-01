@@ -19,6 +19,8 @@ return new class extends Migration
             $table->decimal('amount', 10, 2);
             $table->string('notice')->nullable();
             $table->timestamps();
+
+            $table->index('balance_id');
         });
     }
 

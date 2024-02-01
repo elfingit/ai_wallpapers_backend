@@ -3,6 +3,7 @@
 namespace App\Library\UserBalance\Handlers;
 
 use App\Library\Core\Logger\LoggerChannel;
+use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionCommand;
 use App\Models\User;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
@@ -34,7 +35,7 @@ class UpdateUserBalanceHandler implements CommandHandlerContract
         ]);
 
         $user = User::findOrFail($command->userId->value());
-        \DB::begitTransaction();
+        \DB::beginTransaction();
 
         try {
             if (!$user->balance) {
@@ -53,7 +54,7 @@ class UpdateUserBalanceHandler implements CommandHandlerContract
                     'balance' => $user->balance->balance + $command->balanceAmount->value()
                 ]);
             }
-            $user->balance->refresh();
+            $user->refresh();
             \DB::commit();
 
             $this->logger->info('balance changed', [
@@ -62,6 +63,14 @@ class UpdateUserBalanceHandler implements CommandHandlerContract
                 'file' => __FILE__,
                 'line' => __LINE__,
             ]);
+
+            $transactionCommand = CreateUserBalanceTransactionCommand::instanceFromPrimitives(
+                $user->balance->id,
+                $command->balanceAmount->value(),
+                $command->notice?->value()
+            );
+
+            \CommandBus::dispatch($transactionCommand);
         } catch (\Throwable $e) {
             \DB::rollBack();
             $this->logger->error($e->getMessage(), [

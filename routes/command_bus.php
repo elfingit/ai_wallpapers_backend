@@ -36,6 +36,8 @@ use App\Library\Tag\Commands\CreateTagCommand;
 use App\Library\Tag\Handlers\CreateTagHandler;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Library\UserBalance\Handlers\UpdateUserBalanceHandler;
+use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionCommand;
+use App\Library\UserBalanceTransaction\Handlers\CreateUserBalanceTransactionHandler;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
@@ -132,4 +134,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     UpdateUserBalanceCommand::class,
     UpdateUserBalanceHandler::class
+);
+
+\CommandBus::addHandler(
+    CreateUserBalanceTransactionCommand::class,
+    CreateUserBalanceTransactionHandler::class
 );

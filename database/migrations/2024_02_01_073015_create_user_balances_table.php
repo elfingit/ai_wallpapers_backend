@@ -19,6 +19,8 @@ return new class extends Migration
                       ->restrictOnDelete();
 				$table->timestamps();
 				$table->softDeletes();
+
+                $table->unique('user_id');
         });
     }
 
