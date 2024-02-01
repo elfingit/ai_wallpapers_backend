@@ -29,7 +29,11 @@ class AddToUserBalanceCommand extends Command
         $userId = $this->argument('user_id');
         $amount = $this->argument('amount');
 
-        $command = UpdateUserBalanceCommand::instanceFromPrimitives($userId, $amount);
+        $command = UpdateUserBalanceCommand::instanceFromPrimitives(
+            $userId,
+            $amount,
+            'change user balance from console command'
+        );
 
         \CommandBus::dispatch($command);
     }
