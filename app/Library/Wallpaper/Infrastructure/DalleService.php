@@ -69,7 +69,7 @@ class DalleService
 
             return [
                 'prompt' => $revised_prompt,
-                'file_path' => $path . DIRECTORY_SEPARATOR . $file_name
+                'file_path' => $path . DIRECTORY_SEPARATOR . $file_name,
             ];
         }
 

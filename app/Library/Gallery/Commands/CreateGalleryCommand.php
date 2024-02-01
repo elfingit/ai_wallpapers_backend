@@ -4,6 +4,7 @@ namespace App\Library\Gallery\Commands;
 
 use App\Library\Gallery\Values\FilePathValue;
 use App\Library\Gallery\Values\LocaleValue;
+use App\Library\Gallery\Values\RevisedPromptValue;
 use App\Library\Gallery\Values\TagsValue;
 use App\Library\Gallery\Values\UserIdValue;
 use Elfin\LaravelCommandBus\Library\AbstractCommand;
@@ -22,6 +23,8 @@ class CreateGalleryCommand extends AbstractCommand
     public ?UserIdValue $userIdValue = null;
 
     public ?FilePathValue $filePathValue = null;
+
+    public ?RevisedPromptValue $revisedPromptValue = null;
 
     public static function createFromDto(AddDto $dto, int $user_id = null): self
     {
@@ -43,7 +46,8 @@ class CreateGalleryCommand extends AbstractCommand
         array $tags,
         string $locale,
         int $user_id,
-        string $file_path
+        string $file_path,
+        ?string $revised_prompt = null
     ): self
     {
         $command = new self();
@@ -53,6 +57,10 @@ class CreateGalleryCommand extends AbstractCommand
         $command->localeValue = new LocaleValue($locale);
         $command->userIdValue = new UserIdValue($user_id);
         $command->filePathValue = new FilePathValue($file_path);
+
+        if (!is_null($revised_prompt)) {
+            $command->revisedPromptValue = new RevisedPromptValue($revised_prompt);
+        }
 
         return $command;
     }

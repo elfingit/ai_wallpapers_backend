@@ -134,7 +134,8 @@ class CreateWallpaperHandler implements CommandHandlerContract
                         $tags,
                         $command->localeValue->value(),
                         $command->userIdValue->value(),
-                        $image_data['file_path']
+                        $image_data['file_path'],
+                        $image_data['prompt']
                     )
                 )->getResult();
 
