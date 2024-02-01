@@ -34,7 +34,9 @@ use App\Library\Role\Commands\CreateRoleCommand;
 use App\Library\Role\Handlers\CreateRoleHandler;
 use App\Library\Tag\Commands\CreateTagCommand;
 use App\Library\Tag\Handlers\CreateTagHandler;
+use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
+use App\Library\UserBalance\Handlers\GetUserBalanceHandler;
 use App\Library\UserBalance\Handlers\UpdateUserBalanceHandler;
 use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionCommand;
 use App\Library\UserBalanceTransaction\Handlers\CreateUserBalanceTransactionHandler;
@@ -139,4 +141,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     CreateUserBalanceTransactionCommand::class,
     CreateUserBalanceTransactionHandler::class
+);
+
+\CommandBus::addHandler(
+    GetUserBalanceCommand::class,
+    GetUserBalanceHandler::class
 );

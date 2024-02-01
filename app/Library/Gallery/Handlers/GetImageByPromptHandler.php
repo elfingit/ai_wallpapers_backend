@@ -27,6 +27,7 @@ class GetImageByPromptHandler implements CommandHandlerContract
         $gallery = Gallery::query()
                           ->where('prompt', $command->promptValue->value())
                           ->where('locale', $command->localValue->value())
+                          ->orderBy('id', 'desc')
                           ->first();
 
         if ($gallery) {

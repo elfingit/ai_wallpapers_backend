@@ -2,11 +2,14 @@
 
 namespace App\Library\Wallpaper\Handlers;
 
+use App\Exceptions\InsufficientBalanceException;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\GetImageByPromptCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
 use App\Library\Gallery\Handlers\CreateGalleryHandler;
+use App\Library\UserBalance\Commands\GetUserBalanceCommand;
+use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Library\Wallpaper\Infrastructure\DalleService;
 use App\Library\Wallpaper\Results\GalleryResult;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -33,68 +36,90 @@ class CreateWallpaperHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
+        \DB::beginTransaction();
+
         $prompt = $command->promptValue->value();
         $locale = $command->localeValue->value();
 
-        $gallery = null;
+        try {
+            $balance = \CommandBus::dispatch(
+                GetUserBalanceCommand::instanceFromPrimitives(
+                    $command->userIdValue->value()
+                )
+            )->getResult();
 
-        $this->logger->info('trying create wallpaper', [
-            'prompt' => $prompt,
-            'locale' => $locale,
-            'user_id' => $command->userIdValue->value(),
-            'file' => __FILE__,
-            'line' => __LINE__
-        ]);
+            if ($balance < 1) {
+                throw new InsufficientBalanceException();
+            }
 
-        $galleryResponse = \CommandBus::dispatch(GetImageByPromptCommand::instanceFromPrimitives(
-            $prompt,
-            $locale
-        ));
+            $gallery = null;
 
-        if ($galleryResponse) {
-            $gallery = $galleryResponse->getResult();
-        }
-
-        if ($gallery) {
-            $this->logger->info('matched with prompt', [
-                'prompt' => $prompt,
-                'locale' => $locale,
-                'g_id' => $gallery->id,
+            $this->logger->info('trying create wallpaper', [
+                'prompt'  => $prompt,
+                'locale'  => $locale,
                 'user_id' => $command->userIdValue->value(),
-                'file' => __FILE__,
-                'line' => __LINE__
+                'file'    => __FILE__,
+                'line'    => __LINE__
             ]);
 
+            $galleryResponse = \CommandBus::dispatch(
+                GetImageByPromptCommand::instanceFromPrimitives(
+                    $prompt,
+                    $locale
+                )
+            );
 
-            $newGallery = \CommandBus::dispatch(
-                MakePictureCopyCommand::instanceFromPrimitives(
-                    $gallery->id,
-                    $command->userIdValue->value()
-                ))->getResult();
+            if ($galleryResponse) {
+                $gallery = $galleryResponse->getResult();
+            }
 
-            return new GalleryResult($newGallery);
-        }
+            if ($gallery) {
+                $this->logger->info('matched with prompt', [
+                    'prompt'  => $prompt,
+                    'locale'  => $locale,
+                    'g_id'    => $gallery->id,
+                    'user_id' => $command->userIdValue->value(),
+                    'file'    => __FILE__,
+                    'line'    => __LINE__
+                ]);
 
-        $this->logger->info('no matches trying get from AI', [
-            'prompt' => $prompt,
-            'locale' => $locale,
-            'user_id' => $command->userIdValue->value(),
-            'file' => __FILE__,
-            'line' => __LINE__
-        ]);
 
-        try {
+                $newGallery = \CommandBus::dispatch(
+                    MakePictureCopyCommand::instanceFromPrimitives(
+                        $gallery->id,
+                        $command->userIdValue->value()
+                    )
+                )->getResult();
+                
+                if ($gallery->user_id != $command->userIdValue->value()) {
+                    \CommandBus::dispatch(UpdateUserBalanceCommand::instanceFromPrimitives(
+                        $gallery->user_id,
+                        -1,
+                        'reward for wallpaper'
+                    ));
+                }
+                \DB::commit();
+
+                return new GalleryResult($newGallery);
+            }
+
+            $this->logger->info('no matches trying get from AI', [
+                'prompt'  => $prompt,
+                'locale'  => $locale,
+                'user_id' => $command->userIdValue->value(),
+                'file'    => __FILE__,
+                'line'    => __LINE__
+            ]);
             $image_data = $this->dalleService->getImageByPrompt($prompt);
 
             if ($image_data) {
-
                 $this->logger->info('got it', [
-                    'prompt' => $prompt,
-                    'locale' => $locale,
-                    'user_id' => $command->userIdValue->value(),
+                    'prompt'     => $prompt,
+                    'locale'     => $locale,
+                    'user_id'    => $command->userIdValue->value(),
                     'image_data' => $image_data,
-                    'file' => __FILE__,
-                    'line' => __LINE__
+                    'file'       => __FILE__,
+                    'line'       => __LINE__
                 ]);
 
                 $tags = array_filter(
@@ -111,20 +136,38 @@ class CreateWallpaperHandler implements CommandHandlerContract
                         $command->localeValue->value(),
                         $command->userIdValue->value(),
                         $image_data['file_path']
-                    ))->getResult();
+                    )
+                )->getResult();
 
+                \CommandBus::dispatch(UpdateUserBalanceCommand::instanceFromPrimitives(
+                    $command->userIdValue->value(),
+                    -1,
+                    'charge for wallpaper'
+                ));
+                \DB::commit();
                 return new GalleryResult($gallery);
             } else {
+                \DB::rollBack();
                 $this->logger->error('can\'t get AI response', [
-                    'prompt' => $prompt,
-                    'locale' => $locale,
+                    'prompt'  => $prompt,
+                    'locale'  => $locale,
                     'user_id' => $command->userIdValue->value(),
-                    'file' => __FILE__,
-                    'line' => __LINE__
+                    'file'    => __FILE__,
+                    'line'    => __LINE__
                 ]);
             }
-
+        } catch (InsufficientBalanceException $exception) {
+            \DB::rollBack();
+            $this->logger->error('insufficient balance', [
+                'prompt'  => $prompt,
+                'locale'  => $locale,
+                'user_id' => $command->userIdValue->value(),
+                'file'    => __FILE__,
+                'line'    => __LINE__
+            ]);
+            throw $exception;
         } catch (\Throwable $th) {
+            \DB::rollBack();
             $this->logger->error('error while trying get an image', [
                 'prompt' => $prompt,
                 'locale' => $locale,

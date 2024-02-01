@@ -17,7 +17,10 @@ class GetImageByPromptCommand extends AbstractCommand
     public PromptValue $promptValue;
     public LocaleValue $localValue;
 
-    public static function instanceFromPrimitives(string $prompt_value, string $locale): self
+    public static function instanceFromPrimitives(
+        string $prompt_value,
+        string $locale
+    ): self
     {
         $command = new self();
         $command->promptValue = new PromptValue($prompt_value);
