@@ -34,6 +34,8 @@ use App\Library\Role\Commands\CreateRoleCommand;
 use App\Library\Role\Handlers\CreateRoleHandler;
 use App\Library\Tag\Commands\CreateTagCommand;
 use App\Library\Tag\Handlers\CreateTagHandler;
+use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
+use App\Library\UserBalance\Handlers\UpdateUserBalanceHandler;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
@@ -125,4 +127,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     MakePictureCopyCommand::class,
     MakePictureCopyHandler::class
+);
+
+\CommandBus::addHandler(
+    UpdateUserBalanceCommand::class,
+    UpdateUserBalanceHandler::class
 );

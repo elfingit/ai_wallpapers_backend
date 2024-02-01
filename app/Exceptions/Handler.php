@@ -27,4 +27,15 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof InsufficientBalanceException) {
+            return response()->json([
+                'message' => __('Insufficient balance'),
+            ], 402);
+        }
+
+        return parent::render($request, $e);
+    }
 }

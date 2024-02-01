@@ -1,0 +1,19 @@
+{
+    "domain": {
+        "id": "UserBalance",
+        "entity": {
+            "make_model": true,
+            "make_migration": true,
+            "soft_delete": true,
+            "timestamps": true,
+            "fields": {
+                "id": {
+                    "type": "pk",
+                    "skip_in_store": true,
+                    "can_be_search": false,
+                    "can_be_order": false
+                }
+            }
+        }
+    }
+}
