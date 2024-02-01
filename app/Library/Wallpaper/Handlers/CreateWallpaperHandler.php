@@ -7,7 +7,6 @@ use App\Library\Core\Logger\LoggerChannel;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\GetImageByPromptCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
-use App\Library\Gallery\Handlers\CreateGalleryHandler;
 use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Library\Wallpaper\Infrastructure\DalleService;
@@ -90,12 +89,12 @@ class CreateWallpaperHandler implements CommandHandlerContract
                         $command->userIdValue->value()
                     )
                 )->getResult();
-                
+
                 if ($gallery->user_id != $command->userIdValue->value()) {
                     \CommandBus::dispatch(UpdateUserBalanceCommand::instanceFromPrimitives(
-                        $gallery->user_id,
+                        $command->userIdValue->value(),
                         -1,
-                        'reward for wallpaper'
+                        'charge for wallpaper'
                     ));
                 }
                 \DB::commit();
