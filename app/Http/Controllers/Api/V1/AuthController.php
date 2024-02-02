@@ -58,7 +58,8 @@ class AuthController extends Controller
      *  HTTP/1.1 200 OK
      *  {
      *      "token": "2|zXp0DMrIjSpyfdbJwO5CCjyn9loYjjcZ5GjZdjHVec126865",
-     *      "role": "user"
+     *      "role": "user",
+     *      "balance": "5.00"
      *  }
      */
     public function store(AddRequest $request): JsonResponse

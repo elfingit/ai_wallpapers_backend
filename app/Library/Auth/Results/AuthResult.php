@@ -25,6 +25,7 @@ class AuthResult implements CommandResultContract
         return [
             'token' => $this->token,
             'role' => $this->user->role->title_slug,
+            'balance' => $this->user->balance?->balance ?? 0,
         ];
     }
 }

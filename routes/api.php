@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\GalleryController;
 use App\Http\Controllers\Api\V1\RegistrationController;
+use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\WallpaperController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,9 @@ Route::group(
 
                 //Wallpaper
                 Route::post('/wallpaper', [WallpaperController::class, 'store']);
+
+                //User
+                Route::get('/user/balance', [UserController::class, 'balance']);
             }
         );
     }

@@ -13,4 +13,5 @@ return [
     RulesEnum::INDEX_OF_GALLERY,
     RulesEnum::THUMBNAIL_OF_PICTURE,
     RulesEnum::MAKE_WALLPAPER,
+    RulesEnum::MAIN_BALANCE,
 ];

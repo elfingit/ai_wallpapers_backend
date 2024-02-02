@@ -19,6 +19,8 @@ enum RulesEnum : string
     case PICTURE_PROMPT = 'pic:prompt';
     case ADD_TAG = 'add:tag';
 
+    case MAIN_BALANCE = 'balance:main';
+
     case MAKE_WALLPAPER = 'make:wallpaper';
     public function value(): string
     {
