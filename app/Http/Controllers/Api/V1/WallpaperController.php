@@ -55,6 +55,12 @@ class WallpaperController extends Controller
      *        message: "Unauthenticated"
      *    }
      *
+     * @apiErrorExample {json} Payment Required:
+     *     HTTP/1.1 402
+     *     {
+     *          "message": "Insufficient balance"
+     *     }
+     *
      * @apiSuccessExample {json} Success-Response:
      *   HTTP/1.1 200 OK
      * {
