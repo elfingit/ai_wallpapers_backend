@@ -57,6 +57,7 @@ Route::group(
 
                 //User
                 Route::get('/user/balance', [UserController::class, 'balance']);
+                Route::get('/logout', [AuthController::class, 'logout']);
             }
         );
     }

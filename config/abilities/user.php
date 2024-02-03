@@ -13,4 +13,5 @@ return [
     RulesEnum::INDEX_OF_GALLERY,
     RulesEnum::THUMBNAIL_OF_PICTURE,
     RulesEnum::MAIN_BALANCE,
+    RulesEnum::LOGOUT,
 ];

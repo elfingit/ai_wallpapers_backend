@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AddRequest;
+use App\Http\Requests\Auth\LogoutRequest;
 use App\Library\Auth\Commands\CreateAuthCommand;
+use App\Library\Auth\Commands\LogoutCommand;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -72,5 +74,51 @@ class AuthController extends Controller
         $result = \CommandBus::dispatch($command);
 
         return response()->json($result->getResult());
+    }
+
+    /**
+     * @api {get} /api/v1/logout Logout
+     * @apiName Logout
+     * @apiGroup Auth
+     * @apiDescription Endpoint for logout user
+     * @apiVersion 1.0.0
+     *
+     * @apiHeader {String} Content-Type application/json
+     * @apiHeader {String} Accept application/json
+     * @apiHeader {String} X-App-Locale en
+     * @apiHeader {String} Authorization Bearer
+     *
+     * @apiHeaderExample {String} Header-Example:
+     *  {
+     *       Accept: application/json
+     *       Content-Type: application/json
+     *       X-App-Locale: pl
+     *       Authorization: Bearer 2|zXp0DMrIjSpyfdbJwO5CCjyn9loYjjcZ5GjZdjHVec126865
+     *  }
+     *
+     * @apiErrorExample {json} Forbidden:
+     *   HTTP/1.1 403 Forbidden
+     *   {
+     *       "message": "Forbidden."
+     *   }
+     *
+     * @apiErrorExample {json} Auth-Error:
+     *    HTTP/1.1 401
+     *    {
+     *        message: "Unauthenticated"
+     *    }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     *  HTTP/1.1 200 OK
+     *  {
+     *      "message": "Logged out"
+     *  }
+     */
+    public function logout(LogoutRequest $request)
+    {
+        $command = LogoutCommand::instanceFromModel($request->user());
+        \CommandBus::dispatch($command);
+
+        return response()->json(['message' => 'Logged out']);
     }
 }

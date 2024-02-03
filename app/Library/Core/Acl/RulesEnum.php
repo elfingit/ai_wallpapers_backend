@@ -22,6 +22,8 @@ enum RulesEnum : string
     case MAIN_BALANCE = 'balance:main';
 
     case MAKE_WALLPAPER = 'make:wallpaper';
+
+    case LOGOUT = 'logout';
     public function value(): string
     {
         return $this->value;

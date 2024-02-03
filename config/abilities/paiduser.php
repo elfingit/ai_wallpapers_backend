@@ -14,4 +14,5 @@ return [
     RulesEnum::THUMBNAIL_OF_PICTURE,
     RulesEnum::MAKE_WALLPAPER,
     RulesEnum::MAIN_BALANCE,
+    RulesEnum::LOGOUT,
 ];

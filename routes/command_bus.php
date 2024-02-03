@@ -7,7 +7,9 @@
  */
 
 use App\Library\Auth\Commands\CreateAuthCommand;
+use App\Library\Auth\Commands\LogoutCommand;
 use App\Library\Auth\Handlers\CreateAuthHandler;
+use App\Library\Auth\Handlers\LogoutHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\DeleteGalleryCommand;
 use App\Library\Gallery\Commands\EditGalleryCommand;
@@ -146,4 +148,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     GetUserBalanceCommand::class,
     GetUserBalanceHandler::class
+);
+
+\CommandBus::addHandler(
+    LogoutCommand::class,
+    LogoutHandler::class
 );
