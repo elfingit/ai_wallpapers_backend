@@ -18,6 +18,13 @@ class CreateUserDeviceHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
+        $device = UserDevice::where('uuid', $command->idValue->value())
+                    ->first();
+
+        if ($device) {
+            return new CreateResult($device);
+        }
+
         $device = UserDevice::create([
             'uuid' => $command->idValue->value(),
             'ip_address' => $command->ipValue->value(),
