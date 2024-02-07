@@ -10,6 +10,7 @@ namespace App\Library\Core\Acl;
 
 enum RulesEnum : string
 {
+    case ALL = '*';
     case ADD_FILE_TO_GALLERY = 'add:gallery';
     case EDIT_FILE_IN_GALLERY = 'edit:gallery';
     case UPDATE_FILE_IN_GALLERY = 'upd:gallery';
