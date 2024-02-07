@@ -34,7 +34,7 @@ class CreateTagHandler implements CommandHandlerContract
 
             $ids[] = $tag_id;
         }
-
+        $ids = array_unique($ids);
         return new CreateTagResult($ids);
     }
 

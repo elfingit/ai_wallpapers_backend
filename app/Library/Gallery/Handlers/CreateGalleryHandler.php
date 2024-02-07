@@ -49,7 +49,7 @@ class CreateGalleryHandler implements CommandHandlerContract
             $hashed_name = basename($path);
             $path = dirname($path);
         }
-
+        /** @var Gallery $gallery */
         $gallery = Gallery::create([
             'prompt' => $command->promptValue->value(),
             'file_path' => $path . DIRECTORY_SEPARATOR . $hashed_name,
