@@ -12,4 +12,6 @@ enum LoggerChannel: string
 {
     case OPEN_AI = 'openai';
     case USER_BALANCE = 'user_balance';
+
+    case HTTP_REQUEST = 'http_request';
 }

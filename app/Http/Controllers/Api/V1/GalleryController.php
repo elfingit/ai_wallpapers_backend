@@ -11,6 +11,7 @@ use App\Http\Requests\Gallery\ThumbnailRequest;
 use App\Http\Requests\Gallery\UpdateRequest;
 use App\Http\Resources\Gallery\EditResource;
 use App\Http\Resources\Gallery\GalleryCollection;
+use App\Library\Core\Logger\LoggerChannel;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\DeleteGalleryCommand;
 use App\Library\Gallery\Commands\EditGalleryCommand;
@@ -179,6 +180,12 @@ class GalleryController extends Controller
      */
     public function index(IndexRequest $request): GalleryCollection
     {
+        \LoggerService::getChannel(LoggerChannel::HTTP_REQUEST)
+            ->info('GalleryController@index', [
+                'request' => $request->all(),
+                'headers' => $request->header(),
+                'dto' => $request->getDto()
+            ]);
         $command = IndexGalleryCommand::createFromDto($request->getDto(), $request->user()->id);
         $result = \CommandBus::dispatch($command);
 
