@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Gallery;
 
+use App\Http\Controllers\Api\V1\WallpaperController;
 use App\Library\Core\Acl\RulesEnum;
 use App\Models\Gallery;
 use App\Models\User;
@@ -40,5 +41,20 @@ class GalleryResource extends JsonResource
     {
         return $user->tokenCan(RulesEnum::PICTURE_PROMPT->value())
             || $gallery->user_id === $user->id;
+    }
+
+    public function with($request): array
+    {
+        $clazz = get_class(\Route::getCurrentRoute()->getController());
+
+        if ($clazz == WallpaperController::class) {
+            return [
+                'meta' => [
+                    'balance' => $request->user()->balance?->balance ?? 0
+                ]
+            ];
+        }
+
+        return parent::with($request);
     }
 }
