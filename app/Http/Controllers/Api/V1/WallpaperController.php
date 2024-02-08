@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Wallpaper\AddRequest;
 use App\Http\Resources\Gallery\GalleryResource;
+use App\Library\Core\Logger\LoggerChannel;
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
 use Illuminate\Http\Request;
 
@@ -87,7 +88,8 @@ class WallpaperController extends Controller
     {
         $command = CreateWallpaperCommand::createFromDto($request->getDto(), $request->user()->id);
         $gallery = \CommandBus::dispatch($command);
-
+        \LoggerService::getChannel(LoggerChannel::HTTP_REQUEST)
+                      ->info('Wallpaper created', ['gallery' => $gallery->getResult()]);
         return GalleryResource::make($gallery->getResult());
     }
 }
