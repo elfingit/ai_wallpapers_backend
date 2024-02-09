@@ -2,6 +2,7 @@
 
 namespace App\Library\Wallpaper\Handlers;
 
+use App\Exceptions\ContentPolicyViolationException;
 use App\Exceptions\InsufficientBalanceException;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
@@ -16,6 +17,7 @@ use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Log\LoggerInterface;
 
 class CreateWallpaperHandler implements CommandHandlerContract
@@ -91,11 +93,13 @@ class CreateWallpaperHandler implements CommandHandlerContract
                 )->getResult();
 
                 if ($gallery->user_id != $command->userIdValue->value()) {
-                    \CommandBus::dispatch(UpdateUserBalanceCommand::instanceFromPrimitives(
-                        $command->userIdValue->value(),
-                        -1,
-                        'charge for wallpaper'
-                    ));
+                    \CommandBus::dispatch(
+                        UpdateUserBalanceCommand::instanceFromPrimitives(
+                            $command->userIdValue->value(),
+                            -1,
+                            'charge for wallpaper'
+                        )
+                    );
                 }
                 \DB::commit();
 
@@ -139,12 +143,15 @@ class CreateWallpaperHandler implements CommandHandlerContract
                     )
                 )->getResult();
 
-                \CommandBus::dispatch(UpdateUserBalanceCommand::instanceFromPrimitives(
-                    $command->userIdValue->value(),
-                    -1,
-                    'charge for wallpaper'
-                ));
+                \CommandBus::dispatch(
+                    UpdateUserBalanceCommand::instanceFromPrimitives(
+                        $command->userIdValue->value(),
+                        -1,
+                        'charge for wallpaper'
+                    )
+                );
                 \DB::commit();
+
                 return new GalleryResult($gallery);
             } else {
                 \DB::rollBack();
@@ -156,6 +163,20 @@ class CreateWallpaperHandler implements CommandHandlerContract
                     'line'    => __LINE__
                 ]);
             }
+        } catch (RequestException $exception) {
+            \DB::rollBack();
+
+            $this->processRequestException($exception);
+
+            $this->logger->error('error while trying get an image', [
+                'prompt' => $prompt,
+                'locale' => $locale,
+                'user_id' => $command->userIdValue->value(),
+                'error' => $exception->getMessage(),
+                'trace' => $exception->getTraceAsString(),
+                'file' => __FILE__,
+                'line' => __LINE__
+            ]);
         } catch (InsufficientBalanceException $exception) {
             \DB::rollBack();
             $this->logger->error('insufficient balance', [
@@ -185,5 +206,16 @@ class CreateWallpaperHandler implements CommandHandlerContract
     public function isAsync(): bool
     {
         return false;
+    }
+
+    private function processRequestException(RequestException $exception): void
+    {
+        $data = json_decode($exception->getResponse()->getBody()->getContents(), true);
+
+        if (isset($data['error']) && $data['error']['code'] === 'content_policy_violation') {
+            throw new ContentPolicyViolationException(
+                form_field: 'prompt',
+            );
+        }
     }
 }
