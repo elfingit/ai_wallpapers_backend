@@ -18,4 +18,8 @@ final class AddDto
 	#[RequestParam('device_id')]
 	#[ValidationRule('required|string|uuid')]
 	public string $device_id;
+
+    #[RequestParam('agreement')]
+    #[ValidationRule('required|accepted')]
+    public bool $agree_to_terms;
 }
