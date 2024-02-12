@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/terms_of_conditions.html', function () {
+    $locale = \App::getLocale();
+    return view($locale . '/terms_of_conditions');
 });
