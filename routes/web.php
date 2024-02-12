@@ -17,3 +17,8 @@ Route::get('/terms_of_conditions.html', function () {
     $locale = \App::getLocale();
     return view($locale . '/terms_of_conditions');
 });
+
+Route::get('/privacy_policy.html', function () {
+    $locale = \App::getLocale();
+    return view($locale . '/privacy_policy');
+});
