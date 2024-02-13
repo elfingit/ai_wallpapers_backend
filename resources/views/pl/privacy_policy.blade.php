@@ -2,45 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Terms and Conditions</title>
+    <title>Polityka Prywatności</title>
 </head>
 <body style="background: #0A314B; color: white;">
-<h1>Privacy Policy</h1>
-<h2>1. Introduction</h2>
+<h1>Polityka Prywatności</h1>
+<h2>1. Wprowadzenie</h2>
 <p>
-    Welcome to AI Wallpapers ("we", "us", "our").
-    We are committed to protecting the privacy and security of your personal information.
-    This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application ("App").
+    Witamy w AI Wallpapers ("my", "nas", "nasz").
+    Jesteśmy zobowiązani do ochrony prywatności i bezpieczeństwa Twoich danych osobowych.
+    Niniejsza Polityka Prywatności wyjaśnia, jak zbieramy, używamy, ujawniamy i chronimy Twoje informacje, gdy korzystasz z naszej aplikacji mobilnej ("Aplikacja").
 </p>
-<h2>2. Information We Collect</h2>
-<p>We may collect personal identification information in various ways, including, but not limited to, when you:</p>
+<h2>2. Informacje, które zbieramy</h2>
+<p>Możemy zbierać informacje umożliwiające identyfikację osobistą na różne sposoby, między innymi, ale nie wyłącznie, gdy:</p>
 <ul>
-    <li>Use our App</li>
-    <li>Register an account</li>
-    <li>Fill out a form</li>
-    <li>Use in-app purchases</li>
-    <li>Interact with other app functionalities</li>
+    <li>Korzystasz z naszej Aplikacji</li>
+    <li>Rejestrujesz konto</li>
+    <li>Wypełniasz formularz</li>
+    <li>Korzystasz z zakupów w aplikacji</li>
+    <li>Interakcjonujesz z innymi funkcjonalnościami aplikacji</li>
 </ul>
 <p>
-    The types of information collected may include your name, email address, phone number, and any other information you choose to provide.
+    Rodzaje zbieranych informacji mogą obejmować Twoje imię, adres e-mail, numer telefonu oraz wszelkie inne informacje, które zdecydujesz się nam dostarczyć.
 </p>
-<h2>3. How We Use Your Information</h2>
-<p>The information we collect may be used in the following ways:</p>
+<h2>3. Jak wykorzystujemy Twoje informacje</h2>
+<p>Zebrane informacje mogą być wykorzystywane w następujących celach:</p>
 <ul>
-    <li>To provide, operate, and maintain our App</li>
-    <li>To improve, personalize, and expand our App</li>
-    <li>To understand and analyze how you use our App</li>
-    <li>To develop new products, services, features, and functionality</li>
-    <li>To provide, operate, and maintain our App</li>
-    <li>To communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the App, and for marketing and promotional purposes</li>
-    <li>To send you emails</li>
+    <li>Do dostarczania, obsługi i utrzymania naszej Aplikacji</li>
+    <li>Do ulepszania, personalizowania i rozwijania naszej Aplikacji</li>
+    <li>Do zrozumienia i analizowania sposobu, w jaki korzystasz z naszej Aplikacji</li>
+    <li>Do opracowywania nowych produktów, usług, funkcji i funkcjonalności</li>
+    <li>Do dostarczania, obsługi i utrzymania naszej Aplikacji</li>
+    <li>Do komunikowania się z Tobą, bezpośrednio lub przez jednego z naszych partnerów, w tym w celach obsługi klienta, dostarczania aktualizacji oraz innych informacji dotyczących Aplikacji, a także do celów marketingowych i promocyjnych</li>
+    <li>Do wysyłania do Ciebie e-maili</li>
 </ul>
-<h2>4. Sharing Your Information</h2>
-<p>We may share your information with third parties in the following situations:</p>
+<h2>4. Udostępnianie Twoich Informacji</h2>
+<p>Możemy udostępniać Twoje informacje stronie trzeciej w następujących sytuacjach:</p>
 <ul>
-    <li>With your consent</li>
-    <li>For legal reasons, if we believe disclosure is in accordance with or required by any applicable law, regulation, or legal process</li>
-    <li>With our trusted services providers who work on our behalf, do not have an independent use of the information we disclose to them, and have agreed to adhere to the rules set forth in this Privacy Policy</li>
+    <li>Z Twoją zgodą</li>
+    <li>Z przyczyn prawnych, jeśli uważamy, że ujawnienie jest zgodne z wymogami dowolnego obowiązującego prawa, regulacji lub procesu prawnego</li>
+    <li>Naszym zaufanym dostawcom usług, którzy działają w naszym imieniu, nie mają niezależnego użytkowania informacji, które im ujawniamy, i zgodzili się przestrzegać zasad określonych w niniejszej Polityce Prywatności</li>
 </ul>
 <h2>5. Security</h2>
 <p>
