@@ -14,7 +14,8 @@
 </p>
 <h2>2. Privacy Policy</h2>
 <p>
-    Our Privacy Policy, which details how we collect, use, and protect your personal data, is incorporated into these Terms by reference.
+    Our Privacy Policy, which details how we collect, use, and protect your personal data, is incorporated into these Terms by
+    <a href="/privacy_policy.html">reference.</a>
     Please read our Privacy Policy carefully before using our App.
 </p>
 <h2>3. License to Use the App,</h2>
@@ -33,7 +34,7 @@
 </p>
 <h2>6. Intellectual Property Rights,</h2>
 <p>
-    The App and its original content, features, and functionality are and will remain the exclusive property of [Your Company] and its licensors.
+    The App and its original content, features, and functionality are and will remain the exclusive property of Nuntechs and its licensors.
     Our intellectual property must not be used in any manner not authorized by us.
 </p>
 <h2>7. Termination</h2>
@@ -42,7 +43,7 @@
 </p>
 <h2>8. Limitation of Liability</h2>
 <p>
-    In no event will [Your Company], nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of the App or services.
+    In no event will Nuntechs, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of the App or services.
 </p>
 <h2>9. Changes to Terms</h2>
 <p>
