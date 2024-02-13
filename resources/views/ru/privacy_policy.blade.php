@@ -2,73 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Terms and Conditions</title>
+    <title>Политика конфиденциальности</title>
 </head>
 <body style="background: #0A314B; color: white;">
-<h1>Privacy Policy</h1>
-<h2>1. Introduction</h2>
+<h1>Политика конфиденциальности</h1>
+<h2>1. Введение</h2>
 <p>
-    Welcome to AI Wallpapers ("we", "us", "our").
-    We are committed to protecting the privacy and security of your personal information.
-    This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application ("App").
+    Добро пожаловать в AI Wallpapers ("мы", "нас", "наш").
+    Мы обязуемся защищать вашу личную информацию и обеспечивать ее конфиденциальность и безопасность.
+    Эта Политика конфиденциальности объясняет, как мы собираем, используем, раскрываем и защищаем вашу информацию, когда вы используете наше мобильное приложение ("Приложение").
 </p>
-<h2>2. Information We Collect</h2>
-<p>We may collect personal identification information in various ways, including, but not limited to, when you:</p>
+<h2>2. Информация, которую мы собираем</h2>
+<p>Мы можем собирать информацию, удостоверяющую личность, различными способами, включая, но не ограничиваясь, когда вы:</p>
 <ul>
-    <li>Use our App</li>
-    <li>Register an account</li>
-    <li>Fill out a form</li>
-    <li>Use in-app purchases</li>
-    <li>Interact with other app functionalities</li>
+    <li>Используете наше Приложение</li>
+    <li>Регистрируете аккаунт</li>
+    <li>Заполняете форму</li>
+    <li>Используете внутриприложенные покупки</li>
+    <li>Взаимодействуете с другими функциями приложения</li>
 </ul>
 <p>
-    The types of information collected may include your name, email address, phone number, and any other information you choose to provide.
+    К типам собираемой информации могут относиться ваше имя, адрес электронной почты, номер телефона и любая другая информация, которую вы решите предоставить.
 </p>
-<h2>3. How We Use Your Information</h2>
-<p>The information we collect may be used in the following ways:</p>
+<h2>3. Как мы используем вашу информацию</h2>
+<p>Собранная нами информация может использоваться следующими способами:</p>
 <ul>
-    <li>To provide, operate, and maintain our App</li>
-    <li>To improve, personalize, and expand our App</li>
-    <li>To understand and analyze how you use our App</li>
-    <li>To develop new products, services, features, and functionality</li>
-    <li>To provide, operate, and maintain our App</li>
-    <li>To communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the App, and for marketing and promotional purposes</li>
-    <li>To send you emails</li>
+    <li>Для предоставления, управления и поддержания нашего Приложения</li>
+    <li>Для улучшения, персонализации и расширения нашего Приложения</li>
+    <li>Для понимания и анализа того, как вы используете наше Приложение</li>
+    <li>Для разработки новых продуктов, услуг, функций и возможностей</li>
+    <li>Для предоставления, управления и поддержания нашего Приложения</li>
+    <li>Для общения с вами, непосредственно или через одного из наших партнеров, включая обслуживание клиентов, предоставление вам обновлений и другой информации, относящейся к Приложению, а также в маркетинговых и рекламных целях</li>
+    <li>Для отправки вам электронных писем</li>
 </ul>
-<h2>4. Sharing Your Information</h2>
-<p>We may share your information with third parties in the following situations:</p>
+<h2>4. Распространение вашей информации</h2>
+<p>Мы можем делиться вашей информацией с третьими сторонами в следующих случаях:</p>
 <ul>
-    <li>With your consent</li>
-    <li>For legal reasons, if we believe disclosure is in accordance with or required by any applicable law, regulation, or legal process</li>
-    <li>With our trusted services providers who work on our behalf, do not have an independent use of the information we disclose to them, and have agreed to adhere to the rules set forth in this Privacy Policy</li>
+    <li>С вашего согласия</li>
+    <li>По юридическим причинам, если мы считаем, что раскрытие информации соответствует требованиям применимого закона, регулирования или юридического процесса</li>
+    <li>С нашими надежными поставщиками услуг, которые работают от нашего имени, не имеют независимого использования информации, которую мы им передаем, и согласились придерживаться правил, изложенных в данной Политике конфиденциальности</li>
 </ul>
-<h2>5. Security</h2>
+<h2>5. Безопасность</h2>
 <p>
-    We value your trust in providing us your personal information, thus we strive to use commercially acceptable means of protecting it. However, remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.
+    Мы ценим ваше доверие, когда вы предоставляете нам вашу личную информацию, поэтому мы стараемся использовать коммерчески приемлемые способы ее защиты. Однако помните, что ни один способ передачи данных через интернет или метод электронного хранения не являются на 100% безопасными и надежными, и мы не можем гарантировать их абсолютную безопасность.
 </p>
-<h2>6. Links to Other Sites</h2>
+<h2>6. Ссылки на другие сайты</h2>
 <p>
-    Our App may contain links to other sites.
-    If you click on a third-party link, you will be directed to that site.
-    Note that these external sites are not operated by us.
-    Therefore, we strongly advise you to review the Privacy Policy of these websites.
-    We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
+    Наше Приложение может содержать ссылки на другие сайты.
+    Если вы перейдете по ссылке третьей стороны, вы будете направлены на этот сайт.
+    Обратите внимание, что эти внешние сайты не управляются нами.
+    Поэтому мы настоятельно рекомендуем вам ознакомиться с Политикой конфиденциальности этих веб-сайтов.
+    Мы не контролируем и не несем ответственности за содержание, политики конфиденциальности или практики любых сайтов или услуг третьих сторон.
 </p>
-<h2>7. Children's Privacy</h2>
+<h2>7. Конфиденциальность детей</h2>
 <p>
-    Our App does not address anyone under the age of 13.
-    We do not knowingly collect personally identifiable information from children under 13.
-    In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers.
-    If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do necessary actions.
+    Наше Приложение не предназначено для лиц младше 13 лет.
+    Мы не собираем сознательно личную информацию от детей до 13 лет.
+    В случае, если мы обнаружим, что ребенок младше 13 лет предоставил нам личную информацию, мы немедленно удаляем ее с наших серверов.
+    Если вы родитель или законный представитель и знаете, что ваш ребенок предоставил нам личную информацию, пожалуйста, свяжитесь с нами, чтобы мы могли предпринять необходимые действия.
 </p>
-<h2>8. Changes to This Privacy Policy</h2>
+<h2>8. Изменения в Политике Конфиденциальности</h2>
 <p>
-    We may update our Privacy Policy from time to time.
-    Thus, you are advised to review this page periodically for any changes.
-    We will notify you of any changes by posting the new Privacy Policy on this page.
-    These changes are effective immediately after they are posted on this page.
+    Мы можем время от времени обновлять нашу Политику Конфиденциальности.
+    Поэтому вам рекомендуется периодически просматривать эту страницу на предмет изменений.
+    Мы уведомим вас о любых изменениях, разместив новую Политику Конфиденциальности на этой странице.
+    Эти изменения вступают в силу немедленно после их публикации на этой странице.
 </p>
-<h2>9. Contact Us</h2>
-<p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us via email <a href="mailto:admin@nuntech.com">admin@nuntech.com</a>.</p>
+<h2>9. Свяжитесь с нами</h2>
+<p>Если у вас есть вопросы или предложения относительно нашей Политики Конфиденциальности, не стесняйтесь обращаться к нам по электронной почте <a href="mailto:admin@nuntech.com">admin@nuntech.com</a>.</p>
 </body>
 </html>
