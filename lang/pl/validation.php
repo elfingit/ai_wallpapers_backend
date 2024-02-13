@@ -154,5 +154,12 @@ return [
     "uppercase" => ":Attribute musi być pisany wielkimi literami.",
     "url" => "Format pola :attribute jest nieprawidłowy.",
     "user" => "Nie znaleziono użytkownika z takim adresem e-mail.",
-    "uuid" => "Pole :attribute musi być poprawnym identyfikatorem UUID."
+    "uuid" => "Pole :attribute musi być poprawnym identyfikatorem UUID.",
+
+
+    'attributes' => [
+        'password' => 'hasło',
+        'device_id' => 'identyfikator urządzenia',
+        'email' => 'adres e-mail',
+    ],
 ];
