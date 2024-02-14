@@ -54,7 +54,7 @@
 <p>
     Acești Termeni vor fi guvernați și interpretați în conformitate cu legile Poloniei, fără a ține cont de prevederile sale privind conflictele de legi.
 </p>
-<h2>11. Contact Us</h2>
+<h2>11. Contactați-ne</h2>
     <p>
         Dacă aveți întrebări despre acești Termeni, vă rugăm să ne contactați prin e-mail la  <a href="mailto:admin@nuntech.com">admin@nuntech.com</a>.
     </p>
