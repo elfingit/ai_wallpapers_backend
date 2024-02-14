@@ -21,7 +21,7 @@ class SetLocaleMiddleware
         ) {
             \App::setLocale($request->headers->get('X-App-Locale'));
         }
-        \App::setLocale('ro');
+        //\App::setLocale('ro');
         return $next($request);
     }
 }

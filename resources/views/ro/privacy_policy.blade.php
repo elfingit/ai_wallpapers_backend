@@ -2,73 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Privacy Policy</title>
+    <title>Politica de Confidențialitate</title>
 </head>
 <body style="background: #0A314B; color: white;">
-<h1>Privacy Policy</h1>
-<h2>1. Introduction</h2>
+<h1>Politica de Confidențialitate</h1>
+<h2>1. Introducere</h2>
 <p>
-    Welcome to AI Wallpapers ("we", "us", "our").
-    We are committed to protecting the privacy and security of your personal information.
-    This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application ("App").
+    Bine ați venit la AI Wallpapers ("noi", "ne", "al nostru").
+    Ne angajăm să protejăm confidențialitatea și securitatea informațiilor dumneavoastră personale.
+    Această Politică de Confidențialitate explică modul în care colectăm, utilizăm, divulgăm și protejăm informațiile dumneavoastră atunci când utilizați aplicația noastră mobilă ("Aplicația").
 </p>
-<h2>2. Information We Collect</h2>
-<p>We may collect personal identification information in various ways, including, but not limited to, when you:</p>
+<h2>2. Informațiile pe care le colectăm</h2>
+<p>Putem colecta informații de identificare personală în diverse moduri, inclusiv, dar fără a se limita la, când:</p>
 <ul>
-    <li>Use our App</li>
-    <li>Register an account</li>
-    <li>Fill out a form</li>
-    <li>Use in-app purchases</li>
-    <li>Interact with other app functionalities</li>
+    <li>Utilizați Aplicația noastră</li>
+    <li>Vă înregistrați un cont</li>
+    <li>Completați un formular</li>
+    <li>Utilizați achiziții în aplicație</li>
+    <li>Interacționați cu alte funcționalități ale aplicației</li>
 </ul>
 <p>
-    The types of information collected may include your name, email address, phone number, and any other information you choose to provide.
+    Tipurile de informații colectate pot include numele dumneavoastră, adresa de email, numărul de telefon și orice alte informații pe care alegeți să le furnizați.
 </p>
-<h2>3. How We Use Your Information</h2>
-<p>The information we collect may be used in the following ways:</p>
+<h2>3. Cum utilizăm informațiile dumneavoastră</h2>
+<p>Informațiile pe care le colectăm pot fi utilizate în următoarele moduri:</p>
 <ul>
-    <li>To provide, operate, and maintain our App</li>
-    <li>To improve, personalize, and expand our App</li>
-    <li>To understand and analyze how you use our App</li>
-    <li>To develop new products, services, features, and functionality</li>
-    <li>To provide, operate, and maintain our App</li>
-    <li>To communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the App, and for marketing and promotional purposes</li>
-    <li>To send you emails</li>
+    <li>Pentru a furniza, opera și întreține Aplicația noastră</li>
+    <li>Pentru a îmbunătăți, personaliza și extinde Aplicația noastră</li>
+    <li>Pentru a înțelege și analiza modul în care utilizați Aplicația noastră</li>
+    <li>Pentru a dezvolta noi produse, servicii, caracteristici și funcționalități</li>
+    <li>Pentru a comunica cu dumneavoastră, fie direct, fie prin intermediul unuia dintre partenerii noștri, inclusiv pentru servicii clienți, pentru a vă furniza actualizări și alte informații legate de Aplicație, și în scopuri de marketing și promoționale</li>
+    <li>Pentru a vă trimite emailuri</li>
 </ul>
-<h2>4. Sharing Your Information</h2>
-<p>We may share your information with third parties in the following situations:</p>
+<h2>4. Partajarea informațiilor dumneavoastră</h2>
+<p>Putem împărtăși informațiile dumneavoastră cu terțe părți în următoarele situații:</p>
 <ul>
-    <li>With your consent</li>
-    <li>For legal reasons, if we believe disclosure is in accordance with or required by any applicable law, regulation, or legal process</li>
-    <li>With our trusted services providers who work on our behalf, do not have an independent use of the information we disclose to them, and have agreed to adhere to the rules set forth in this Privacy Policy</li>
+    <li>Cu consimțământul dumneavoastră</li>
+    <li>Din motive legale, dacă credem că divulgarea este în conformitate cu sau necesară pentru orice lege, reglementare sau proces legal aplicabil</li>
+    <li>Cu furnizorii noștri de servicii de încredere care lucrează în numele nostru, nu au o utilizare independentă a informațiilor pe care le divulgăm lor și au convenit să respecte regulile stabilite în această Politică de Confidențialitate</li>
 </ul>
-<h2>5. Security</h2>
+<h2>5. Securitate</h2>
 <p>
-    We value your trust in providing us your personal information, thus we strive to use commercially acceptable means of protecting it. However, remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.
+    Valorificăm încrederea pe care ne-o acordați furnizându-ne informațiile dumneavoastră personale, astfel încercăm să utilizăm mijloace comercial acceptabile pentru a o proteja. Totuși, rețineți că niciun mod de transmitere prin internet sau metodă de stocare electronică nu este sigură 100% și de încredere, și nu putem garanta securitatea absolută.
 </p>
-<h2>6. Links to Other Sites</h2>
+<h2>6. Legături către alte site-uri</h2>
 <p>
-    Our App may contain links to other sites.
-    If you click on a third-party link, you will be directed to that site.
-    Note that these external sites are not operated by us.
-    Therefore, we strongly advise you to review the Privacy Policy of these websites.
-    We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
+    Aplicația noastră poate conține legături către alte site-uri.
+    Dacă faceți clic pe o legătură către o terță parte, veți fi direcționat către acel site.
+    Rețineți că aceste site-uri externe nu sunt operate de noi.
+    Prin urmare, vă sfătuim puternic să revizuiți Politica de Confidențialitate a acestor site-uri web.
+    Nu avem control și nu ne asumăm nicio responsabilitate pentru conținutul, politicile de confidențialitate sau practicile oricărui site sau serviciu de la terți.
 </p>
-<h2>7. Children's Privacy</h2>
+<h2>7. Confidențialitatea Copiilor</h2>
 <p>
-    Our App does not address anyone under the age of 13.
-    We do not knowingly collect personally identifiable information from children under 13.
-    In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers.
-    If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do necessary actions.
+    Aplicația noastră nu se adresează nimănui sub vârsta de 13 ani.
+    Nu colectăm în mod conștient informații de identificare personală de la copii sub 13 ani.
+    În cazul în care descoperim că un copil sub 13 ani ne-a furnizat informații personale, le ștergem imediat de pe serverele noastre.
+    Dacă sunteți părinte sau tutore și sunteți conștient că copilul dumneavoastră ne-a furnizat informații personale, vă rugăm să ne contactați astfel încât să putem întreprinde acțiunile necesare.
 </p>
-<h2>8. Changes to This Privacy Policy</h2>
+<h2>8. Modificări ale acestei Politici de Confidențialitate</h2>
 <p>
-    We may update our Privacy Policy from time to time.
-    Thus, you are advised to review this page periodically for any changes.
-    We will notify you of any changes by posting the new Privacy Policy on this page.
-    These changes are effective immediately after they are posted on this page.
+    Putem actualiza Politica noastră de Confidențialitate din când în când.
+    Astfel, vă sfătuim să revizuiți periodic această pagină pentru orice modificări.
+    Vă vom notifica despre orice modificări prin postarea noii Politici de Confidențialitate pe această pagină.
+    Aceste modificări devin efective imediat după ce sunt postate pe această pagină.
 </p>
-<h2>9. Contact Us</h2>
-<p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us via email <a href="mailto:admin@nuntech.com">admin@nuntech.com</a>.</p>
+<h2>9. Contactați-ne</h2>
+<p>Dacă aveți întrebări sau sugestii despre Politica noastră de Confidențialitate, nu ezitați să ne contactați prin email la <a href="mailto:admin@nuntech.com">admin@nuntech.com</a>.</p>
 </body>
 </html>
