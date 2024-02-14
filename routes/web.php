@@ -14,11 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/terms_of_conditions.html', function () {
-    $locale = \App::getLocale();
-    return view($locale . '/terms_of_conditions');
+    $view = \App::getLocale() . '/terms_of_conditions';
+
+    if (view()->exists($view)) {
+        return view($view);
+    }
+
+    return view('en/terms_of_conditions');
 });
 
 Route::get('/privacy_policy.html', function () {
-    $locale = \App::getLocale();
-    return view($locale . '/privacy_policy');
+    $view = \App::getLocale() . '/privacy_policy';
+
+    if (view()->exists($view)) {
+        return view($view);
+    }
+
+    return view( 'en/privacy_policy');
 });
