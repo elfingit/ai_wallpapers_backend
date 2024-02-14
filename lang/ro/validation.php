@@ -153,5 +153,11 @@ return [
     "uppercase" => ":Attribute trebuie să fie majuscule.",
     "url" => "Câmpul :attribute nu este un URL valid.",
     "user" => "Nu există niciun utilizator cu această adresă de e-mail.",
-    "uuid" => "Câmpul :attribute trebuie să fie un cod UUID valid."
+    "uuid" => "Câmpul :attribute trebuie să fie un cod UUID valid.",
+
+    'attributes' => [
+        'password' => 'parolă',
+        'device_id' => 'id-ul dispozitivulu',
+        'email' => 'email',
+    ],
 ];
