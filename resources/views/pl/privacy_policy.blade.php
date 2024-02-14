@@ -42,33 +42,35 @@
     <li>Z przyczyn prawnych, jeśli uważamy, że ujawnienie jest zgodne z wymogami dowolnego obowiązującego prawa, regulacji lub procesu prawnego</li>
     <li>Naszym zaufanym dostawcom usług, którzy działają w naszym imieniu, nie mają niezależnego użytkowania informacji, które im ujawniamy, i zgodzili się przestrzegać zasad określonych w niniejszej Polityce Prywatności</li>
 </ul>
-<h2>5. Security</h2>
+<h2>5. Bezpieczeństwo</h2>
 <p>
-    We value your trust in providing us your personal information, thus we strive to use commercially acceptable means of protecting it. However, remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.
+    Cenimy Twoje zaufanie, powierzając nam swoje dane osobowe, dlatego dokładamy wszelkich starań, aby używać komercyjnie akceptowalnych środków ochrony. Pamiętaj jednak, że żadna metoda transmisji danych przez internet, ani metoda elektronicznego przechowywania danych nie jest w 100% bezpieczna i niezawodna, i nie możemy zagwarantować jej absolutnego bezpieczeństwa.
 </p>
-<h2>6. Links to Other Sites</h2>
+<h2>6. Linki do innych stron</h2>
 <p>
-    Our App may contain links to other sites.
-    If you click on a third-party link, you will be directed to that site.
-    Note that these external sites are not operated by us.
-    Therefore, we strongly advise you to review the Privacy Policy of these websites.
-    We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
+    Nasza Aplikacja może zawierać linki do innych stron.
+    Jeśli klikniesz na link trzeciej strony, zostaniesz przekierowany na tę stronę.
+    Zauważ, że te zewnętrzne strony nie są przez nas obsługiwane.
+    Dlatego zdecydowanie radzimy Ci zapoznać się z Polityką Prywatności tych stron internetowych.
+    Nie mamy kontroli i nie ponosimy odpowiedzialności za treści, politykę prywatności ani praktyki jakichkolwiek stron trzecich lub usług.
 </p>
-<h2>7. Children's Privacy</h2>
+<h2>7. Prywatność dzieci</h2>
 <p>
-    Our App does not address anyone under the age of 13.
-    We do not knowingly collect personally identifiable information from children under 13.
-    In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers.
-    If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do necessary actions.
+    Nasza Aplikacja nie jest skierowana do osób poniżej 13 roku życia.
+    Nie zbieramy świadomie informacji umożliwiających identyfikację osobistą od dzieci poniżej 13 roku życia.
+    W przypadku odkrycia, że dziecko poniżej 13 roku życia dostarczyło nam dane osobowe, natychmiast usuwamy te informacje z naszych serwerów.
+    Jeśli jesteś rodzicem lub opiekunem i wiesz, że Twoje dziecko dostarczyło nam dane osobowe, prosimy o kontakt, abyśmy mogli podjąć odpowiednie działania.
 </p>
-<h2>8. Changes to This Privacy Policy</h2>
+<h2>8. Zmiany w tej Polityce Prywatności</h2>
 <p>
-    We may update our Privacy Policy from time to time.
-    Thus, you are advised to review this page periodically for any changes.
-    We will notify you of any changes by posting the new Privacy Policy on this page.
-    These changes are effective immediately after they are posted on this page.
+    Możemy od czasu do czasu aktualizować naszą Politykę Prywatności.
+    Dlatego zaleca się okresowe przeglądanie tej strony pod kątem ewentualnych zmian.
+    O wszelkich zmianach będziemy informować, publikując nową Politykę Prywatności na tej stronie.
+    Zmiany te wchodzą w życie natychmiast po ich opublikowaniu na tej stronie.
 </p>
-<h2>9. Contact Us</h2>
-<p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us via email <a href="mailto:admin@nuntech.com">admin@nuntech.com</a>.</p>
+<h2>9. Kontakt z nami</h2>
+<p>
+    Jeśli masz jakiekolwiek pytania lub sugestie dotyczące naszej Polityki Prywatności, nie wahaj się kontaktować z nami za pośrednictwem e-maila <a href="mailto:admin@nuntech.com">admin@nuntech.com</a>.
+</p>
 </body>
 </html>
