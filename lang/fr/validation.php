@@ -153,5 +153,12 @@ return [
     "uppercase" => "Le champ :attribute doit être en majuscules.",
     "url" => "Le format de l'URL de :attribute n'est pas valide.",
     "user" => "Aucun utilisateur n'a été trouvé avec cette adresse email.",
-    "uuid" => "Le champ :attribute doit être un UUID valide"
+    "uuid" => "Le champ :attribute doit être un UUID valide",
+
+
+    'attributes' => [
+        'password' => 'passe',
+        'device_id' => 'identifiant de l\'appareil',
+        'email' => 'email',
+    ],
 ];
