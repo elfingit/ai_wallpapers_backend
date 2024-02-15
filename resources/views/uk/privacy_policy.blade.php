@@ -2,73 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Privacy Policy</title>
+    <title>Політика конфіденційності</title>
 </head>
 <body style="background: #0A314B; color: white;">
-<h1>Privacy Policy</h1>
-<h2>1. Introduction</h2>
+<h1>Політика конфіденційності</h1>
+<h2>1. Вступ</h2>
 <p>
-    Welcome to AI Wallpapers ("we", "us", "our").
-    We are committed to protecting the privacy and security of your personal information.
-    This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application ("App").
+    Ласкаво просимо до AI Wallpapers ("ми", "нас", "наш").
+    Ми прагнемо захистити приватність та безпеку вашої особистої інформації.
+    Ця Політика конфіденційності пояснює, як ми збираємо, використовуємо, розкриваємо та захищаємо вашу інформацію, коли ви користуєтесь нашим мобільним додатком ("Додаток").
 </p>
-<h2>2. Information We Collect</h2>
-<p>We may collect personal identification information in various ways, including, but not limited to, when you:</p>
+<h2>2. Інформація, яку ми збираємо</h2>
+<p>Ми можемо збирати особисту ідентифікаційну інформацію різними способами, включаючи, але не обмежуючись, коли ви:</p>
 <ul>
-    <li>Use our App</li>
-    <li>Register an account</li>
-    <li>Fill out a form</li>
-    <li>Use in-app purchases</li>
-    <li>Interact with other app functionalities</li>
+    <li>Користуєтесь нашим Додатком</li>
+    <li>Реєструєте обліковий запис</li>
+    <li>Заповнюєте форму</li>
+    <li>Використовуєте покупки в додатку</li>
+    <li>Взаємодієте з іншими функціональними можливостями додатка</li>
 </ul>
 <p>
-    The types of information collected may include your name, email address, phone number, and any other information you choose to provide.
+    Типи зібраної інформації можуть включати ваше ім'я, електронну адресу, номер телефону та будь-яку іншу інформацію, яку ви вирішите надати.
 </p>
-<h2>3. How We Use Your Information</h2>
-<p>The information we collect may be used in the following ways:</p>
+<h2>3. Як ми використовуємо вашу інформацію</h2>
+<p>Інформація, яку ми збираємо, може бути використана таким чином:</p>
 <ul>
-    <li>To provide, operate, and maintain our App</li>
-    <li>To improve, personalize, and expand our App</li>
-    <li>To understand and analyze how you use our App</li>
-    <li>To develop new products, services, features, and functionality</li>
-    <li>To provide, operate, and maintain our App</li>
-    <li>To communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the App, and for marketing and promotional purposes</li>
-    <li>To send you emails</li>
+    <li>Для надання, експлуатації та підтримки нашого Додатку</li>
+    <li>Для поліпшення, персоналізації та розширення нашого Додатку</li>
+    <li>Для розуміння та аналізу того, як ви використовуєте наш Додаток</li>
+    <li>Для розробки нових продуктів, послуг, функцій та можливостей</li>
+    <li>Для надання, експлуатації та підтримки нашого Додатку</li>
+    <li>Для комунікації з вами, безпосередньо або через одного з наших партнерів, включаючи обслуговування клієнтів, надання вам оновлень та іншої інформації, пов’язаної з Додатком, а також для маркетингових та рекламних цілей</li>
+    <li>Для відправки вам електронних листів</li>
 </ul>
-<h2>4. Sharing Your Information</h2>
-<p>We may share your information with third parties in the following situations:</p>
+<h2>4. Поділ вашої інформації</h2>
+<p>Ми можемо ділитися вашою інформацією з третіми сторонами в наступних ситуаціях:</p>
 <ul>
-    <li>With your consent</li>
-    <li>For legal reasons, if we believe disclosure is in accordance with or required by any applicable law, regulation, or legal process</li>
-    <li>With our trusted services providers who work on our behalf, do not have an independent use of the information we disclose to them, and have agreed to adhere to the rules set forth in this Privacy Policy</li>
+    <li>З вашою згодою</li>
+    <li>З юридичних причин, якщо ми вважаємо, що розкриття відповідає або вимагається будь-яким застосовним законом, регулюванням або судовим процесом</li>
+    <li>З нашими надійними постачальниками послуг, які працюють від нашого імені, не мають незалежного використання інформації, яку ми їм розкриваємо, і погодилися дотримуватися правил, викладених у цій Політиці конфіденційності</li>
 </ul>
-<h2>5. Security</h2>
+<h2>5. Безпека</h2>
 <p>
-    We value your trust in providing us your personal information, thus we strive to use commercially acceptable means of protecting it. However, remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.
+    Ми цінуємо вашу довіру в наданні нам вашої особистої інформації, тому ми прагнемо використовувати комерційно прийнятні засоби для її захисту. Однак пам'ятайте, що жоден метод передачі через інтернет або метод електронного зберігання не є на 100% безпечним і надійним, і ми не можемо гарантувати її абсолютну безпеку.
 </p>
-<h2>6. Links to Other Sites</h2>
+<h2>6. Посилання на інші сайти</h2>
 <p>
-    Our App may contain links to other sites.
-    If you click on a third-party link, you will be directed to that site.
-    Note that these external sites are not operated by us.
-    Therefore, we strongly advise you to review the Privacy Policy of these websites.
-    We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
+    Наш Додаток може містити посилання на інші сайти.
+    Якщо ви натиснете на посилання третьої сторони, ви будете перенаправлені на той сайт.
+    Зверніть увагу, що ці зовнішні сайти не керуються нами.
+    Тому ми настійно радимо вам переглянути Політику конфіденційності цих веб-сайтів.
+    Ми не контролюємо і не несемо відповідальності за зміст, політики конфіденційності або практики будь-яких сайтів або послуг третіх сторін.
 </p>
-<h2>7. Children's Privacy</h2>
+<h2>7. Конфіденційність дітей</h2>
 <p>
-    Our App does not address anyone under the age of 13.
-    We do not knowingly collect personally identifiable information from children under 13.
-    In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers.
-    If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do necessary actions.
+    Наш Додаток не призначений для осіб молодше 13 років.
+    Ми не збираємо навмисно особисту ідентифікаційну інформацію від дітей до 13 років.
+    У випадку, якщо ми дізнаємося, що дитина до 13 років надала нам особисту інформацію, ми негайно видаляємо цю інформацію з наших серверів.
+    Якщо ви батько або опікун і ви знаєте, що ваша дитина надала нам особисту інформацію, будь ласка, зв'яжіться з нами, щоб ми могли вжити необхідних заходів.
 </p>
-<h2>8. Changes to This Privacy Policy</h2>
+<h2>8. Зміни до цієї Політики конфіденційності</h2>
 <p>
-    We may update our Privacy Policy from time to time.
-    Thus, you are advised to review this page periodically for any changes.
-    We will notify you of any changes by posting the new Privacy Policy on this page.
-    These changes are effective immediately after they are posted on this page.
+    Ми можемо оновлювати нашу Політику конфіденційності з часом.
+    Таким чином, вам радять періодично переглядати цю сторінку на предмет будь-яких змін.
+    Ми повідомимо вас про будь-які зміни, опублікувавши нову Політику конфіденційності на цій сторінці.
+    Ці зміни набувають чинності негайно після їх публікації на цій сторінці.
 </p>
-<h2>9. Contact Us</h2>
-<p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us via email <a href="mailto:admin@nuntech.com">admin@nuntech.com</a>.</p>
+<h2>9. Зв'язок з нами</h2>
+<p>Якщо у вас є будь-які питання або пропозиції щодо нашої Політики конфіденційності, не вагайтеся зв'язатися з нами за електронною поштою <a href="mailto:admin@nuntech.com">admin@nuntech.com</a>.</p>
 </body>
 </html>
