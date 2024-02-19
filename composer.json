@@ -16,6 +16,7 @@
         "spatie/laravel-translatable": "^6.5"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.15",
         "elfingit/cqrs_generator": "^1.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",

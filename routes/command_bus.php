@@ -36,6 +36,8 @@ use App\Library\Role\Commands\CreateRoleCommand;
 use App\Library\Role\Handlers\CreateRoleHandler;
 use App\Library\Tag\Commands\CreateTagCommand;
 use App\Library\Tag\Handlers\CreateTagHandler;
+use App\Library\User\Commands\IndexUserCommand;
+use App\Library\User\Handlers\IndexUserHandler;
 use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Library\UserBalance\Handlers\GetUserBalanceHandler;
@@ -154,3 +156,10 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
     LogoutCommand::class,
     LogoutHandler::class
 );
+
+\CommandBus::addHandler(
+    IndexUserCommand::class,
+    IndexUserHandler::class
+);
+
+

@@ -25,6 +25,8 @@ enum RulesEnum : string
     case MAKE_WALLPAPER = 'make:wallpaper';
 
     case LOGOUT = 'logout';
+
+    case USER_LIST = 'user:list';
     public function value(): string
     {
         return $this->value;

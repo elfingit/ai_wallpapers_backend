@@ -6,6 +6,7 @@ use App\Library\Core\Acl\AbilitiesProvider;
 use App\Library\Core\Contracts\AbilitiesProviderContract;
 use App\Library\Core\Contracts\Services\LoggerServiceContract;
 use App\Library\Core\Services\LoggerService;
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Elfin\Generator\Providers\GeneratorProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->isLocal()) {
             $this->app->register(GeneratorProvider::class);
+            $this->app->register(IdeHelperServiceProvider::class);
         }
 
         $this->app->bind(

@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\BalanceRequest;
+use App\Http\Requests\User\IndexRequest;
+use App\Http\Resources\User\ListCollection;
+use App\Library\User\Commands\IndexUserCommand;
 use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use Illuminate\Http\Request;
 
@@ -53,5 +56,13 @@ class UserController extends Controller
         $result = \CommandBus::dispatch($command);
         $amount = number_format($result->getResult(), 2);
         return response()->json(['balance' => $amount]);
+    }
+
+    public function index(IndexRequest $request): ListCollection
+    {
+        $command = IndexUserCommand::createFromDto($request->getDto());
+        $result = \CommandBus::dispatch($command)->getResult();
+
+        return ListCollection::make($result);
     }
 }
