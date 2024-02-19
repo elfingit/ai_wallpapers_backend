@@ -8,6 +8,7 @@ use App\Http\Requests\User\IndexRequest;
 use App\Http\Resources\User\ListCollection;
 use App\Library\User\Commands\IndexUserCommand;
 use App\Library\UserBalance\Commands\GetUserBalanceCommand;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -50,7 +51,7 @@ class UserController extends Controller
      *      "balance": "5.00"
      *  }
      */
-    public function balance(BalanceRequest $request)
+    public function balance(BalanceRequest $request): JsonResponse
     {
         $command = GetUserBalanceCommand::instanceFromPrimitives($request->user()->id);
         $result = \CommandBus::dispatch($command);
