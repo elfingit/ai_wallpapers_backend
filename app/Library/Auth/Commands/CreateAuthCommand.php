@@ -22,7 +22,7 @@ class CreateAuthCommand extends AbstractCommand
     public static function createFromDto(AddDto $dto, string $ip, string $user_agent): self
     {
         $command = new self();
-		$command->emailValue = new EmailValue($dto->email);
+		$command->emailValue = new EmailValue(\Str::lower($dto->email));
 		$command->passwordValue = new PasswordValue($dto->password);
 		$command->deviceIdValue = new DeviceIdValue($dto->device_id);
         $command->ipValue = new IpValue($ip);

@@ -19,7 +19,7 @@ class CreateRegistrationCommand extends AbstractCommand
     public static function createFromDto(AddDto $dto): self
     {
         $command = new self();
-		$command->emailValue = new EmailValue($dto->email);
+		$command->emailValue = new EmailValue(\Str::lower($dto->email));
 		$command->passwordValue = new PasswordValue($dto->password);
         $command->userRoleValue = new UserRoleValue('user');
 
