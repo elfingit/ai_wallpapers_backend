@@ -2,6 +2,7 @@
 
 namespace App\Library\Registration\Dto;
 
+use Elfin\LaravelDto\Dto\Attributes\HeaderParam;
 use Elfin\LaravelDto\Dto\Attributes\RequestParam;
 use Elfin\LaravelDto\Dto\Attributes\ValidationRule;
 
@@ -22,4 +23,7 @@ final class AddDto
     #[RequestParam('agreement')]
     #[ValidationRule('required|accepted')]
     public bool $agree_to_terms;
+
+    #[HeaderParam('X-App-Locale')]
+    public string $locale = 'en';
 }

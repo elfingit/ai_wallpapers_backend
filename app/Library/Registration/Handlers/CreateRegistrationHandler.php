@@ -3,6 +3,7 @@
 namespace App\Library\Registration\Handlers;
 
 use App\Library\Registration\Results\RegistrationResult;
+use App\Library\User\Commands\UserRegisteredCommand;
 use App\Models\Role;
 use App\Models\User;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -32,6 +33,12 @@ class CreateRegistrationHandler implements CommandHandlerContract
             'password' => \Hash::make($command->passwordValue->value()),
             'role_id' => $role->id,
         ]);
+
+        $registeredCommand = UserRegisteredCommand::createFromPrimitives(
+            $user->id,
+            $command->localeValue->value()
+        );
+        \CommandBus::dispatch($registeredCommand);
 
         return new RegistrationResult($user);
     }

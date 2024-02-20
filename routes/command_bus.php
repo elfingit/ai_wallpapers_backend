@@ -37,7 +37,9 @@ use App\Library\Role\Handlers\CreateRoleHandler;
 use App\Library\Tag\Commands\CreateTagCommand;
 use App\Library\Tag\Handlers\CreateTagHandler;
 use App\Library\User\Commands\IndexUserCommand;
+use App\Library\User\Commands\UserRegisteredCommand;
 use App\Library\User\Handlers\IndexUserHandler;
+use App\Library\User\Handlers\WelcomeMailHandler;
 use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Library\UserBalance\Handlers\GetUserBalanceHandler;
@@ -160,6 +162,11 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     IndexUserCommand::class,
     IndexUserHandler::class
+);
+
+\CommandBus::addHandler(
+    UserRegisteredCommand::class,
+    WelcomeMailHandler::class
 );
 
 

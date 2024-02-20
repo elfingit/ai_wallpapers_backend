@@ -2,6 +2,7 @@
 
 namespace App\Library\Registration\Commands;
 
+use App\Library\Registration\Values\LocaleValue;
 use App\Library\Registration\Values\UserRoleValue;
 use Elfin\LaravelCommandBus\Library\AbstractCommand;
 
@@ -16,12 +17,15 @@ class CreateRegistrationCommand extends AbstractCommand
 	public PasswordValue $passwordValue;
     public UserRoleValue $userRoleValue;
 
+    public LocaleValue $localeValue;
+
     public static function createFromDto(AddDto $dto): self
     {
         $command = new self();
 		$command->emailValue = new EmailValue(\Str::lower($dto->email));
 		$command->passwordValue = new PasswordValue($dto->password);
         $command->userRoleValue = new UserRoleValue('user');
+        $command->localeValue = new LocaleValue($dto->locale);
 
         return $command;
     }
