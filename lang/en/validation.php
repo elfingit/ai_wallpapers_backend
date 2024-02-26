@@ -186,6 +186,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'prompt' => 'description',
+    ],
 
 ];

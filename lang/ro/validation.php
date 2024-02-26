@@ -159,6 +159,7 @@ return [
         'password' => 'parolă',
         'device_id' => 'id-ul dispozitivulu',
         'email' => 'email',
-        'agreement' => 'acord'
+        'agreement' => 'acord',
+        'prompt' => 'descriere',
     ],
 ];

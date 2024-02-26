@@ -160,5 +160,6 @@ return [
         'password' => 'passe',
         'device_id' => 'identifiant de l\'appareil',
         'email' => 'email',
+        'prompt' => 'description',
     ],
 ];
