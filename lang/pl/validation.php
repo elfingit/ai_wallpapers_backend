@@ -162,5 +162,6 @@ return [
         'device_id' => 'identyfikator urządzenia',
         'email' => 'adres e-mail',
         'prompt' => 'opis',
+        'agreement' => 'umowa',
     ],
 ];

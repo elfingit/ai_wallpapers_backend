@@ -160,6 +160,7 @@ return [
         'password' => 'jelszó',
         'device_id' => 'eszköz azonosító',
         'email' => 'email',
-        'prompt' => 'leírás'
+        'prompt' => 'leírás',
+        'agreement' => 'megállapodás',
     ],
 ];
