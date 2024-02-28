@@ -4,6 +4,7 @@ namespace App\Http\Resources\Gallery;
 
 use App\Http\Controllers\Api\V1\WallpaperController;
 use App\Library\Core\Acl\RulesEnum;
+use App\Library\Core\Utils\Utils;
 use App\Models\Gallery;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -30,8 +31,8 @@ class GalleryResource extends JsonResource
 
             ),
             'tags' => $resource->tags->pluck('title'),
-            'thumbnail_url' => route('gallery.thumbnail', ['pic' => $resource->id]),
-            'download_url' => route('gallery.download', ['pic' => $resource->id]),
+            'thumbnail_url' => Utils::buildImageUrl($resource->id, 'thumbnail'),
+            'download_url' => Utils::buildImageUrl($resource->id, 'download'),
         ];
 
         return $data;
