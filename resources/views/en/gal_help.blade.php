@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Help</title>
 </head>
-<body style="background: #0A314B; color: white;">
-    <video height="100%" controls>
+<body style="background: #0A314B; color: white; height: 100%">
+    <video height="100%" controls autoplay>
         <source src="/videos/instruction_{{ $locale }}.mov">
         Your browser does not support the video tag.
 </body>
