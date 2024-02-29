@@ -32,3 +32,12 @@ Route::get('/privacy_policy.html', function () {
 
     return view( 'en/privacy_policy');
 });
+
+Route::get('/gal_help.html', function () {
+    $locale = \App::getLocale();
+
+    return view( 'en/gal_help', [
+        'locale' => $locale
+    ]);
+});
+
