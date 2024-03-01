@@ -5,8 +5,9 @@
     <title>Help</title>
 </head>
 <body style="background: #0A314B; color: white; height: 100%">
-    <video height="100%" width="100%" autoplay controls muted>
+    <video height="100%" width="100%" preload="auto" controls muted>
         <source src="/videos/instruction_{{ $locale }}.mov">
         Your browser does not support the video tag.
+    </video>
 </body>
 </html>
