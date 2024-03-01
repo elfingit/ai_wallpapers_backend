@@ -8,7 +8,6 @@ use Elfin\LaravelCommandBus\Library\AbstractCommand;
 
 use App\Library\Registration\Values\EmailValue;
 use App\Library\Registration\Values\PasswordValue;
-use App\Library\Registration\Values\DeviceIdValue;
 use App\Library\Registration\Dto\AddDto;
 
 class CreateRegistrationCommand extends AbstractCommand
