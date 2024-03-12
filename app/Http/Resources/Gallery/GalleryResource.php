@@ -30,6 +30,10 @@ class GalleryResource extends JsonResource
                 fn() => ['prompt' => $resource->prompt],
 
             ),
+            $this->mergeWhen(
+                $this->canSeeLocale($resource, $user),
+                fn() => ['locale' => $resource->locale],
+            ),
             'tags' => $resource->tags->pluck('title'),
             'thumbnail_url' => Utils::buildImageUrl($resource->id, 'thumbnail'),
             'download_url' => Utils::buildImageUrl($resource->id, 'download'),
@@ -42,6 +46,11 @@ class GalleryResource extends JsonResource
     {
         return $user->tokenCan(RulesEnum::PICTURE_PROMPT->value())
             || $gallery->user_id === $user->id;
+    }
+
+    private function canSeeLocale(Gallery $gallery, User $user): bool
+    {
+        return $user->tokenCan(RulesEnum::PICTURE_LOCALE->value());
     }
 
     public function with($request): array

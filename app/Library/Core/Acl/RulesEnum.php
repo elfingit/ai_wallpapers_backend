@@ -27,6 +27,8 @@ enum RulesEnum : string
     case LOGOUT = 'logout';
 
     case USER_LIST = 'user:list';
+
+    case PICTURE_LOCALE = 'pic:locale';
     public function value(): string
     {
         return $this->value;
