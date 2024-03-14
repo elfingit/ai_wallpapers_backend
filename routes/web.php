@@ -24,13 +24,9 @@ Route::get('/terms_of_conditions.html', function () {
 });
 
 Route::get('/privacy_policy.html', function () {
-    $view = \App::getLocale() . '/privacy_policy';
-
-    if (view()->exists($view)) {
-        return view($view);
-    }
-
-    return view( 'en/privacy_policy');
+    return view('privacy_policy', [
+        'data' => config('privacy_policy')
+    ]);
 });
 
 Route::get('/gal_help.html', function () {
