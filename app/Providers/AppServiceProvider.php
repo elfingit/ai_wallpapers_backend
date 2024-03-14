@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
         $path = config_path('docs');
         $privacy_policy_path = $path . '/privacy_policy_en.php';
 
-        $locale = 'fr';//request()->header('X-App-Locale', 'en');
+        $locale = 'hu';//request()->header('X-App-Locale', 'en');
 
         if ($locale !== 'en' && file_exists($path . "/privacy_policy_{$locale}.php")) {
             $privacy_policy_path = $path . "/privacy_policy_{$locale}.php";
