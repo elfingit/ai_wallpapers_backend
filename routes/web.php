@@ -14,13 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/terms_of_conditions.html', function () {
-    $view = \App::getLocale() . '/terms_of_conditions';
-
-    if (view()->exists($view)) {
-        return view($view);
-    }
-
-    return view('en/terms_of_conditions');
+    return view('terms_of_conditions', [
+        'data' => config('terms_of_conditions')
+    ]);
 });
 
 Route::get('/privacy_policy.html', function () {

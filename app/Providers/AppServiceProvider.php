@@ -40,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $path = config_path('docs');
         $privacy_policy_path = $path . '/privacy_policy_en.php';
+        $terms_path = $path . '/terms_of_conditions_en.php';
 
         $locale = request()->header('X-App-Locale', 'en');
 
@@ -47,6 +48,11 @@ class AppServiceProvider extends ServiceProvider
             $privacy_policy_path = $path . "/privacy_policy_{$locale}.php";
         }
 
+        if ($locale !== 'en' && file_exists($path . "/terms_of_conditions_{$locale}.php")) {
+            $terms_path = $path . "/terms_of_conditions_{$locale}.php";
+        }
+
         $this->mergeConfigFrom($privacy_policy_path, 'privacy_policy');
+        $this->mergeConfigFrom($terms_path, 'terms_of_conditions');
     }
 }
