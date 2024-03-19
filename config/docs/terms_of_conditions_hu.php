@@ -5,7 +5,7 @@
 		[
 			'title' => '1. Bevezetés',
 			'content' => '<p>
-    Üdvözöljük az AI Wallpapersnél („mi”, „minket”, „miénk”).
+    Üdvözöljük az ' . env('PRODUCT_NAME') . 'nél („mi”, „minket”, „miénk”).
     Mobilalkalmazásunk („Alkalmazás”) elérésével vagy használatával Ön („felhasználó”, „Ön”) elfogadja, hogy ezekhez a Felhasználási Feltételekhez („Feltételek”) kötődik.
     Ha nem ért egyet ezekkel a Feltételekkel, akkor nem használhatja Alkalmazásunkat.
 </p>',

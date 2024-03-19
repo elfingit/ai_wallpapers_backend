@@ -11,7 +11,7 @@ return [
         [
             'title' => '1. Bevezetés',
             'content'=> '<p>
-    Üdvözöljük az AI Wallpapersnél („mi”, „minket”, „miénk”).
+    Üdvözöljük az ' . env('PRODUCT_NAME') . 'nél („mi”, „minket”, „miénk”).
     Elkötelezettek vagyunk személyes adatainak védelme és biztonsága mellett.
     Ez az Adatvédelmi Szabályzat magyarázza, hogyan gyűjtjük, használjuk, közzétesszük és védjük az Ön információit, amikor mobilalkalmazásunkat („Alkalmazás”) használja.
 </p>'

@@ -5,7 +5,7 @@
 		[
 			'title' => '1. Wprowadzenie',
 			'content' => '<p>
-    Witamy w AI Wallpapers ("my", "nas", "nasz").
+    Witamy w ' . env('PRODUCT_NAME') . ' ("my", "nas", "nasz").
     Jesteśmy zobowiązani do ochrony prywatności i bezpieczeństwa Twoich danych osobowych.
     Niniejsza Polityka Prywatności wyjaśnia, jak zbieramy, używamy, ujawniamy i chronimy Twoje informacje, gdy korzystasz z naszej aplikacji mobilnej ("Aplikacja").
 </p>',

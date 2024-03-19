@@ -5,7 +5,7 @@
 		[
 			'title' => '1. Wprowadzenie',
 			'content' => '<p>
-    Witamy w AI Wallpapers ("my", "nas", "nasz").
+    Witamy w ' . env('PRODUCT_NAME') . ' ("my", "nas", "nasz").
     Przystępując do korzystania z naszej aplikacji mobilnej ("Aplikacja"), zgadzasz się ("użytkownik", "Ty") na przestrzeganie niniejszych Regulaminów ("Warunki").
     Jeżeli nie zgadzasz się z tymi Warunkami, nie możesz używać naszej Aplikacji.
 </p>',

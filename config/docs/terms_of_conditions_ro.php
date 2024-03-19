@@ -5,7 +5,7 @@
 		[
 			'title' => '1. Introducere',
 			'content' => '<p>
-    Bine ați venit la AI Wallpapers ("noi", "ne", "al nostru").
+    Bine ați venit la ' . env('PRODUCT_NAME') . ' ("noi", "ne", "al nostru").
     Accesând sau utilizând aplicația noastră mobilă ("Aplicația"), dumneavoastră ("utilizatorul", "dumneavoastră") sunteți de acord să fiți legat de acești Termeni și Condiții ("Termeni").
     Dacă nu sunteți de acord cu acești Termeni, nu aveți permisiunea de a utiliza Aplicația noastră.
 </p>',

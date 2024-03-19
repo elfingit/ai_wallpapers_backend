@@ -10,7 +10,7 @@ return [
     'sections' => [
         [
             'title' => '1. Introduction',
-            'content'=> '<p>Welcome to AI Wallpapers ("we", "us", "our").
+            'content'=> '<p>Welcome to ' . env('PRODUCT_NAME') . ' ("we", "us", "our").
                          We are committed to protecting the privacy and security of your personal information.
                          This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application ("App").</p>'
         ], [
