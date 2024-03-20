@@ -39,6 +39,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRoleId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @property array|null $params
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereParams($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -54,7 +56,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id'
+        'role_id',
+        'params'
     ];
 
     /**
@@ -74,7 +77,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'password'          => 'hashed',
+        'params'            => 'array'
     ];
 
     public function role(): BelongsTo

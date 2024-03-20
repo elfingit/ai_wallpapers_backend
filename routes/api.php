@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\GalleryController;
 use App\Http\Controllers\Api\V1\RegistrationController;
+use App\Http\Controllers\Api\V1\SocialNetworkController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\WallpaperController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ Route::group(
     ],
     function () {
         Route::post('/registration', [RegistrationController::class, 'store']);
+        Route::post('/registration/social', [SocialNetworkController::class, 'store']);
         Route::post('/auth', [AuthController::class, 'store']);
 
         Route::group(
