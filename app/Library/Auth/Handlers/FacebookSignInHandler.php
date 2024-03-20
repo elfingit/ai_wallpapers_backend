@@ -11,6 +11,7 @@ namespace App\Library\Auth\Handlers;
 use App\Library\Auth\Commands\CreateAuthCommand;
 use App\Library\Auth\Commands\FacebookSignInCommand;
 use App\Library\Auth\Results\AuthResult;
+use App\Library\User\Commands\UserRegisteredFromSocialNetworkCommand;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Models\Role;
@@ -100,6 +101,14 @@ class FacebookSignInHandler implements CommandHandlerContract
                 $user->id
             )
         )->getResult();
+
+        $registeredCommand = UserRegisteredFromSocialNetworkCommand::instanceFromPrimitives(
+            $user->id,
+            $command->locale->value(),
+            $password,
+        );
+
+        \CommandBus::dispatch($registeredCommand);
 
         return new AuthResult(
             $user->createToken(

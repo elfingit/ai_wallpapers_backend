@@ -13,6 +13,7 @@ use App\Library\Auth\Values\DeviceIdValue;
 use App\Library\Auth\Values\EmailValue;
 use App\Library\Auth\Values\FacebookIdValue;
 use App\Library\Auth\Values\IpValue;
+use App\Library\Auth\Values\LocaleValue;
 use App\Library\Auth\Values\UserAgentValue;
 use Elfin\LaravelCommandBus\Library\AbstractCommand;
 
@@ -23,6 +24,7 @@ class FacebookSignInCommand extends AbstractCommand
     public DeviceIdValue $deviceId;
     public IpValue $ip;
     public UserAgentValue $userAgent;
+    public LocaleValue $locale;
 
     public static function instanceFromDto(FacebookDto $dto): self
     {
@@ -32,6 +34,7 @@ class FacebookSignInCommand extends AbstractCommand
         $instance->deviceId = new DeviceIdValue($dto->device_id);
         $instance->ip = new IpValue($dto->ip);
         $instance->userAgent = new UserAgentValue($dto->user_agent);
+        $instance->locale = new LocaleValue($dto->locale);
         return $instance;
     }
 }

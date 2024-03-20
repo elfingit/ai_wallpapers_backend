@@ -8,6 +8,7 @@
 
 namespace App\Library\Auth\Dto;
 
+use Elfin\LaravelDto\Dto\Attributes\HeaderParam;
 use Elfin\LaravelDto\Dto\Attributes\RequestParam;
 use Elfin\LaravelDto\Dto\Attributes\ValidationRule;
 
@@ -24,6 +25,9 @@ final class FacebookDto
     #[RequestParam('device_id')]
     #[ValidationRule('required|string|max:255|uuid')]
     public string $device_id;
+
+    #[HeaderParam('X-App-Locale')]
+    public string $locale = 'en';
 
     public string $ip;
     public string $user_agent;

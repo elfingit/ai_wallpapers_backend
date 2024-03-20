@@ -40,7 +40,9 @@ use App\Library\Tag\Commands\CreateTagCommand;
 use App\Library\Tag\Handlers\CreateTagHandler;
 use App\Library\User\Commands\IndexUserCommand;
 use App\Library\User\Commands\UserRegisteredCommand;
+use App\Library\User\Commands\UserRegisteredFromSocialNetworkCommand;
 use App\Library\User\Handlers\IndexUserHandler;
+use App\Library\User\Handlers\UserRegisteredFromSocialNetworkHandler;
 use App\Library\User\Handlers\WelcomeMailHandler;
 use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
@@ -174,6 +176,11 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     FacebookSignInCommand::class,
     FacebookSignInHandler::class
+);
+
+\CommandBus::addHandler(
+    UserRegisteredFromSocialNetworkCommand::class,
+    UserRegisteredFromSocialNetworkHandler::class
 );
 
 

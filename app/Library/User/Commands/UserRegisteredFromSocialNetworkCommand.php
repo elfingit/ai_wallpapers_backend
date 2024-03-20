@@ -19,7 +19,7 @@ class UserRegisteredFromSocialNetworkCommand extends AbstractCommand
     public LocaleValue $locale;
     public PasswordValue $password;
 
-    public static function createFromPrimitives(int $userId, string $locale, string $password): self
+    public static function instanceFromPrimitives(int $userId, string $locale, string $password): self
     {
         $command = new self();
         $command->userId = new IdValue($userId);
