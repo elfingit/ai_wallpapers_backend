@@ -8,9 +8,11 @@
 
 use App\Library\Auth\Commands\CreateAuthCommand;
 use App\Library\Auth\Commands\FacebookSignInCommand;
+use App\Library\Auth\Commands\GoogleSignInCommand;
 use App\Library\Auth\Commands\LogoutCommand;
 use App\Library\Auth\Handlers\CreateAuthHandler;
 use App\Library\Auth\Handlers\FacebookSignInHandler;
+use App\Library\Auth\Handlers\GoogleSignInHandler;
 use App\Library\Auth\Handlers\LogoutHandler;
 use App\Library\ContactForm\Commands\SendMessageCommand;
 use App\Library\ContactForm\Handlers\SendMessageHandler;
@@ -178,6 +180,11 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     FacebookSignInCommand::class,
     FacebookSignInHandler::class
+);
+
+\CommandBus::addHandler(
+    GoogleSignInCommand::class,
+    GoogleSignInHandler::class
 );
 
 \CommandBus::addHandler(

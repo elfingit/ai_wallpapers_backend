@@ -4,6 +4,7 @@ namespace App\Http\Requests\SignInNetwork;
 
 use App\Http\Requests\AbstractRequest;
 use App\Library\Auth\Dto\FacebookDto;
+use App\Library\Auth\Dto\GoogleDto;
 use App\Library\Auth\Enums\SocialNetworkEnum;
 
 class IncomeRequest extends AbstractRequest
@@ -22,6 +23,7 @@ class IncomeRequest extends AbstractRequest
 
         return match ($type) {
             SocialNetworkEnum::FACEBOOK => FacebookDto::class,
+            SocialNetworkEnum::GOOGLE => GoogleDto::class,
             default => throw new \InvalidArgumentException('Unknown network type'),
         };
     }

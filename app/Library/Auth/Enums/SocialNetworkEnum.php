@@ -11,4 +11,5 @@ namespace App\Library\Auth\Enums;
 enum SocialNetworkEnum: string
 {
     case FACEBOOK = 'facebook';
+    case GOOGLE = 'google';
 }
