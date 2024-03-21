@@ -12,6 +12,8 @@ use App\Library\Auth\Commands\LogoutCommand;
 use App\Library\Auth\Handlers\CreateAuthHandler;
 use App\Library\Auth\Handlers\FacebookSignInHandler;
 use App\Library\Auth\Handlers\LogoutHandler;
+use App\Library\ContactForm\Commands\SendMessageCommand;
+use App\Library\ContactForm\Handlers\SendMessageHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\DeleteGalleryCommand;
 use App\Library\Gallery\Commands\EditGalleryCommand;
@@ -181,6 +183,11 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     UserRegisteredFromSocialNetworkCommand::class,
     UserRegisteredFromSocialNetworkHandler::class
+);
+
+\CommandBus::addHandler(
+    SendMessageCommand::class,
+    SendMessageHandler::class
 );
 
 

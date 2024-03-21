@@ -14,4 +14,6 @@ enum LoggerChannel: string
     case USER_BALANCE = 'user_balance';
 
     case HTTP_REQUEST = 'http_request';
+
+    case TELEGRAM = 'telegram';
 }

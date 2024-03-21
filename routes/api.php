@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\ContactFormController;
 use App\Http\Controllers\Api\V1\GalleryController;
 use App\Http\Controllers\Api\V1\RegistrationController;
 use App\Http\Controllers\Api\V1\SocialNetworkController;
@@ -32,6 +33,7 @@ Route::group(
         Route::post('/registration', [RegistrationController::class, 'store']);
         Route::post('/registration/social', [SocialNetworkController::class, 'store']);
         Route::post('/auth', [AuthController::class, 'store']);
+        Route::post('/contact_form', [ContactFormController::class, 'store']);
 
         Route::group(
             [
