@@ -19,7 +19,7 @@ class GoogleDto
     public string $email;
 
     #[RequestParam('id')]
-    #[ValidationRule('required|integer|max:' . PHP_INT_MAX)]
+    #[ValidationRule('required|string|max:150')]
     public string $id;
 
     #[RequestParam('device_id')]
