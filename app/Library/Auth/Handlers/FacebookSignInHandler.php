@@ -46,7 +46,8 @@ class FacebookSignInHandler implements CommandHandlerContract
     private function signIn(User $user, FacebookSignInCommand $command): AuthResult
     {
         if (is_null($user->params) || !isset($user->params['facebook_id'])) {
-            $user->params = ['facebook_id' => null];
+            $params = $user->params ?? [];
+            $user->params = array_merge($params, ['facebook_id' => null]);
         }
 
         if ($user->params['facebook_id'] !== $command->id->value()) {

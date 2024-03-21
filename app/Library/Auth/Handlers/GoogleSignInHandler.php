@@ -40,7 +40,8 @@ class GoogleSignInHandler implements CommandHandlerContract
     private function signIn(User $user, GoogleSignInCommand $command): AuthResult
     {
         if (is_null($user->params) || !isset($user->params['google_id'])) {
-            $user->params = ['google_id' => null];
+            $params = $user->params ?? [];
+            $user->params = array_merge($params, ['google_id' => null]);
         }
 
         if ($user->params['google_id'] !== $command->id->value()) {
