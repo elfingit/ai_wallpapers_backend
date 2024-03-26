@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\RegistrationController;
 use App\Http\Controllers\Api\V1\SocialNetworkController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\WallpaperController;
+use App\Http\Middleware\AppSignRequestMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +32,8 @@ Route::group(
     ],
     function () {
         Route::post('/registration', [RegistrationController::class, 'store']);
-        Route::post('/registration/social', [SocialNetworkController::class, 'store']);
+        Route::post('/registration/social', [SocialNetworkController::class, 'store'])
+            ->middleware(AppSignRequestMiddleware::class);
         Route::post('/auth', [AuthController::class, 'store']);
         Route::post('/contact_form', [ContactFormController::class, 'store']);
 

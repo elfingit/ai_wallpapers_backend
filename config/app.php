@@ -189,4 +189,5 @@ return [
         'LoggerService' => LoggerServiceFacade::class,
     ])->toArray(),
 
+    'client_signature' => env('CLIENT_SIGNATURE', 'client_signature'),
 ];
