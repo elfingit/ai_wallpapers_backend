@@ -22,23 +22,7 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="text-center">AI Wallpapers</h1>
-            <h2 class="text-center">{{ __('Request for remove personal data') }}</h2>
-            <p class="text-center">
-                {{ __('Enter below your email address to remove your personal data from our service.') }}
-            </p>
-            <form action="{{ route('google.remove_data_send') }}" method="post">
-                @csrf
-                <div class="form-group col-md-4 mx-auto">
-                    <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
-                    @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="form-group col-md-4 mx-auto">
-                    <button type="submit" class="btn btn-primary float-end">{{ __('Submit') }}</button>
-                </div>
-            </form>
+            <h2 class="text-center">{{ __('All your personal data has been removed') }}</h2>
         </div>
     </div>
 </div>
