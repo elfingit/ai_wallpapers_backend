@@ -41,6 +41,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @property array|null $params
  * @method static \Illuminate\Database\Eloquent\Builder|User whereParams($value)
+ * @property string|null $remove_data_token
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRemoveDataToken($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable

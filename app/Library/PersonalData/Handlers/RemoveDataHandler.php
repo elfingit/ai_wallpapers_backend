@@ -12,6 +12,7 @@ use App\Library\Auth\Commands\RemoveUserTokensCommand;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Library\Gallery\Commands\UserPicturesMakePublicCommand;
 use App\Library\PersonalData\Commands\RemoveDataCommand;
+use App\Library\UserBalance\Commands\RemoveUserBalanceCommand;
 use App\Library\UserDevice\Commands\RemoveUserDevicesCommand;
 use App\Models\User;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
@@ -76,6 +77,10 @@ final class RemoveDataHandler implements CommandHandlerContract
         //Delete all auth tokens
         $commandDeleteTokens = RemoveUserTokensCommand::instanceFromPrimitive($user->id);
         \CommandBus::dispatch($commandDeleteTokens);
+
+        //Delete user balance
+        $commandDeleteBalance = RemoveUserBalanceCommand::instanceFromPrimitive($user->id);
+        \CommandBus::dispatch($commandDeleteBalance);
 
         //Delete user record
         $user->delete();

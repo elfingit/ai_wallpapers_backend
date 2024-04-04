@@ -41,7 +41,9 @@ use App\Library\Gallery\Handlers\ThumbnailHandler;
 use App\Library\Gallery\Handlers\UpdateGalleryHandler;
 use App\Library\Gallery\Handlers\UserPicturesMakePublicHandler;
 use App\Library\PersonalData\Commands\EmailRemoveDataCommand;
+use App\Library\PersonalData\Commands\RemoveDataCommand;
 use App\Library\PersonalData\Handlers\EmailRemoveDataHandler;
+use App\Library\PersonalData\Handlers\RemoveDataHandler;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
 use App\Library\Registration\Handlers\CreateRegistrationHandler;
 use App\Library\Role\Commands\CreateRoleCommand;
@@ -55,8 +57,10 @@ use App\Library\User\Handlers\IndexUserHandler;
 use App\Library\User\Handlers\UserRegisteredFromSocialNetworkHandler;
 use App\Library\User\Handlers\WelcomeMailHandler;
 use App\Library\UserBalance\Commands\GetUserBalanceCommand;
+use App\Library\UserBalance\Commands\RemoveUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Library\UserBalance\Handlers\GetUserBalanceHandler;
+use App\Library\UserBalance\Handlers\RemoveUserBalanceHandler;
 use App\Library\UserBalance\Handlers\UpdateUserBalanceHandler;
 use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionCommand;
 use App\Library\UserBalanceTransaction\Handlers\CreateUserBalanceTransactionHandler;
@@ -206,6 +210,11 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 );
 
 \CommandBus::addHandler(
+    RemoveDataCommand::class,
+    RemoveDataHandler::class
+);
+
+\CommandBus::addHandler(
     EmailRemoveDataCommand::class,
     EmailRemoveDataHandler::class
 );
@@ -225,4 +234,8 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
     RemoveUserTokensHandler::class
 );
 
+\CommandBus::addHandler(
+    RemoveUserBalanceCommand::class,
+    RemoveUserBalanceHandler::class
+);
 

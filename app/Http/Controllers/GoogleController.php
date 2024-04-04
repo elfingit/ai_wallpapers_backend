@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GoogleRemoveDataRequest;
 use App\Library\PersonalData\Commands\EmailRemoveDataCommand;
+use App\Library\PersonalData\Commands\RemoveDataCommand;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -29,7 +30,8 @@ class GoogleController extends Controller
             abort(400);
         }
 
-
+        $command = RemoveDataCommand::instanceFromPrimitive($token);
+        \CommandBus::dispatch($command);
 
         return view('google.remove_data_confirm_form', ['token' => $token]);
     }
