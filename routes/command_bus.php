@@ -10,10 +10,12 @@ use App\Library\Auth\Commands\CreateAuthCommand;
 use App\Library\Auth\Commands\FacebookSignInCommand;
 use App\Library\Auth\Commands\GoogleSignInCommand;
 use App\Library\Auth\Commands\LogoutCommand;
+use App\Library\Auth\Commands\RemoveUserTokensCommand;
 use App\Library\Auth\Handlers\CreateAuthHandler;
 use App\Library\Auth\Handlers\FacebookSignInHandler;
 use App\Library\Auth\Handlers\GoogleSignInHandler;
 use App\Library\Auth\Handlers\LogoutHandler;
+use App\Library\Auth\Handlers\RemoveUserTokensHandler;
 use App\Library\ContactForm\Commands\SendMessageCommand;
 use App\Library\ContactForm\Handlers\SendMessageHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
@@ -26,6 +28,7 @@ use App\Library\Gallery\Commands\IndexGalleryCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Library\Gallery\Commands\UpdateGalleryCommand;
+use App\Library\Gallery\Commands\UserPicturesMakePublicCommand;
 use App\Library\Gallery\Handlers\CreateGalleryHandler;
 use App\Library\Gallery\Handlers\DeleteGalleryHandler;
 use App\Library\Gallery\Handlers\EditGalleryHandler;
@@ -36,6 +39,11 @@ use App\Library\Gallery\Handlers\IndexGalleryHandler;
 use App\Library\Gallery\Handlers\MakePictureCopyHandler;
 use App\Library\Gallery\Handlers\ThumbnailHandler;
 use App\Library\Gallery\Handlers\UpdateGalleryHandler;
+use App\Library\Gallery\Handlers\UserPicturesMakePublicHandler;
+use App\Library\PersonalData\Commands\EmailRemoveDataCommand;
+use App\Library\PersonalData\Commands\RemoveDataCommand;
+use App\Library\PersonalData\Handlers\EmailRemoveDataHandler;
+use App\Library\PersonalData\Handlers\RemoveDataHandler;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
 use App\Library\Registration\Handlers\CreateRegistrationHandler;
 use App\Library\Role\Commands\CreateRoleCommand;
@@ -49,15 +57,19 @@ use App\Library\User\Handlers\IndexUserHandler;
 use App\Library\User\Handlers\UserRegisteredFromSocialNetworkHandler;
 use App\Library\User\Handlers\WelcomeMailHandler;
 use App\Library\UserBalance\Commands\GetUserBalanceCommand;
+use App\Library\UserBalance\Commands\RemoveUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Library\UserBalance\Handlers\GetUserBalanceHandler;
+use App\Library\UserBalance\Handlers\RemoveUserBalanceHandler;
 use App\Library\UserBalance\Handlers\UpdateUserBalanceHandler;
 use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionCommand;
 use App\Library\UserBalanceTransaction\Handlers\CreateUserBalanceTransactionHandler;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
+use App\Library\UserDevice\Commands\RemoveUserDevicesCommand;
 use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
 use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
+use App\Library\UserDevice\Handlers\RemoveUserDevicesHandler;
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
 use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 
@@ -197,4 +209,33 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
     SendMessageHandler::class
 );
 
+\CommandBus::addHandler(
+    RemoveDataCommand::class,
+    RemoveDataHandler::class
+);
+
+\CommandBus::addHandler(
+    EmailRemoveDataCommand::class,
+    EmailRemoveDataHandler::class
+);
+
+\CommandBus::addHandler(
+    UserPicturesMakePublicCommand::class,
+    UserPicturesMakePublicHandler::class
+);
+
+\CommandBus::addHandler(
+    RemoveUserDevicesCommand::class,
+    RemoveUserDevicesHandler::class
+);
+
+\CommandBus::addHandler(
+    RemoveUserTokensCommand::class,
+    RemoveUserTokensHandler::class
+);
+
+\CommandBus::addHandler(
+    RemoveUserBalanceCommand::class,
+    RemoveUserBalanceHandler::class
+);
 

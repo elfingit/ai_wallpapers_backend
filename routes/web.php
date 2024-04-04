@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GoogleController;
+use App\Http\Middleware\DetectBrowserLanguage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,5 +33,22 @@ Route::get('/gal_help.html', function () {
     return view( 'en/gal_help', [
         'locale' => $locale
     ]);
+});
+
+Route::middleware(DetectBrowserLanguage::class)->group(function () {
+    Route::get(
+        '/google/remove_data',
+        [GoogleController::class, 'removeData']
+    )->name('google.remove_data');
+
+    Route::post(
+        '/google/remove_data',
+        [GoogleController::class, 'sentRemoveData']
+    )->name('google.remove_data_send');
+
+    Route::get(
+        '/google/remove_data/confirm/{token}',
+        [GoogleController::class, 'removeDataConfirm']
+    )->name('google.remove_data_confirm');
 });
 

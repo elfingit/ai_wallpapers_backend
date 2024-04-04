@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -28,6 +29,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|UserBalance whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserBalance withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|UserBalance withoutTrashed()
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UserBalanceTransaction> $transactions
+ * @property-read int|null $transactions_count
  * @mixin \Eloquent
  */
 class UserBalance extends Model
@@ -40,5 +43,10 @@ class UserBalance extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(UserBalanceTransaction::class, 'balance_id', 'id');
     }
 }

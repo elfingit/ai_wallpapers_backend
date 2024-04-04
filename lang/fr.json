@@ -1,3 +1,15 @@
 {
-    "Your prompt violate our content policy, please rephrase it.":"Votre invitation viole notre politique de contenu, veuillez la reformuler, s'il vous plaît."
+    "Your prompt violate our content policy, please rephrase it.":"Votre invitation viole notre politique de contenu, veuillez la reformuler.",
+    "Request for remove personal data": "Demande de suppression des données personnelles",
+    "Enter below your email address to remove your personal data from our service.": "Entrez votre adresse e-mail ci-dessous pour supprimer vos données personnelles de notre service.",
+    "Submit": "Soumettre",
+    "Remove personal data from AI Wallpapers":"Supprimer les données personnelles de AI Wallpapers",
+    "We received a request to remove your personal data from AI Wallpapers.":"Nous avons reçu une demande de suppression de vos données personnelles de AI Wallpapers.",
+    "If you did not make this request, just ignore this letter.":"Si vous n'avez pas fait cette demande, ignorez simplement cette lettre.",
+    "To confirm the request, click the link below.":"Pour confirmer la demande, cliquez sur le lien ci-dessous.",
+    "If link not working, just copy below url and paste it to browser":"Si le lien ne fonctionne pas, copiez simplement l'URL ci-dessous et collez-la dans votre navigateur",
+    "Request was accepted":"La demande a été acceptée",
+    "We sent email to address such as your provided.":"Nous avons envoyé un email à l'adresse que vous avez fournie.",
+    "Please check your email and follow the instructions to remove your personal data from our service.":"Veuillez vérifier votre e-mail et suivre les instructions pour supprimer vos données personnelles de notre service.",
+    "All your personal data has been removed":"Toutes vos données personnelles ont été supprimées"
 }
