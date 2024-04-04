@@ -36,6 +36,8 @@ use App\Library\Gallery\Handlers\IndexGalleryHandler;
 use App\Library\Gallery\Handlers\MakePictureCopyHandler;
 use App\Library\Gallery\Handlers\ThumbnailHandler;
 use App\Library\Gallery\Handlers\UpdateGalleryHandler;
+use App\Library\PersonalData\Commands\EmailRemoveDataCommand;
+use App\Library\PersonalData\Handlers\EmailRemoveDataHandler;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
 use App\Library\Registration\Handlers\CreateRegistrationHandler;
 use App\Library\Role\Commands\CreateRoleCommand;
@@ -195,6 +197,11 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     SendMessageCommand::class,
     SendMessageHandler::class
+);
+
+\CommandBus::addHandler(
+    EmailRemoveDataCommand::class,
+    EmailRemoveDataHandler::class
 );
 
 

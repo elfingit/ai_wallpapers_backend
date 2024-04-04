@@ -1,3 +1,6 @@
 {
-    "Your prompt violate our content policy, please rephrase it.": "Ваш запрос нарушает нашу политику контента, пожалуйста, перефразируйте его."
+    "Your prompt violate our content policy, please rephrase it.": "Ваш запрос нарушает нашу политику контента, пожалуйста, перефразируйте его.",
+    "Request for remove personal data": "Запрос на удаление личных данных",
+    "Enter below your email address to remove your personal data from our service.": "Введите ниже свой адрес электронной почты, чтобы удалить свои личные данные из нашего сервиса.",
+    "Submit": "Отправить"
 }
