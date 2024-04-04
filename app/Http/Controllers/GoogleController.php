@@ -22,4 +22,15 @@ class GoogleController extends Controller
         \CommandBus::dispatch($command);
         return view('google.remove_data_sent');
     }
+
+    public function removeDataConfirm(?string $token): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        if (!$token) {
+            abort(400);
+        }
+
+
+
+        return view('google.remove_data_confirm_form', ['token' => $token]);
+    }
 }

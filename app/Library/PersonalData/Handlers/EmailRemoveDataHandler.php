@@ -47,10 +47,12 @@ class EmailRemoveDataHandler implements CommandHandlerContract
         }
 
         \App::setLocale($command->localValue->value());
+        $token = \Hash::make($user->email . '|' . $user->id);
 
-        \Mail::to($user->email)->send(new RemovePersonalDataMail(
-            \Hash::make($user->email . '|' . $user->id)
-        ));
+        $user->remove_data_token = $token;
+        $user->save();
+
+        \Mail::to($user->email)->send(new RemovePersonalDataMail($token));
 
         return null;
     }
