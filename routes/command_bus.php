@@ -16,6 +16,10 @@ use App\Library\Auth\Handlers\FacebookSignInHandler;
 use App\Library\Auth\Handlers\GoogleSignInHandler;
 use App\Library\Auth\Handlers\LogoutHandler;
 use App\Library\Auth\Handlers\RemoveUserTokensHandler;
+use App\Library\Billing\Commands\GooglePurchaseCommand;
+use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
+use App\Library\Billing\Handlers\GooglePurchaseHandler;
+use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
 use App\Library\ContactForm\Commands\SendMessageCommand;
 use App\Library\ContactForm\Handlers\SendMessageHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
@@ -239,3 +243,12 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
     RemoveUserBalanceHandler::class
 );
 
+\CommandBus::addHandler(
+    GooglePurchaseCommand::class,
+    GooglePurchaseHandler::class
+);
+
+\CommandBus::addHandler(
+    GooglePurchaseTransactionCommand::class,
+    GooglePurchaseTransactionHandler::class
+);

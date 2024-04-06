@@ -1,0 +1,26 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Andrei Siarheyeu <andreylong@gmail.com>
+ * Date: 6.04.24
+ * Time: 11:21
+ */
+
+namespace App\Library\Billing\Dto;
+
+use Elfin\LaravelDto\Dto\Attributes\RequestParam;
+use Elfin\LaravelDto\Dto\Attributes\ValidationRule;
+
+final class GooglePurchaseDto
+{
+    #[RequestParam('product_id')]
+    #[ValidationRule('required|string|max:150|in:ai_requests_2,ai_requests_5,ai_requests_10,ai_requests_20')]
+    public string $product_id;
+
+    #[RequestParam('purchase_token')]
+    #[ValidationRule('required|string|max:255')]
+    public string $purchase_token;
+
+    public int $user_id;
+    public int $product_amount;
+}

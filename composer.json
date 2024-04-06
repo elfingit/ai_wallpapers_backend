@@ -58,7 +58,10 @@
             "dont-discover": [
                 "barryvdh/laravel-ide-helper"
             ]
-        }
+        },
+        "google/apiclient-services": [
+            "AndroidEnterprise"
+        ]
     },
     "config": {
         "optimize-autoloader": true,
