@@ -15,4 +15,5 @@ return [
     RulesEnum::MAKE_WALLPAPER,
     RulesEnum::MAIN_BALANCE,
     RulesEnum::LOGOUT,
+    RulesEnum::BILLING_PURCHASE,
 ];

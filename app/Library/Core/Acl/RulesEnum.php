@@ -29,6 +29,8 @@ enum RulesEnum : string
     case USER_LIST = 'user:list';
 
     case PICTURE_LOCALE = 'pic:locale';
+
+    case BILLING_PURCHASE = 'billing:purchase';
     public function value(): string
     {
         return $this->value;

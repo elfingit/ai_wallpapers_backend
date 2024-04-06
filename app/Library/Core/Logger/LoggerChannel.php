@@ -18,4 +18,6 @@ enum LoggerChannel: string
     case TELEGRAM = 'telegram';
 
     case PERSONAL_DATA = 'personal_data';
+
+    case GOOGLE_PURCHASE = 'google_purchase';
 }
