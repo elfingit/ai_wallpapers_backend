@@ -22,4 +22,5 @@ final class GooglePurchaseDto
     public string $purchase_token;
 
     public int $user_id;
+    public int $product_amount;
 }

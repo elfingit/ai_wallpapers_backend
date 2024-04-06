@@ -41,16 +41,54 @@ class GoogleService
         $this->access_token = $this->getAccessToken();
     }
 
-    public function getPurchase()
+    public function getPurchase(string $product_id, string $purchase_token): ?array
     {
+        $url = sprintf(self::PURCHASE_URL, $this->package_name, $product_id, $purchase_token);
+        try {
+            $response = $this->httpClient->request(
+                'GET',
+                $url,
+                [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $this->access_token,
+                    ]
+                ]
+            );
 
+            return json_decode($response->getBody()->getContents(), true);
+
+        } catch (\Throwable $th) {
+            $this->logger->error(
+                'Failed to get purchase',
+                ['extra' => [
+                    'error' => $th->getMessage(),
+                    'trace' => $th->getTraceAsString(),
+                    'file' => __FILE__,
+                    'line' => __LINE__
+                ]]
+            );
+        }
+
+        return null;
     }
 
     private function getAccessToken(): ?string
     {
+        $this->logger->info('trying to get access token', [
+            'extra' => [
+                'file' => __FILE__,
+                'line' => __LINE__
+            ]
+        ]);
         $token = \Cache::get('google_access_token');
 
         if ($token) {
+            $this->logger->info('found in cache', [
+                'extra' => [
+                    'file' => __FILE__,
+                    'line' => __LINE__
+                ]
+            ]);
             return $token;
         }
         try {
@@ -70,6 +108,14 @@ class GoogleService
             $data = json_decode($response->getBody()->getContents(), true);
             $expired = Carbon::now()->addSeconds($data['expires_in']);
             \Cache::set('google_access_token', $data['access_token'], $expired);
+
+            $this->logger->info('got from google', [
+                'extra' => [
+                    'access_token' => $data['access_token'],
+                    'file' => __FILE__,
+                    'line' => __LINE__
+                ]
+            ]);
 
             return $data['access_token'];
         } catch (\Throwable $th) {
