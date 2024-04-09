@@ -40,6 +40,7 @@ class CreateRegistrationCommand extends AbstractCommand
         $command->emailValue = new EmailValue($email);
         $command->passwordValue = new PasswordValue($password);
         $command->userRoleValue = new UserRoleValue($user_role);
+        $command->localeValue = new LocaleValue('en');
 
         return $command;
     }
