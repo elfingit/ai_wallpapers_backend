@@ -1,0 +1,22 @@
+{
+    "domain": {
+        "id": "Wallpaper",
+        "entity": {
+            "make_model": false,
+            "make_migration": false,
+            "soft_delete": false,
+            "timestamps": false,
+            "fields": {
+                "prompt": {
+                    "type": "string",
+                    "skip_in_store": false,
+                    "can_be_search": false,
+                    "can_be_order": false,
+                    "required": true,
+                    "min": 5,
+                    "max": 255
+                }
+            }
+        }
+    }
+}

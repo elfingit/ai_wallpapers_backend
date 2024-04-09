@@ -27,4 +27,26 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof InsufficientBalanceException) {
+            return response()->json([
+                'message' => __('Insufficient balance'),
+            ], 402);
+        }
+
+        if ($e instanceof ContentPolicyViolationException) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'errors' => [
+                    $e->getFormField() => [
+                        __('Your prompt violate our content policy, please rephrase it.'),
+                    ],
+                ],
+            ], 422);
+        }
+
+        return parent::render($request, $e);
+    }
 }

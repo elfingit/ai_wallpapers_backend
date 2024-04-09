@@ -1,0 +1,38 @@
+{
+    "domain": {
+        "id": "Gallery",
+        "entity": {
+            "make_model": true,
+            "make_migration": true,
+            "soft_delete": true,
+            "timestamps": true,
+            "fields": {
+                "id": {
+                    "type": "pk",
+                    "skip_in_store": true,
+                    "can_be_search": true,
+                    "can_be_order": true
+                },
+                "file": {
+                    "type": "file",
+                    "skip_in_store": false,
+                    "can_be_search": false,
+                    "can_be_order": false,
+                    "required": true,
+                    "mimes": ["png"],
+                    "extensions": ["png"],
+                    "max": 10240
+                },
+                "prompt": {
+                    "type": "string",
+                    "required": true,
+                    "skip_in_store": false,
+                    "can_be_search": true,
+                    "can_be_order": false,
+                    "min": 25,
+                    "max": 1500
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "Your prompt violate our content policy, please rephrase it.": "Ваш запрос нарушает нашу политику контента, пожалуйста, перефразируйте его.",
+    "Request for remove personal data": "Запрос на удаление личных данных",
+    "Enter below your email address to remove your personal data from our service.": "Введите ниже свой адрес электронной почты, чтобы удалить свои личные данные из нашего сервиса.",
+    "Submit": "Отправить",
+    "Remove personal data from AI Wallpapers": "Удалить личные данные из AI Wallpapers",
+    "We received a request to remove your personal data from AI Wallpapers.": "Мы получили запрос на удаление ваших личных данных из AI Wallpapers.",
+    "If you did not make this request, just ignore this letter.": "Если вы не делали этот запрос, просто проигнорируйте это письмо.",
+    "To confirm the request, click the link below.": "Для подтверждения запроса нажмите на ссылку ниже.",
+    "If link not working, just copy below url and paste it to browser": "Если ссылка не работает, просто скопируйте нижеуказанный URL и вставьте его в браузер",
+    "Request was accepted": "Запрос был принят",
+    "We sent email to address such as your provided.": "Мы отправили письмо на адрес, который вы указали.",
+    "Please check your email and follow the instructions to remove your personal data from our service.": "Пожалуйста, проверьте свою электронную почту и следуйте инструкциям, чтобы удалить свои личные данные из нашего сервиса.",
+    "All your personal data has been removed": "Все ваши личные данные были удалены"
+}

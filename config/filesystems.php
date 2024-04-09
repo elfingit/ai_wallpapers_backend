@@ -56,6 +56,36 @@ return [
             'throw' => false,
         ],
 
+        'wallpaper' => [
+            'driver' => 'local',
+            'root' => storage_path('app/wallpapers'),
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0664,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0775,
+                ],
+            ]
+        ],
+
+        'thumbnail' => [
+            'driver' => 'local',
+            'root' => storage_path('app/thumbnails'),
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0664,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0775,
+                ],
+            ]
+        ],
+
     ],
 
     /*

@@ -1,0 +1,39 @@
+{
+    "domain": {
+        "id": "Registration",
+        "entity": {
+            "make_model": false,
+            "make_migration": false,
+            "soft_delete": false,
+            "timestamps": false,
+            "fields": {
+                "email": {
+                    "type": "email",
+                    "skip_in_store": false,
+                    "can_be_search": false,
+                    "can_be_order": false,
+                    "required": true
+                },
+                "password": {
+                    "type": "password",
+                    "skip_in_store": false,
+                    "can_be_search": false,
+                    "can_be_order": false,
+                    "min": 6,
+                    "max": 25,
+                    "should_be_confirmed": true,
+                    "required": true
+                },
+                "device_id": {
+                    "type": "string",
+                    "min": 6,
+                    "max": 25,
+                    "skip_in_store": false,
+                    "can_be_search": false,
+                    "can_be_order": false,
+                    "required": true
+                }
+            }
+        }
+    }
+}

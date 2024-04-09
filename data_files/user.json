@@ -1,0 +1,27 @@
+{
+    "domain": {
+        "id": "User",
+        "entity": {
+            "make_model": false,
+            "make_migration": false,
+            "soft_delete": true,
+            "timestamps": true,
+            "fields": {
+                "id": {
+                    "type": "pk",
+                    "skip_in_store": true,
+                    "can_be_search": true,
+                    "can_be_order": true
+                },
+                "email": {
+                    "type": "email",
+                    "skip_in_store": true,
+                    "can_be_search": true,
+                    "can_be_order": false,
+                    "min": 5,
+                    "max": 100
+                }
+            }
+        }
+    }
+}

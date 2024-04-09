@@ -1,5 +1,7 @@
 <?php
 
+use App\Facades\AbilityProviderFacade;
+use App\Facades\LoggerServiceFacade;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -84,6 +86,7 @@ return [
     */
 
     'locale' => 'en',
+    'locales' => ['en', 'pl', 'ru', 'fr', 'ro', 'hu', 'uk'],
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +185,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'AbilityProvider' => AbilityProviderFacade::class,
+        'LoggerService' => LoggerServiceFacade::class,
     ])->toArray(),
 
+    'client_signature' => env('CLIENT_SIGNATURE', 'client_signature'),
 ];

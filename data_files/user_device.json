@@ -1,0 +1,35 @@
+{
+    "domain": {
+        "id": "UserDevice",
+        "entity": {
+            "make_model": false,
+            "make_migration": false,
+            "soft_delete": false,
+            "timestamps": false,
+            "fields": {
+                "id": {
+                    "type": "pk_uuid",
+                    "skip_in_store": false,
+                    "can_be_search": true,
+                    "can_be_order": true
+                },
+                "ip": {
+                    "type": "string",
+                    "skip_in_store": false,
+                    "can_be_search": true,
+                    "can_be_order": false,
+                    "min": 15,
+                    "max": 15
+                },
+                "user_agent": {
+                    "type": "string",
+                    "skip_in_store": false,
+                    "can_be_search": true,
+                    "can_be_order": false,
+                    "min": 15,
+                    "max": 1024
+                }
+            }
+        }
+    }
+}

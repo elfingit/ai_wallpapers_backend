@@ -6,12 +6,18 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "guzzlehttp/guzzle": "^7.2",
+        "elfingit/laravel_command_bus": "^1.0",
+        "elfingit/laravel_dto": "^1.2",
+        "guzzlehttp/guzzle": "^7.8",
+        "intervention/image": "^3.3",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "spatie/laravel-translatable": "^6.5"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.15",
+        "elfingit/cqrs_generator": "^1.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
@@ -49,8 +55,13 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
-        }
+            "dont-discover": [
+                "barryvdh/laravel-ide-helper"
+            ]
+        },
+        "google/apiclient-services": [
+            "AndroidEnterprise"
+        ]
     },
     "config": {
         "optimize-autoloader": true,
@@ -62,5 +73,19 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:elfingit/laravel_dto.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:elfingit/laravel_command_bus.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:elfingit/cqrs_generator.git"
+        }
+    ]
 }

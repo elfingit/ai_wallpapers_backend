@@ -1,0 +1,15 @@
+{
+    "Your prompt violate our content policy, please rephrase it.": "Az Ön kérése megsérti tartalom politikánkat, kérem fogalmazza át.",
+    "Request for remove personal data": "Kérés a személyes adatok eltávolítására",
+    "Enter below your email address to remove your personal data from our service.": "Adja meg az e-mail címét alább, hogy eltávolíthassuk a személyes adatait szolgáltatásunkból.",
+    "Submit": "Beküldés",
+    "Remove personal data from AI Wallpapers": "Személyes adatok eltávolítása az AI Wallpapers szolgáltatásból",
+    "We received a request to remove your personal data from AI Wallpapers.": "Kérést kaptunk a személyes adatainak az AI Wallpapers szolgáltatásból való eltávolítására.",
+    "If you did not make this request, just ignore this letter.": "Ha Ön nem tette ezt a kérést, egyszerűen hagyja figyelmen kívül ezt a levelet.",
+    "To confirm the request, click the link below.": "A kérés megerősítéséhez kattintson az alábbi linkre.",
+    "If link not working, just copy below url and paste it to browser": "Ha a link nem működik, egyszerűen másolja a lenti URL-t és illessze be a böngészőjébe",
+    "Request was accepted": "A kérést elfogadták",
+    "We sent email to address such as your provided.": "E-mailt küldtünk az Ön által megadott címre.",
+    "Please check your email and follow the instructions to remove your personal data from our service.": "Kérjük, ellenőrizze az e-mailjét és kövesse az utasításokat a személyes adatai szolgáltatásunkból történő eltávolításához.",
+    "All your personal data has been removed": "Minden személyes adatát eltávolítottuk"
+}
