@@ -37,6 +37,11 @@ class ReplicateFreeImagesCommand extends Command
             $gallery = Gallery::find($record->id);
 
             foreach ($locales as $locale) {
+
+                if ($gallery->locale == $locale) {
+                    continue;
+                }
+
                 $newGal = $gallery->replicate();
                 $newGal->locale = $locale;
                 $newGal->save();
