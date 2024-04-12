@@ -21,7 +21,7 @@ class UserResource extends JsonResource
             'id' => $resource->id,
             'email' => $resource->email,
             'role' => $resource->role->title,
-            'balance' => $resource->balance?->amount ?? '0.00',
+            'balance' => $resource->balance?->balance ?? '0.00',
             'created_at' => $resource->created_at->format('Y-m-d H:i:s'),
         ];
     }
