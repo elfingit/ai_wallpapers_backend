@@ -8,6 +8,7 @@
 
 namespace App\Library\Billing\Handlers;
 
+use App\Exceptions\DuplicateGoogleOrderException;
 use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
 use App\Library\Billing\Results\PurchaseResult;
@@ -75,7 +76,25 @@ class GooglePurchaseHandler implements CommandHandlerContract
         $purchase_data['user_id'] = $command->userId->value();
 
         $googleTransactionCommand = GooglePurchaseTransactionCommand::instanceFromArray($purchase_data);
-        \CommandBus::dispatch($googleTransactionCommand);
+        try {
+            \CommandBus::dispatch($googleTransactionCommand);
+        } catch (DuplicateGoogleOrderException $googleOrderException) {
+            $this->logger->error('duplicate order', [
+                'extra' => [
+                    'message' => $googleOrderException->getMessage(),
+                    'purchase_data' => $purchase_data,
+                ]
+            ]);
+            return new PurchaseResult(false);
+        } catch (\Throwable $exception) {
+            $this->logger->error('error while saving transaction', [
+                'extra' => [
+                    'message' => $exception->getMessage(),
+                    'purchase_data' => $purchase_data,
+                ]
+            ]);
+            return new PurchaseResult(false);
+        }
 
         $userBalanceCommand = UpdateUserBalanceCommand::instanceFromPrimitives(
             $command->userId->value(),

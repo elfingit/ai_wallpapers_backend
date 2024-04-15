@@ -8,6 +8,7 @@
 
 namespace App\Library\Billing\Handlers;
 
+use App\Exceptions\DuplicateGoogleOrderException;
 use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
 use App\Models\GooglePurchaseTransaction;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
@@ -23,6 +24,13 @@ class GooglePurchaseTransactionHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
+        $order_id = $command->googleOrderId->value();
+        $transaction = GooglePurchaseTransaction::where('order_id', $order_id)->first();
+
+        if (!is_null($transaction)) {
+            throw new DuplicateGoogleOrderException("Order with id $order_id already exists.");
+        }
+
         GooglePurchaseTransaction::create([
             'order_id' => $command->googleOrderId->value(),
             'purchase_state' => $command->purchaseState->value(),
