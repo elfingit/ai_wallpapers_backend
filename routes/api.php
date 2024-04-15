@@ -69,7 +69,8 @@ Route::group(
 
                 //Billing
                 Route::post('/billing/purchase/{type}', [BillingController::class, 'store'])
-                    ->where('type', 'google|apple');
+                    ->where('type', 'google|apple')
+                    ->middleware(AppSignRequestMiddleware::class);
             }
         );
     }
