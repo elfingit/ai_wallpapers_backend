@@ -6,11 +6,13 @@
  * Time: 12:17
  */
 
+use App\Library\Auth\Commands\AppleSignInCommand;
 use App\Library\Auth\Commands\CreateAuthCommand;
 use App\Library\Auth\Commands\FacebookSignInCommand;
 use App\Library\Auth\Commands\GoogleSignInCommand;
 use App\Library\Auth\Commands\LogoutCommand;
 use App\Library\Auth\Commands\RemoveUserTokensCommand;
+use App\Library\Auth\Handlers\AppleSignInHandler;
 use App\Library\Auth\Handlers\CreateAuthHandler;
 use App\Library\Auth\Handlers\FacebookSignInHandler;
 use App\Library\Auth\Handlers\GoogleSignInHandler;
@@ -205,6 +207,11 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     GoogleSignInCommand::class,
     GoogleSignInHandler::class
+);
+
+\CommandBus::addHandler(
+    AppleSignInCommand::class,
+    AppleSignInHandler::class
 );
 
 \CommandBus::addHandler(
