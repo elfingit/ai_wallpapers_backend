@@ -106,6 +106,15 @@ class GooglePurchaseHandler implements CommandHandlerContract
 
         $user = User::find($command->userId->value());
 
+        $this->logger->info('user balance updated', [
+            'extra' => [
+                'user_id' => $command->userId->value(),
+                'balance' => $user->balance->balance,
+                'file' => __FILE__,
+                'line' => __LINE__,
+            ]
+        ]);
+
         return new PurchaseResult(true, $user->balance->balance);
     }
 

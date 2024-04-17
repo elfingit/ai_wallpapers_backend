@@ -8,7 +8,7 @@
 
 namespace App\Library\Billing\Commands;
 
-use App\Library\Billing\Dto\GooglePurchaseDto;
+use App\Library\Billing\Dto\ApplePurchaseDto;
 use App\Library\Billing\Values\ProductAmountValue;
 use App\Library\Billing\Values\ProductIdValue;
 use App\Library\Billing\Values\PurchaseTokenValue;
