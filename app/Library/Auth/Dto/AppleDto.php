@@ -15,8 +15,8 @@ use Elfin\LaravelDto\Dto\Attributes\ValidationRule;
 final class AppleDto
 {
     #[RequestParam('email')]
-    #[ValidationRule('required|email|max:255')]
-    public string $email;
+    #[ValidationRule('nullable|email|max:255')]
+    public ?string $email = null;
 
     #[RequestParam('id')]
     #[ValidationRule('required|string|max:1024')]

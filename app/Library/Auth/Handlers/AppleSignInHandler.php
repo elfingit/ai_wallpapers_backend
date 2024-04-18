@@ -28,7 +28,18 @@ class AppleSignInHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
-        $user = User::where('email', $command->email->value())->first();
+        $user = null;
+
+        if (is_null($command->email)) {
+            $user = User::where('params->apple_id', $command->id->value())->first();
+
+            if (!$user) {
+                return null;
+            }
+
+        } else {
+            $user = User::where('email', $command->email->value())->first();
+        }
 
         if ($user) {
             return $this->signIn($user, $command);

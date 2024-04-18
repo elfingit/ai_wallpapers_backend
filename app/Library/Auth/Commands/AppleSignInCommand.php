@@ -19,7 +19,7 @@ use Elfin\LaravelCommandBus\Library\AbstractCommand;
 
 class AppleSignInCommand extends AbstractCommand
 {
-    public EmailValue $email;
+    public ?EmailValue $email = null;
     public AppleIdValue $id;
     public DeviceIdValue $deviceId;
     public IpValue $ip;
@@ -29,7 +29,7 @@ class AppleSignInCommand extends AbstractCommand
     public static function instanceFromDto(AppleDto $dto): self
     {
         $instance = new self();
-        $instance->email = new EmailValue(\Str::lower($dto->email));
+        $instance->email = !is_null($dto->email) ? new EmailValue(\Str::lower($dto->email)) : null;
         $instance->id = new AppleIdValue($dto->id);
         $instance->deviceId = new DeviceIdValue($dto->device_id);
         $instance->ip = new IpValue($dto->ip);

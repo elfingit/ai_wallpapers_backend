@@ -28,6 +28,10 @@ class SocialNetworkController extends Controller
             default => throw new \InvalidArgumentException('Unknown network type'),
         };
 
+        if (is_null($result)) {
+            abort(401);
+        }
+
         return response()->json($result->getResult());
     }
 }
