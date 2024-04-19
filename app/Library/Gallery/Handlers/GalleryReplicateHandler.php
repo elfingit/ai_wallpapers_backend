@@ -38,6 +38,7 @@ class GalleryReplicateHandler implements CommandHandlerContract
 
             $newGal = $gallery->replicate();
             $newGal->locale = $locale;
+            $newGal->save();
         }
 
         return null;
