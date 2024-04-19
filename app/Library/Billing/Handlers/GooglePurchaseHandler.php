@@ -9,10 +9,10 @@
 namespace App\Library\Billing\Handlers;
 
 use App\Exceptions\DuplicateGoogleOrderException;
+use App\GlobalServices\GoogleService;
 use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
 use App\Library\Billing\Results\PurchaseResult;
-use App\Library\Billing\Services\GoogleService;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Models\User;
