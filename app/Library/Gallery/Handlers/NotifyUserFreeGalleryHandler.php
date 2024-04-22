@@ -66,7 +66,7 @@ class NotifyUserFreeGalleryHandler implements CommandHandlerContract
 
     public function isAsync(): bool
     {
-        return true;
+        return false;
     }
 
 }
