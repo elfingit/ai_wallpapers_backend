@@ -12,4 +12,5 @@ enum SocialNetworkEnum: string
 {
     case FACEBOOK = 'facebook';
     case GOOGLE = 'google';
+    case APPLE = 'apple';
 }

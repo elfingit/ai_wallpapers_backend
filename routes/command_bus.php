@@ -6,18 +6,24 @@
  * Time: 12:17
  */
 
+use App\Library\Auth\Commands\AppleSignInCommand;
 use App\Library\Auth\Commands\CreateAuthCommand;
 use App\Library\Auth\Commands\FacebookSignInCommand;
 use App\Library\Auth\Commands\GoogleSignInCommand;
 use App\Library\Auth\Commands\LogoutCommand;
 use App\Library\Auth\Commands\RemoveUserTokensCommand;
+use App\Library\Auth\Handlers\AppleSignInHandler;
 use App\Library\Auth\Handlers\CreateAuthHandler;
 use App\Library\Auth\Handlers\FacebookSignInHandler;
 use App\Library\Auth\Handlers\GoogleSignInHandler;
 use App\Library\Auth\Handlers\LogoutHandler;
 use App\Library\Auth\Handlers\RemoveUserTokensHandler;
+use App\Library\Billing\Commands\ApplePurchaseCommand;
+use App\Library\Billing\Commands\ApplePurchaseTransactionCommand;
 use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
+use App\Library\Billing\Handlers\ApplePurchaseHandler;
+use App\Library\Billing\Handlers\ApplePurchaseTransactionHandler;
 use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
 use App\Library\ContactForm\Commands\SendMessageCommand;
@@ -25,22 +31,26 @@ use App\Library\ContactForm\Handlers\SendMessageHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\DeleteGalleryCommand;
 use App\Library\Gallery\Commands\EditGalleryCommand;
+use App\Library\Gallery\Commands\GalleryReplicateCommand;
 use App\Library\Gallery\Commands\GetImageByPromptCommand;
 use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
+use App\Library\Gallery\Commands\NotifyUserFreeGalleryCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Library\Gallery\Commands\UpdateGalleryCommand;
 use App\Library\Gallery\Commands\UserPicturesMakePublicCommand;
 use App\Library\Gallery\Handlers\CreateGalleryHandler;
 use App\Library\Gallery\Handlers\DeleteGalleryHandler;
 use App\Library\Gallery\Handlers\EditGalleryHandler;
+use App\Library\Gallery\Handlers\GalleryReplicateHandler;
 use App\Library\Gallery\Handlers\GetImageByPromptHandler;
 use App\Library\Gallery\Handlers\GetMailFileHandler;
 use App\Library\Gallery\Handlers\GetThumbnailHandler;
 use App\Library\Gallery\Handlers\IndexGalleryHandler;
 use App\Library\Gallery\Handlers\MakePictureCopyHandler;
+use App\Library\Gallery\Handlers\NotifyUserFreeGalleryHandler;
 use App\Library\Gallery\Handlers\ThumbnailHandler;
 use App\Library\Gallery\Handlers\UpdateGalleryHandler;
 use App\Library\Gallery\Handlers\UserPicturesMakePublicHandler;
@@ -204,6 +214,11 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 );
 
 \CommandBus::addHandler(
+    AppleSignInCommand::class,
+    AppleSignInHandler::class
+);
+
+\CommandBus::addHandler(
     UserRegisteredFromSocialNetworkCommand::class,
     UserRegisteredFromSocialNetworkHandler::class
 );
@@ -251,4 +266,24 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     GooglePurchaseTransactionCommand::class,
     GooglePurchaseTransactionHandler::class
+);
+
+\CommandBus::addHandler(
+    ApplePurchaseCommand::class,
+    ApplePurchaseHandler::class
+);
+
+\CommandBus::addHandler(
+    ApplePurchaseTransactionCommand::class,
+    ApplePurchaseTransactionHandler::class
+);
+
+\CommandBus::addHandler(
+    GalleryReplicateCommand::class,
+    GalleryReplicateHandler::class
+);
+
+\CommandBus::addHandler(
+    NotifyUserFreeGalleryCommand::class,
+    NotifyUserFreeGalleryHandler::class
 );

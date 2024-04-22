@@ -20,4 +20,7 @@ enum LoggerChannel: string
     case PERSONAL_DATA = 'personal_data';
 
     case GOOGLE_PURCHASE = 'google_purchase';
+    case APPLE_PURCHASE = 'apple_purchase';
+
+    case PUSHES = 'pushes';
 }

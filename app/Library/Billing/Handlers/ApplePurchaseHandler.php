@@ -2,17 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: Andrei Siarheyeu <andreylong@gmail.com>
- * Date: 6.04.24
- * Time: 12:00
+ * Date: 16.04.24
+ * Time: 14:59
  */
 
 namespace App\Library\Billing\Handlers;
 
-use App\Exceptions\DuplicateGoogleOrderException;
-use App\GlobalServices\GoogleService;
-use App\Library\Billing\Commands\GooglePurchaseCommand;
-use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
+use App\Exceptions\DuplicateAppleTransactionException;
+use App\Library\Billing\Commands\ApplePurchaseCommand;
+use App\Library\Billing\Commands\ApplePurchaseTransactionCommand;
 use App\Library\Billing\Results\PurchaseResult;
+use App\Library\Billing\Services\AppleService;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Models\User;
@@ -21,19 +21,18 @@ use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 use Psr\Log\LoggerInterface;
 
-class GooglePurchaseHandler implements CommandHandlerContract
+class ApplePurchaseHandler implements CommandHandlerContract
 {
-    private GoogleService $googleService;
     private LoggerInterface $logger;
+    private AppleService $appleService;
 
     public function __construct()
     {
-        $this->googleService = new GoogleService();
-        $this->logger = \LoggerService::getChannel(LoggerChannel::GOOGLE_PURCHASE);
+        $this->appleService = new AppleService();
+        $this->logger = \LoggerService::getChannel(LoggerChannel::APPLE_PURCHASE);
     }
-
     /**
-     * @param GooglePurchaseCommand $command
+     * @param ApplePurchaseCommand $command
      *
      * @return CommandResultContract|null
      */
@@ -44,62 +43,85 @@ class GooglePurchaseHandler implements CommandHandlerContract
                 'product_id' => $command->productId->value(),
                 'purchase_token' => $command->purchaseToken->value(),
                 'user_id' => $command->userId->value(),
+                'file' => __FILE__,
+                'line' => __LINE__,
             ]
         ]);
 
-        $purchase_data = $this->googleService->getPurchase(
-            $command->productId->value(),
-            $command->purchaseToken->value()
-        );
+        $purchaseData = $this->appleService->getPurchase($command->purchaseToken->value());
 
-        if (is_null($purchase_data)) {
+        if (is_null($purchaseData)) {
             $this->logger->warning('purchase not found', [
                 'extra' => [
                     'product_id' => $command->productId->value(),
                     'purchase_token' => $command->purchaseToken->value(),
                     'user_id' => $command->userId->value(),
+                    'file' => __FILE__,
+                    'line' => __LINE__,
                 ]
             ]);
+
             return new PurchaseResult(false);
         }
+
+        $claims = $purchaseData->claims();
 
         $this->logger->info('purchase found', [
             'extra' => [
-                'purchase_data' => $purchase_data,
+                'transaction_id' => $claims->get('transactionId'),
+                'product_id' => $claims->get('productId'),
+                'user_id' => $command->userId->value(),
+                'file' => __FILE__,
+                'line' => __LINE__,
             ]
         ]);
 
-        if ($purchase_data['acknowledgementState'] !== 1) {
-            return new PurchaseResult(false);
-        }
+        $transactionCommand = ApplePurchaseTransactionCommand::instanceFromPrimitives(
+            $claims->get('transactionId'),
+            $claims->get('productId'),
+            $claims->get('type'),
+            $claims->get('environment'),
+            $claims->get('storefront'),
+            $claims->get('storefrontId'),
+            $claims->get('currency'),
+            $claims->get('price'),
+            $command->userId->value()
+        );
 
-        $purchase_data['user_id'] = $command->userId->value();
-
-        $googleTransactionCommand = GooglePurchaseTransactionCommand::instanceFromArray($purchase_data);
         try {
-            \CommandBus::dispatch($googleTransactionCommand);
-        } catch (DuplicateGoogleOrderException $googleOrderException) {
-            $this->logger->error('duplicate order', [
+            \CommandBus::dispatch($transactionCommand);
+        } catch (DuplicateAppleTransactionException $e) {
+            $this->logger->warning('duplicate transaction', [
                 'extra' => [
-                    'message' => $googleOrderException->getMessage(),
-                    'purchase_data' => $purchase_data,
+                    'transaction_id' => $claims->get('transactionId'),
+                    'product_id' => $claims->get('productId'),
+                    'user_id' => $command->userId->value(),
+                    'file' => __FILE__,
+                    'line' => __LINE__,
                 ]
             ]);
+
             return new PurchaseResult(false);
-        } catch (\Throwable $exception) {
+        } catch (\Throwable $e) {
             $this->logger->error('error while saving transaction', [
                 'extra' => [
-                    'message' => $exception->getMessage(),
-                    'purchase_data' => $purchase_data,
+                    'transaction_id' => $claims->get('transactionId'),
+                    'product_id' => $claims->get('productId'),
+                    'user_id' => $command->userId->value(),
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                    'file' => __FILE__,
+                    'line' => __LINE__,
                 ]
             ]);
+
             return new PurchaseResult(false);
         }
 
         $userBalanceCommand = UpdateUserBalanceCommand::instanceFromPrimitives(
             $command->userId->value(),
             $command->productAmount->value(),
-            'Google purchase'
+            'Apple purchase'
         );
 
         \CommandBus::dispatch($userBalanceCommand);

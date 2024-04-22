@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Library\Gallery\Commands\GalleryReplicateCommand;
 use App\Models\Gallery;
 use Illuminate\Console\Command;
 
@@ -24,28 +25,16 @@ class ReplicateFreeImagesCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
-        $locales = config('app.locales');
-
         $sql = 'SELECT g1.id FROM galleries g1
              WHERE (SELECT COUNT(*) FROM galleries g2 WHERE g2.prompt = g1.prompt) = 1
                AND user_id IS NULL;';
         $records = \DB::select($sql);
 
         foreach ($records as $record) {
-            $gallery = Gallery::find($record->id);
-
-            foreach ($locales as $locale) {
-
-                if ($gallery->locale == $locale) {
-                    continue;
-                }
-
-                $newGal = $gallery->replicate();
-                $newGal->locale = $locale;
-                $newGal->save();
-            }
+            $command = GalleryReplicateCommand::createFromPrimitives($record->id);
+            \CommandBus::dispatch($command);
         }
     }
 }

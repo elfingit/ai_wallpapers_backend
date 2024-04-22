@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Billing;
 
 use App\Http\Requests\AbstractRequest;
+use App\Library\Billing\Dto\ApplePurchaseDto;
 use App\Library\Billing\Dto\GooglePurchaseDto;
 use App\Library\Billing\Enums\MarketTypeEnum;
 use App\Library\Core\Acl\RulesEnum;
@@ -23,6 +24,7 @@ class PurchaseRequest extends AbstractRequest
 
         return match($type) {
             MarketTypeEnum::GOOGLE => GooglePurchaseDto::class,
+            MarketTypeEnum::APPLE => ApplePurchaseDto::class,
             default => null
         };
     }

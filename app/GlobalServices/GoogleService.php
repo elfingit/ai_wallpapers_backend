@@ -6,7 +6,7 @@
  * Time: 12:02
  */
 
-namespace App\Library\Billing\Services;
+namespace App\GlobalServices;
 
 use App\Library\Core\Logger\LoggerChannel;
 use Carbon\Carbon;
@@ -18,6 +18,7 @@ class GoogleService
     const TOKEN_URL = 'https://oauth2.googleapis.com/token';
     const PURCHASE_URL = 'https://androidpublisher.googleapis.com/androidpublisher/v3/applications/%s/purchases/products/%s/tokens/%s';
 
+    const FCM_URL = 'https://fcm.googleapis.com/v1/projects/ai-wallpapers-417722/messages:send';
     private string $refresh_token;
     private string $client_id;
 
@@ -70,6 +71,56 @@ class GoogleService
         }
 
         return null;
+    }
+
+    public function sendPush(): void
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            self::FCM_URL,
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->access_token,
+                    'Content-Type' => 'application/json'
+                ],
+                'json' => [
+                    'validate_only' => false,
+                    'message' => [
+                        'notification' => [
+                            'title' => 'notification_title',
+                            'body' => 'notification_message'
+                        ],
+                        'android' => [
+                            'notification' => [
+                                'title' => 'notification_title',
+                                'body' => 'notification_message',
+                                'sound' => 'default',
+                                'tag' => 'new_free_images',
+                                'channel_id' => 'com.nuntechs.aiwallpaper',
+                            ],
+                        ],
+                        'apns' => [
+                            'headers' => [
+                                'apns-priority' => '10',
+                            ],
+                            'payload' => [
+                                'aps' => [
+                                    'alert' => [
+                                        'title-loc-key' => 'NOTIFICATION_TITLE',
+                                        'loc-key' => 'NOTIFICATION_MESSAGE',
+                                    ],
+                                    'sound' => 'default',
+                                ],
+                                'messageID' => 'new_free_images'
+                            ],
+                        ],
+                        'topic' => 'new_free_images',
+                    ],
+                ]
+            ]
+        );
+
+        dd($response->getBody()->getContents());
     }
 
     private function getAccessToken(): ?string
