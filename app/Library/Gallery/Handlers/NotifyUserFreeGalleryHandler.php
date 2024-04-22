@@ -59,8 +59,6 @@ class NotifyUserFreeGalleryHandler implements CommandHandlerContract
             return null;
         }
 
-        //Need wait thumbs and others async tasks
-        sleep(5);
         $this->googleService->sendPush();
 
         return null;
