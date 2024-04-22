@@ -58,7 +58,13 @@ class NotifyUserFreeGalleryHandler implements CommandHandlerContract
             ]);
             return null;
         }
-
+        $this->logger->info('Sending push to user', [
+            'extra' => [
+                'id' => $command->id->value(),
+                'file' => __FILE__,
+                'line' => __LINE__
+            ]
+        ]);
         $this->googleService->sendPush();
 
         return null;
