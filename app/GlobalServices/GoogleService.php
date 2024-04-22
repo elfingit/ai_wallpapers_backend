@@ -94,17 +94,10 @@ class GoogleService
                     'json'    => [
                         'validate_only' => false,
                         'message'       => [
-                            'notification' => [
-                                'title' => 'notification_title',
-                                'body'  => 'notification_message'
-                            ],
                             'android'      => [
-                                'notification' => [
-                                    'title'      => 'notification_title',
-                                    'body'       => 'notification_message',
-                                    'sound'      => 'default',
-                                    'tag'        => 'new_free_images',
-                                    'channel_id' => 'com.nuntechs.aiwallpaper',
+                                'data' => [
+                                    'title' => 'notification_title',
+                                    'body'  => 'notification_message',
                                 ],
                             ],
                             'apns'         => [
