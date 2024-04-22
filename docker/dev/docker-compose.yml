@@ -12,3 +12,5 @@ services:
             POSTGRES_DB: db_app
         volumes:
             - ./postgres-data:/var/lib/postgresql/data
+    redis:
+        image: redis

@@ -51,13 +51,6 @@ class ThumbnailHandler implements CommandHandlerContract
         $gallery->thumbnail_path = $sub_path . DIRECTORY_SEPARATOR . $file_name;
         $gallery->save();
 
-        if (is_null($gallery->user_id)) {
-            $replicateCommand = GalleryReplicateCommand::createFromPrimitives($gallery->id);
-            \CommandBus::dispatch($replicateCommand);
-            $notifyCommand = NotifyUserFreeGalleryCommand::createFromPrimitives($gallery->id);
-            \CommandBus::dispatch($notifyCommand);
-        }
-
         return null;
     }
 
