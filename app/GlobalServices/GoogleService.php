@@ -75,52 +75,77 @@ class GoogleService
 
     public function sendPush(): void
     {
-        $response = $this->httpClient->request(
-            'POST',
-            self::FCM_URL,
-            [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->access_token,
-                    'Content-Type' => 'application/json'
-                ],
-                'json' => [
-                    'validate_only' => false,
-                    'message' => [
-                        'notification' => [
-                            'title' => 'notification_title',
-                            'body' => 'notification_message'
-                        ],
-                        'android' => [
+        $this->logger->info('sending push', [
+            'extra' => [
+                'file' => __FILE__,
+                'line' => __LINE__
+            ]
+        ]);
+
+        try {
+            $response = $this->httpClient->request(
+                'POST',
+                self::FCM_URL,
+                [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $this->access_token,
+                        'Content-Type'  => 'application/json'
+                    ],
+                    'json'    => [
+                        'validate_only' => false,
+                        'message'       => [
                             'notification' => [
                                 'title' => 'notification_title',
-                                'body' => 'notification_message',
-                                'sound' => 'default',
-                                'tag' => 'new_free_images',
-                                'channel_id' => 'com.nuntechs.aiwallpaper',
+                                'body'  => 'notification_message'
                             ],
-                        ],
-                        'apns' => [
-                            'headers' => [
-                                'apns-priority' => '10',
-                            ],
-                            'payload' => [
-                                'aps' => [
-                                    'alert' => [
-                                        'title-loc-key' => 'NOTIFICATION_TITLE',
-                                        'loc-key' => 'NOTIFICATION_MESSAGE',
-                                    ],
-                                    'sound' => 'default',
+                            'android'      => [
+                                'notification' => [
+                                    'title'      => 'notification_title',
+                                    'body'       => 'notification_message',
+                                    'sound'      => 'default',
+                                    'tag'        => 'new_free_images',
+                                    'channel_id' => 'com.nuntechs.aiwallpaper',
                                 ],
-                                'messageID' => 'new_free_images'
                             ],
+                            'apns'         => [
+                                'headers' => [
+                                    'apns-priority' => '10',
+                                ],
+                                'payload' => [
+                                    'aps'       => [
+                                        'alert' => [
+                                            'title-loc-key' => 'NOTIFICATION_TITLE',
+                                            'loc-key'       => 'NOTIFICATION_MESSAGE',
+                                        ],
+                                        'sound' => 'default',
+                                    ],
+                                    'messageID' => 'new_free_images'
+                                ],
+                            ],
+                            'topic'        => 'new_free_images',
                         ],
-                        'topic' => 'new_free_images',
-                    ],
+                    ]
                 ]
-            ]
-        );
+            );
 
-        dd($response->getBody()->getContents());
+            $this->logger->info('push sent', [
+                'extra' => [
+                    'response' => $response->getBody()->getContents(),
+                    'file' => __FILE__,
+                    'line' => __LINE__
+                ]
+            ]);
+        } catch (\Throwable $th) {
+            $this->logger->error(
+                'Failed to send push',
+                ['extra' => [
+                    'error' => $th->getMessage(),
+                    'trace' => $th->getTraceAsString(),
+                    'file' => __FILE__,
+                    'line' => __LINE__
+                ]]
+            );
+        }
     }
 
     private function getAccessToken(): ?string
