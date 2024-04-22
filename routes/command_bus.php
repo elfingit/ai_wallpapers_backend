@@ -129,7 +129,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 
 \CommandBus::addHandler(
     PictureUploadedCommand::class, [
-        ThumbnailHandler::class
+        ThumbnailHandler::class,
+        GalleryReplicateHandler::class,
+        NotifyUserFreeGalleryHandler::class
     ]
 );
 
@@ -276,14 +278,4 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     ApplePurchaseTransactionCommand::class,
     ApplePurchaseTransactionHandler::class
-);
-
-\CommandBus::addHandler(
-    GalleryReplicateCommand::class,
-    GalleryReplicateHandler::class
-);
-
-\CommandBus::addHandler(
-    NotifyUserFreeGalleryCommand::class,
-    NotifyUserFreeGalleryHandler::class
 );
