@@ -38,7 +38,8 @@ class DalleService
                 "prompt" => $prompt,
                 "n" => 1,
                 "size" => "1024x1792",
-                "quality"  => "hd"
+                "quality"  => "hd",
+                'style' => 'natural'
             ],
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $this->api_key,
