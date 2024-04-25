@@ -6,6 +6,9 @@ use App\Library\Core\Acl\AbilitiesProvider;
 use App\Library\Core\Contracts\AbilitiesProviderContract;
 use App\Library\Core\Contracts\Services\LoggerServiceContract;
 use App\Library\Core\Services\LoggerService;
+use App\Library\Wallpaper\Infrastructure\DalleService;
+use App\Library\Wallpaper\Infrastructure\ImageGeneratorTypeEnum;
+use App\Library\Wallpaper\Infrastructure\StableDiffusionService;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Elfin\Generator\Providers\GeneratorProvider;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
             LoggerServiceContract::class,
             LoggerService::class
         );
+
+        $this->app->bind(ImageGeneratorTypeEnum::DALLE->value, DalleService::class);
+        $this->app->bind(ImageGeneratorTypeEnum::STABLE_DIFFUSION->value, StableDiffusionService::class);
     }
 
     /**
