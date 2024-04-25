@@ -8,12 +8,13 @@
 
 namespace App\Library\Wallpaper\Infrastructure;
 
+use App\Library\Wallpaper\Contracts\ImageGeneratorServiceContract;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
 
-class DalleService
+class DalleService implements ImageGeneratorServiceContract
 {
     protected Client $client;
     protected string $api_key;

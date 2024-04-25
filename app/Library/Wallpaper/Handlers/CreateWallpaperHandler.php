@@ -10,7 +10,7 @@ use App\Library\Gallery\Commands\GetImageByPromptCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
 use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
-use App\Library\Wallpaper\Infrastructure\DalleService;
+use App\Library\Wallpaper\Contracts\ImageGeneratorServiceContract;
 use App\Library\Wallpaper\Results\GalleryResult;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
@@ -22,12 +22,12 @@ use Psr\Log\LoggerInterface;
 
 class CreateWallpaperHandler implements CommandHandlerContract
 {
-    private DalleService $dalleService;
+    private ImageGeneratorServiceContract $aiService;
     private LoggerInterface $logger;
 
     public function __construct()
     {
-        $this->dalleService = new DalleService();
+        $this->aiService = app(config('ai.current_service'));
         $this->logger = \LoggerService::getChannel(LoggerChannel::OPEN_AI);
     }
 
@@ -113,7 +113,7 @@ class CreateWallpaperHandler implements CommandHandlerContract
                 'file'    => __FILE__,
                 'line'    => __LINE__
             ]);
-            $image_data = $this->dalleService->getImageByPrompt($prompt);
+            $image_data = $this->aiService->getImageByPrompt($prompt);
 
             if ($image_data) {
                 $this->logger->info('got it', [

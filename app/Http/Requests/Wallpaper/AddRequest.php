@@ -28,8 +28,9 @@ class AddRequest extends AbstractRequest
         $validator->after(function ($validator) {
             $prompts = explode(' ', $this->input('prompt'));
             $prompts = array_filter($prompts, fn($prompt) => strlen($prompt) > 2);
-            if (count($prompts) < 5) {
-                $validator->errors()->add('prompt', __('Prompt must contain at least 5 words'));
+            if (count($prompts) < 2) {
+                //TODO add translation
+                $validator->errors()->add('prompt', __('Prompt must contain at least 2 words'));
             }
         });
     }

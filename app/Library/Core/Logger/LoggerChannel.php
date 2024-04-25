@@ -11,6 +11,7 @@ namespace App\Library\Core\Logger;
 enum LoggerChannel: string
 {
     case OPEN_AI = 'openai';
+    case STABLE_DIFFUSION = 'stable_diffusion';
     case USER_BALANCE = 'user_balance';
 
     case HTTP_REQUEST = 'http_request';
