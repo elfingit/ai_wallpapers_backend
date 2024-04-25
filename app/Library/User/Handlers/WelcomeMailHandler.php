@@ -24,7 +24,7 @@ class WelcomeMailHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
-        $user = User::findOrFail($command->idValue->value());
+        $user = User::findOrFail($command->userId->value());
 
         $welcomeMail = new WelcomeMail();
         $welcomeMail->locale = $command->localeValue->value();

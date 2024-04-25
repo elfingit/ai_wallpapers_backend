@@ -14,13 +14,13 @@ use Elfin\LaravelCommandBus\Library\AbstractCommand;
 
 class UserRegisteredCommand extends AbstractCommand
 {
-    public IdValue $idValue;
+    public IdValue $userId;
     public LocaleValue $localeValue;
 
     public static function createFromPrimitives(int $id, string $locale): self
     {
         $command = new self();
-        $command->idValue = new IdValue($id);
+        $command->userId = new IdValue($id);
         $command->localeValue = new LocaleValue($locale);
         return $command;
     }
