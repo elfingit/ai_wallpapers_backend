@@ -33,8 +33,8 @@ Route::group(
     ],
     function () {
         Route::post('/registration', [RegistrationController::class, 'store']);
-        Route::post('/registration/social', [SocialNetworkController::class, 'store'])
-            ->middleware(AppSignRequestMiddleware::class);
+        Route::post('/registration/social', [SocialNetworkController::class, 'store']);
+            //->middleware(AppSignRequestMiddleware::class);
         Route::post('/auth', [AuthController::class, 'store']);
         Route::post('/contact_form', [ContactFormController::class, 'store']);
 

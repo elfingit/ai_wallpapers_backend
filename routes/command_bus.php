@@ -74,6 +74,7 @@ use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use App\Library\UserBalance\Commands\RemoveUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Library\UserBalance\Handlers\GetUserBalanceHandler;
+use App\Library\UserBalance\Handlers\GiftForBalanceHandler;
 use App\Library\UserBalance\Handlers\RemoveUserBalanceHandler;
 use App\Library\UserBalance\Handlers\UpdateUserBalanceHandler;
 use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionCommand;
@@ -201,8 +202,10 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 );
 
 \CommandBus::addHandler(
-    UserRegisteredCommand::class,
-    WelcomeMailHandler::class
+    UserRegisteredCommand::class,[
+        WelcomeMailHandler::class,
+        GiftForBalanceHandler::class
+    ]
 );
 
 \CommandBus::addHandler(
@@ -221,8 +224,10 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 );
 
 \CommandBus::addHandler(
-    UserRegisteredFromSocialNetworkCommand::class,
-    UserRegisteredFromSocialNetworkHandler::class
+    UserRegisteredFromSocialNetworkCommand::class, [
+        UserRegisteredFromSocialNetworkHandler::class,
+        GiftForBalanceHandler::class
+    ]
 );
 
 \CommandBus::addHandler(
