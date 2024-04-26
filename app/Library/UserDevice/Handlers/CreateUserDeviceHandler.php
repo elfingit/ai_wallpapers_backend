@@ -25,12 +25,17 @@ class CreateUserDeviceHandler implements CommandHandlerContract
             return new CreateResult($device);
         }
 
-        $device = UserDevice::create([
+        $data = [
             'uuid' => $command->idValue->value(),
             'ip_address' => $command->ipValue->value(),
             'user_agent' => $command->userAgentValue->value(),
-            'user_id' => $command->userIdValue->value(),
-        ]);
+        ];
+
+        if (!is_null($command->userIdValue)) {
+            $data['user_id'] = $command->userIdValue->value();
+        }
+
+        $device = UserDevice::create($data);
 
         return new CreateResult($device);
     }
