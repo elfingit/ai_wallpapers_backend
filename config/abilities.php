@@ -9,4 +9,5 @@ return [
     'admin' => require_once 'abilities/admin.php',
     'user' => require_once 'abilities/user.php',
     'paiduser' => require_once 'abilities/paiduser.php',
+    'device' => require_once 'abilities/device.php'
 ];

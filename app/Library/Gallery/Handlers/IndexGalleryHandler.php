@@ -33,12 +33,14 @@ class IndexGalleryHandler implements CommandHandlerContract
         }
 
         if ($command->isPublicValue->value()) {
-            $query->where(function ($query) use ($command) {
-                $query->whereNull('user_id');
-                $query->orWhere('user_id', $command->userIdValue->value());
-            });
+            $query->whereNull('user_id');
+            $query->whereNull('device_uuid');
         } else {
-            $query->where('user_id', $command->userIdValue->value());
+            if ($command->deviceIdValue) {
+                $query->where('device_uuid', $command->deviceIdValue->value());
+            } else if ($command->userIdValue) {
+                $query->where('user_id', $command->userIdValue->value());
+            }
         }
 
         $query->orderBy('id', 'desc');

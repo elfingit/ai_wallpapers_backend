@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Library\Core\Acl\RulesEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,4 +36,13 @@ class UserDevice extends Model
     public $incrementing = false;
 
     protected $keyType = 'string';
+
+    public function tokenCan(string $rule): bool
+    {
+        $rule = RulesEnum::tryFrom($rule);
+
+        $rules = config('abilities.device', []);
+
+        return in_array($rule, $rules, true);
+    }
 }

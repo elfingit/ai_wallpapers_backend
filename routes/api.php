@@ -40,7 +40,7 @@ Route::group(
 
         Route::group(
             [
-                'middleware' => 'auth:sanctum',
+                'middleware' => 'auth:device',
             ],
             function () {
                 //Gallery

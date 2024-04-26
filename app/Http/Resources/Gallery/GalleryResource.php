@@ -7,6 +7,7 @@ use App\Library\Core\Acl\RulesEnum;
 use App\Library\Core\Utils\Utils;
 use App\Models\Gallery;
 use App\Models\User;
+use App\Models\UserDevice;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -42,14 +43,22 @@ class GalleryResource extends JsonResource
         return $data;
     }
 
-    private function canSeePrompt(Gallery $gallery, User $user): bool
+    private function canSeePrompt(Gallery $gallery, User | UserDevice $user): bool
     {
+        if ($user instanceof UserDevice) {
+            return false;
+        }
+
         return $user->tokenCan(RulesEnum::PICTURE_PROMPT->value())
             || $gallery->user_id === $user->id;
     }
 
-    private function canSeeLocale(Gallery $gallery, User $user): bool
+    private function canSeeLocale(Gallery $gallery, User | UserDevice $user): bool
     {
+        if ($user instanceof UserDevice) {
+            return false;
+        }
+
         return $user->tokenCan(RulesEnum::PICTURE_LOCALE->value());
     }
 

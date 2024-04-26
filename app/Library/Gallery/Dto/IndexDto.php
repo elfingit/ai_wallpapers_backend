@@ -22,4 +22,7 @@ final class IndexDto
 
     #[HeaderParam('X-App-Locale')]
     public string $locale = 'en';
+
+    public ?int $user_id = null;
+    public ?string $device_uuid = null;
 }
