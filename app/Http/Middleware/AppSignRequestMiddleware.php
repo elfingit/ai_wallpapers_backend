@@ -34,7 +34,7 @@ class AppSignRequestMiddleware
 
         $hash = hash_hmac('sha256', $string, config('app.client_signature'));
 
-        if ($hash != $signature) {
+        if (hash_equals($signature, $hash) === false) {
             return response()->json(['error' => 'Bad request'], 400);
         }
 

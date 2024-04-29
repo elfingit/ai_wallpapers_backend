@@ -7,10 +7,11 @@ use App\Http\Requests\UserDevice\AddRequest;
 use App\Library\DeviceToken\Commands\CreateDeviceTokenCommand;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserDeviceController extends Controller
 {
-    public function store(AddRequest $request)
+    public function store(AddRequest $request): JsonResponse
     {
         $dto = $request->getDto();
         $command = CreateUserDeviceCommand::createFromPrimitive(
