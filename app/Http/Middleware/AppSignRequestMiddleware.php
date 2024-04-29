@@ -16,7 +16,7 @@ class AppSignRequestMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $signature = $request->input('_signature');
+        $signature = $request->input('signature');
 
         if (is_null($signature)) {
             return response()->json(['error' => 'Bad request no sig field'], 400);
@@ -27,7 +27,7 @@ class AppSignRequestMiddleware
         $string = '';
 
         foreach ($input as $key => $value) {
-            if ($key == '_signature') continue;
+            if ($key == 'signature') continue;
 
             $string .= $key . ':' . $value;
         }
