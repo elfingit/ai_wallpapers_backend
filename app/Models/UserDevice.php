@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Library\Core\Acl\RulesEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\UserDevice
@@ -37,12 +38,20 @@ class UserDevice extends Model
 
     protected $keyType = 'string';
 
+    private UserDeviceToken $deviceToken;
+
+    public function tokens(): HasMany
+    {
+        return $this->hasMany(UserDeviceToken::class, 'device_uuid', 'uuid');
+    }
     public function tokenCan(string $rule): bool
     {
-        $rule = RulesEnum::tryFrom($rule);
-
-        $rules = config('abilities.device', []);
-
-        return in_array($rule, $rules, true);
+        return $this->deviceToken->can($rule);
     }
+
+    public function withAccessToken(UserDeviceToken $deviceToken): void
+    {
+        $this->deviceToken = $deviceToken;
+    }
+
 }

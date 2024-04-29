@@ -28,6 +28,8 @@ use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
 use App\Library\ContactForm\Commands\SendMessageCommand;
 use App\Library\ContactForm\Handlers\SendMessageHandler;
+use App\Library\DeviceToken\Commands\CreateDeviceTokenCommand;
+use App\Library\DeviceToken\Handlers\CreateDeviceTokenHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\DeleteGalleryCommand;
 use App\Library\Gallery\Commands\EditGalleryCommand;
@@ -283,4 +285,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     ApplePurchaseTransactionCommand::class,
     ApplePurchaseTransactionHandler::class
+);
+
+\CommandBus::addHandler(
+    CreateDeviceTokenCommand::class,
+    CreateDeviceTokenHandler::class
 );

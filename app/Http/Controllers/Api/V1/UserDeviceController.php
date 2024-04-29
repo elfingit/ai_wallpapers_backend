@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserDevice\AddRequest;
+use App\Library\DeviceToken\Commands\CreateDeviceTokenCommand;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use Illuminate\Http\Request;
 
@@ -17,8 +18,21 @@ class UserDeviceController extends Controller
             $request->ip() ?? 'localhost',
             $request->userAgent() ?? 'unknown'
         );
-        \CommandBus::dispatch($command);
+        $result = \CommandBus::dispatch($command);
 
-        return response()->json(status: 201);
+        if (!$result) {
+            return response()->json(status: 500);
+        }
+
+        $tokenCommand = CreateDeviceTokenCommand::instanceFromPrimitive($result->getResult()->uuid);
+        $tokenResult = \CommandBus::dispatch($tokenCommand);
+
+        if (!$tokenResult) {
+            return response()->json(status: 500);
+        }
+
+        return response()->json([
+            'token' => $tokenResult->getResult()
+        ]);
     }
 }
