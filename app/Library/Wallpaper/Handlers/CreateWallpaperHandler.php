@@ -10,6 +10,7 @@ use App\Library\Gallery\Commands\GetImageByPromptCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
 use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
+use App\Library\UserDevice\Commands\GetDeviceBalanceCommand;
 use App\Library\Wallpaper\Contracts\ImageGeneratorServiceContract;
 use App\Library\Wallpaper\Results\GalleryResult;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -38,16 +39,30 @@ class CreateWallpaperHandler implements CommandHandlerContract
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
         \DB::beginTransaction();
+        try {
+            if (!is_null($command->userIdValue)) {
+                return $this->createForUser($command);
+            } else if (!is_null($command->deviceIdValue)) {
+                return $this->createForDevice($command);
+            }
+        } catch (\Throwable $th) {
+            \DB::rollBack();
+            $this->logger->error('error while trying get an image', [
+                'prompt' => $command->promptValue->value(),
+                'locale' => $command->localeValue->value(),
+                'user_id' => $command->userIdValue?->value(),
+                'device_id' => $command->deviceIdValue?->value(),
+                'error' => $th->getMessage(),
+                'trace' => $th->getTraceAsString(),
+                'file' => __FILE__,
+                'line' => __LINE__
+            ]);
+        }
 
-        $prompt = $command->promptValue->value();
-        $locale = $command->localeValue->value();
+
 
         try {
-            $balance = \CommandBus::dispatch(
-                GetUserBalanceCommand::instanceFromPrimitives(
-                    $command->userIdValue->value()
-                )
-            )->getResult();
+            $balance = $this->getOwnerBalance($command);
 
             if ($balance < 1) {
                 throw new InsufficientBalanceException();
@@ -58,7 +73,8 @@ class CreateWallpaperHandler implements CommandHandlerContract
             $this->logger->info('trying create wallpaper', [
                 'prompt'  => $prompt,
                 'locale'  => $locale,
-                'user_id' => $command->userIdValue->value(),
+                'user_id' => $command->userIdValue?->value(),
+                'device_id' => $command->deviceIdValue?->value(),
                 'file'    => __FILE__,
                 'line'    => __LINE__
             ]);
@@ -79,18 +95,34 @@ class CreateWallpaperHandler implements CommandHandlerContract
                     'prompt'  => $prompt,
                     'locale'  => $locale,
                     'g_id'    => $gallery->id,
-                    'user_id' => $command->userIdValue->value(),
+                    'user_id' => $command->userIdValue?->value(),
+                    'device_id' => $command->deviceIdValue?->value(),
                     'file'    => __FILE__,
                     'line'    => __LINE__
                 ]);
 
+                $newGallery = null;
 
-                $newGallery = \CommandBus::dispatch(
-                    MakePictureCopyCommand::instanceFromPrimitives(
+                if (
+                    !is_null($gallery->user_id)
+                    && !is_null($command->userIdValue)
+                    && $gallery->user_id != $command->userIdValue->value()
+                ) {
+                    \CommandBus::dispatch(
+                        UpdateUserBalanceCommand::instanceFromPrimitives(
+                            $gallery->user_id,
+                            -1,
+                            'charge for wallpaper'
+                        )
+                    );
+
+                    $copyCommand = MakePictureCopyCommand::instanceFromPrimitivesWithUser(
                         $gallery->id,
                         $command->userIdValue->value()
-                    )
-                )->getResult();
+                    );
+
+                    $newGallery = \CommandBus::dispatch($copyCommand)->getResult();
+                }
 
                 if ($gallery->user_id != $command->userIdValue->value()) {
                     \CommandBus::dispatch(
@@ -100,16 +132,31 @@ class CreateWallpaperHandler implements CommandHandlerContract
                             'charge for wallpaper'
                         )
                     );
-                }
-                \DB::commit();
 
-                return new GalleryResult($newGallery);
+                    $copyCommand = null;
+
+                    if (!is_null($command->deviceIdValue)) {
+                        $copyCommand = MakePictureCopyCommand::instanceFromPrimitivesWithDevice(
+                            $gallery->id,
+                            $command->deviceIdValue->value()
+                        );
+                    } else if (!is_null($command->userIdValue)) {
+
+                    }
+
+                    $newGallery = \CommandBus::dispatch($copyCommand)->getResult();
+
+                    \DB::commit();
+
+                    return new GalleryResult($newGallery);
+                }
             }
 
             $this->logger->info('no matches trying get from AI', [
                 'prompt'  => $prompt,
                 'locale'  => $locale,
-                'user_id' => $command->userIdValue->value(),
+                'user_id' => $command->userIdValue?->value(),
+                'device_id' => $command->deviceIdValue?->value(),
                 'file'    => __FILE__,
                 'line'    => __LINE__
             ]);
@@ -119,7 +166,8 @@ class CreateWallpaperHandler implements CommandHandlerContract
                 $this->logger->info('got it', [
                     'prompt'     => $prompt,
                     'locale'     => $locale,
-                    'user_id'    => $command->userIdValue->value(),
+                    'user_id'    => $command->userIdValue?->value(),
+                    'device_id' => $command->deviceIdValue?->value(),
                     'image_data' => $image_data,
                     'file'       => __FILE__,
                     'line'       => __LINE__
@@ -192,7 +240,8 @@ class CreateWallpaperHandler implements CommandHandlerContract
             $this->logger->error('error while trying get an image', [
                 'prompt' => $prompt,
                 'locale' => $locale,
-                'user_id' => $command->userIdValue->value(),
+                'user_id' => $command->userIdValue?->value(),
+                'device_id' => $command->deviceIdValue?->value(),
                 'error' => $th->getMessage(),
                 'trace' => $th->getTraceAsString(),
                 'file' => __FILE__,
@@ -216,6 +265,60 @@ class CreateWallpaperHandler implements CommandHandlerContract
             throw new ContentPolicyViolationException(
                 form_field: 'prompt',
             );
+        }
+    }
+
+    private function getOwnerBalance(CreateWallpaperCommand $command): float
+    {
+        $balance = 0.0;
+
+        if (!is_null($command->userIdValue)) {
+            $balance = \CommandBus::dispatch(
+                GetUserBalanceCommand::instanceFromPrimitives(
+                    $command->userIdValue->value()
+                )
+            )->getResult();
+        } else if (!is_null($command->deviceIdValue)) {
+            $balance = \CommandBus::dispatch(
+                GetDeviceBalanceCommand::instanceFromPrimitive(
+                    $command->deviceIdValue->value()
+                )
+            )->getResult();
+        }
+
+        return $balance;
+    }
+
+    private function createForUser(CreateWallpaperCommand $command): ?CommandResultContract
+    {
+        $balance = $this->getOwnerBalance($command);
+
+        if ($balance < 1) {
+            throw new InsufficientBalanceException();
+        }
+
+        $prompt = $command->promptValue->value();
+        $locale = $command->localeValue->value();
+
+        $gallery = null;
+
+        $this->logger->info('trying create wallpaper for user', [
+            'prompt'  => $prompt,
+            'locale'  => $locale,
+            'user_id' => $command->userIdValue->value(),
+            'file'    => __FILE__,
+            'line'    => __LINE__
+        ]);
+
+        $galleryResponse = \CommandBus::dispatch(
+            GetImageByPromptCommand::instanceFromPrimitives(
+                $prompt,
+                $locale
+            )
+        );
+
+        if ($galleryResponse) {
+            $gallery = $galleryResponse->getResult();
         }
     }
 }

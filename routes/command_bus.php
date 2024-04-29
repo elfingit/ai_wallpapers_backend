@@ -82,9 +82,11 @@ use App\Library\UserBalance\Handlers\UpdateUserBalanceHandler;
 use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionCommand;
 use App\Library\UserBalanceTransaction\Handlers\CreateUserBalanceTransactionHandler;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
+use App\Library\UserDevice\Commands\GetDeviceBalanceCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Library\UserDevice\Commands\RemoveUserDevicesCommand;
 use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
+use App\Library\UserDevice\Handlers\GetDeviceBalanceHandler;
 use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
 use App\Library\UserDevice\Handlers\RemoveUserDevicesHandler;
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
@@ -290,4 +292,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     CreateDeviceTokenCommand::class,
     CreateDeviceTokenHandler::class
+);
+
+\CommandBus::addHandler(
+    GetDeviceBalanceCommand::class,
+    GetDeviceBalanceHandler::class
 );
