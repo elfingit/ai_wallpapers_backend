@@ -19,7 +19,7 @@ class AppSignRequestMiddleware
         $signature = $request->input('_signature');
 
         if (is_null($signature)) {
-            return response()->json(['error' => 'Bad request'], 400);
+            return response()->json(['error' => 'Bad request no sig field'], 400);
         }
 
         $input = $request->all();
@@ -35,7 +35,7 @@ class AppSignRequestMiddleware
         $hash = hash_hmac('sha256', $string, config('app.client_signature'));
 
         if (hash_equals($signature, $hash) === false) {
-            return response()->json(['error' => 'Bad request'], 400);
+            return response()->json(['error' => 'Bad request bad sig'], 400);
         }
 
         return $next($request);
