@@ -5,6 +5,7 @@ namespace App\Library\Wallpaper\Handlers;
 use App\Exceptions\ContentPolicyViolationException;
 use App\Exceptions\InsufficientBalanceException;
 use App\Library\Core\Logger\LoggerChannel;
+use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\GetImageByPromptCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
@@ -319,6 +320,149 @@ class CreateWallpaperHandler implements CommandHandlerContract
 
         if ($galleryResponse) {
             $gallery = $galleryResponse->getResult();
+
+            if (!is_null($gallery->user_id) && $gallery->user_id != $command->userIdValue->value()) {
+                \CommandBus::dispatch(
+                    UpdateUserBalanceCommand::instanceFromPrimitives(
+                        $gallery->user_id,
+                        -1,
+                        'charge for wallpaper'
+                    )
+                );
+
+                $copyCommand = MakePictureCopyCommand::instanceFromPrimitivesWithUser(
+                    $gallery->id,
+                    $command->userIdValue->value()
+                );
+
+                $newGallery = \CommandBus::dispatch($copyCommand)->getResult();
+
+                \DB::commit();
+
+                return new GalleryResult($newGallery);
+            }
+        }
+
+        $this->logger->info('no matches trying get from AI', [
+            'prompt'  => $prompt,
+            'locale'  => $locale,
+            'user_id' => $command->userIdValue->value(),
+            'file'    => __FILE__,
+            'line'    => __LINE__
+        ]);
+
+        $image_data = $this->aiService->getImageByPrompt($prompt);
+
+        if ($image_data) {
+            $this->logger->info('got it', [
+                'prompt'     => $prompt,
+                'locale'     => $locale,
+                'user_id'    => $command->userIdValue?->value(),
+                'device_id'  => $command->deviceIdValue?->value(),
+                'image_data' => $image_data,
+                'file'       => __FILE__,
+                'line'       => __LINE__
+            ]);
+
+            $tags = $this->getTags($command);
+
+            $gallery = \CommandBus::dispatch(
+                CreateGalleryCommand::createFromPrimitives(
+                    $command->promptValue->value(),
+                    $tags,
+                    $command->localeValue->value(),
+                    user_id: $command->userIdValue->value(),
+                    file_path: $image_data['file_path'],
+                    revised_prompt: $image_data['prompt']
+                )
+            )->getResult();
+
+            \CommandBus::dispatch(
+                UpdateUserBalanceCommand::instanceFromPrimitives(
+                    $command->userIdValue->value(),
+                    -1,
+                    'charge for wallpaper'
+                )
+            );
+
+            \DB::commit();
+
+            return new GalleryResult($gallery);
+        }
+
+        \DB::rollBack();
+        $this->logger->error('can\'t get AI response', [
+            'prompt'  => $prompt,
+            'locale'  => $locale,
+            'user_id' => $command->userIdValue->value(),
+            'file'    => __FILE__,
+            'line'    => __LINE__
+        ]);
+
+        return null;
+    }
+
+    private function getTags(CreateWallpaperCommand $command): array
+    {
+        $tags = array_filter(
+            explode(' ', $command->promptValue->value()),
+            fn($tag) => strlen($tag) > 2
+        );
+
+        return array_slice($tags, 0, 10);
+    }
+
+    private function createForDevice(CreateWallpaperCommand $command): ?CommandResultContract
+    {
+        $balance = $this->getOwnerBalance($command);
+
+        if ($balance < 1) {
+            throw new InsufficientBalanceException();
+        }
+
+        $prompt = $command->promptValue->value();
+        $locale = $command->localeValue->value();
+
+        $gallery = null;
+
+        $this->logger->info('trying create wallpaper for device', [
+            'prompt'  => $prompt,
+            'locale'  => $locale,
+            'user_id' => $command->userIdValue->value(),
+            'file'    => __FILE__,
+            'line'    => __LINE__
+        ]);
+
+        $galleryResponse = \CommandBus::dispatch(
+            GetImageByPromptCommand::instanceFromPrimitives(
+                $prompt,
+                $locale
+            )
+        );
+
+        if ($galleryResponse) {
+            $gallery = $galleryResponse->getResult();
+
+            if (!is_null($gallery->device_id) && $gallery->device_id != $command->deviceIdValue->value()) {
+                \CommandBus::dispatch(
+                    UpdateDeviceBalanceCommand::instanceFromPrimitives(
+                        $command->deviceIdValue->value(),
+                        -1,
+                        'charge for wallpaper'
+                    )
+                );
+
+                $copyCommand = MakePictureCopyCommand::instanceFromPrimitivesWithDevice(
+                    $gallery->id,
+                    $command->deviceIdValue->value()
+                );
+
+                $newGallery = \CommandBus::dispatch($copyCommand)->getResult();
+
+                \DB::commit();
+
+                return new GalleryResult($newGallery);
+            }
         }
     }
 }

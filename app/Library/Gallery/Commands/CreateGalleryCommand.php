@@ -45,7 +45,8 @@ class CreateGalleryCommand extends AbstractCommand
         string $prompt,
         array $tags,
         string $locale,
-        int $user_id,
+        ?int $user_id = null,
+        ?string $device_id = null,
         string $file_path,
         ?string $revised_prompt = null
     ): self
