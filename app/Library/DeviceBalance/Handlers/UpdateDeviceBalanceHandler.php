@@ -9,6 +9,7 @@
 namespace App\Library\DeviceBalance\Handlers;
 
 use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
+use App\Models\DeviceBalanceTransaction;
 use App\Models\UserDevice;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -33,6 +34,12 @@ class UpdateDeviceBalanceHandler implements CommandHandlerContract
 
         $device->update([
             'balance' => $device->balance + $command->balanceAmount->value()
+        ]);
+
+        DeviceBalanceTransaction::create([
+            'device_id' => $device->uuid,
+            'amount' => $command->balanceAmount->value(),
+            'notice' => $command->notice?->value()
         ]);
 
         \DB::commit();

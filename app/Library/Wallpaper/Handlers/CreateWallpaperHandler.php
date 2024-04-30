@@ -41,11 +41,22 @@ class CreateWallpaperHandler implements CommandHandlerContract
     {
         \DB::beginTransaction();
         try {
-            if (!is_null($command->userIdValue)) {
+            if ( ! is_null($command->userIdValue)) {
                 return $this->createForUser($command);
-            } else if (!is_null($command->deviceIdValue)) {
+            } elseif ( ! is_null($command->deviceIdValue)) {
                 return $this->createForDevice($command);
             }
+        } catch (InsufficientBalanceException $exception) {
+            \DB::rollBack();
+            $this->logger->warning('insufficient balance', [
+                'prompt'  => $command->promptValue->value(),
+                'locale'  => $command->localeValue->value(),
+                'user_id' => $command->userIdValue?->value(),
+                'device_id' => $command->deviceIdValue?->value(),
+                'file'    => __FILE__,
+                'line'    => __LINE__
+            ]);
+            throw $exception;
         } catch (\Throwable $th) {
             \DB::rollBack();
             $this->logger->error('error while trying get an image', [
@@ -58,9 +69,11 @@ class CreateWallpaperHandler implements CommandHandlerContract
                 'file' => __FILE__,
                 'line' => __LINE__
             ]);
+
+            throw $th;
         }
 
-
+        return null;
 
         try {
             $balance = $this->getOwnerBalance($command);
@@ -218,8 +231,6 @@ class CreateWallpaperHandler implements CommandHandlerContract
             $this->processRequestException($exception);
 
             $this->logger->error('error while trying get an image', [
-                'prompt' => $prompt,
-                'locale' => $locale,
                 'user_id' => $command->userIdValue->value(),
                 'error' => $exception->getMessage(),
                 'trace' => $exception->getTraceAsString(),
@@ -229,8 +240,6 @@ class CreateWallpaperHandler implements CommandHandlerContract
         } catch (InsufficientBalanceException $exception) {
             \DB::rollBack();
             $this->logger->error('insufficient balance', [
-                'prompt'  => $prompt,
-                'locale'  => $locale,
                 'user_id' => $command->userIdValue->value(),
                 'file'    => __FILE__,
                 'line'    => __LINE__
@@ -239,8 +248,6 @@ class CreateWallpaperHandler implements CommandHandlerContract
         } catch (\Throwable $th) {
             \DB::rollBack();
             $this->logger->error('error while trying get an image', [
-                'prompt' => $prompt,
-                'locale' => $locale,
                 'user_id' => $command->userIdValue?->value(),
                 'device_id' => $command->deviceIdValue?->value(),
                 'error' => $th->getMessage(),
@@ -428,7 +435,7 @@ class CreateWallpaperHandler implements CommandHandlerContract
         $this->logger->info('trying create wallpaper for device', [
             'prompt'  => $prompt,
             'locale'  => $locale,
-            'user_id' => $command->userIdValue->value(),
+            'device_id' => $command->deviceIdValue->value(),
             'file'    => __FILE__,
             'line'    => __LINE__
         ]);
@@ -464,5 +471,63 @@ class CreateWallpaperHandler implements CommandHandlerContract
                 return new GalleryResult($newGallery);
             }
         }
+
+        $this->logger->info('no matches trying get from AI', [
+            'prompt'  => $prompt,
+            'locale'  => $locale,
+            'user_id' => $command->userIdValue?->value(),
+            'device_id' => $command->deviceIdValue?->value(),
+            'file'    => __FILE__,
+            'line'    => __LINE__
+        ]);
+        $image_data = $this->aiService->getImageByPrompt($prompt);
+
+        if ($image_data) {
+            $this->logger->info('got it', [
+                'prompt'     => $prompt,
+                'locale'     => $locale,
+                'user_id'    => $command->userIdValue?->value(),
+                'device_id'  => $command->deviceIdValue?->value(),
+                'image_data' => $image_data,
+                'file'       => __FILE__,
+                'line'       => __LINE__
+            ]);
+
+            $tags = $this->getTags($command);
+
+            $gallery = \CommandBus::dispatch(
+                CreateGalleryCommand::createFromPrimitives(
+                    $command->promptValue->value(),
+                    $tags,
+                    $command->localeValue->value(),
+                    $image_data['file_path'],
+                    device_id: $command->deviceIdValue->value(),
+                    revised_prompt: $image_data['prompt']
+                )
+            )->getResult();
+
+            \CommandBus::dispatch(
+                UpdateDeviceBalanceCommand::instanceFromPrimitives(
+                    $command->deviceIdValue->value(),
+                    -1,
+                    'charge for wallpaper'
+                )
+            );
+
+            \DB::commit();
+
+            return new GalleryResult($gallery);
+        } else {
+            \DB::rollBack();
+            $this->logger->error('can\'t get AI response', [
+                'prompt'  => $prompt,
+                'locale'  => $locale,
+                'device_id' => $command->deviceIdValue->value(),
+                'file'    => __FILE__,
+                'line'    => __LINE__
+            ]);
+        }
+
+        return null;
     }
 }

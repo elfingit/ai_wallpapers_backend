@@ -28,18 +28,18 @@ use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
 use App\Library\ContactForm\Commands\SendMessageCommand;
 use App\Library\ContactForm\Handlers\SendMessageHandler;
+use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
+use App\Library\DeviceBalance\Handlers\UpdateDeviceBalanceHandler;
 use App\Library\DeviceToken\Commands\CreateDeviceTokenCommand;
 use App\Library\DeviceToken\Handlers\CreateDeviceTokenHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\DeleteGalleryCommand;
 use App\Library\Gallery\Commands\EditGalleryCommand;
-use App\Library\Gallery\Commands\GalleryReplicateCommand;
 use App\Library\Gallery\Commands\GetImageByPromptCommand;
 use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
-use App\Library\Gallery\Commands\NotifyUserFreeGalleryCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Library\Gallery\Commands\UpdateGalleryCommand;
 use App\Library\Gallery\Commands\UserPicturesMakePublicCommand;
@@ -297,4 +297,10 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     GetDeviceBalanceCommand::class,
     GetDeviceBalanceHandler::class
+);
+
+
+\CommandBus::addHandler(
+    UpdateDeviceBalanceCommand::class,
+    UpdateDeviceBalanceHandler::class
 );
