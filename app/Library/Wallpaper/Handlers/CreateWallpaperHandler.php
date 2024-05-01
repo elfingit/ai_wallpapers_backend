@@ -19,7 +19,6 @@ use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
-use GuzzleHttp\Exception\RequestException;
 use Psr\Log\LoggerInterface;
 
 class CreateWallpaperHandler implements CommandHandlerContract
@@ -282,6 +281,13 @@ class CreateWallpaperHandler implements CommandHandlerContract
             $gallery = $galleryResponse->getResult();
 
             if ($this->use_default_img) {
+                \CommandBus::dispatch(
+                    UpdateDeviceBalanceCommand::instanceFromPrimitives(
+                        $command->deviceIdValue->value(),
+                        -1,
+                        'charge for default wallpaper'
+                    )
+                );
                 return new GalleryResult($gallery);
             }
 
