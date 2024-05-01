@@ -73,11 +73,12 @@ class GooglePurchaseHandler implements CommandHandlerContract
             return new PurchaseResult(false);
         }
 
-        $purchase_data['user_id'] = $command->userId->value();
-
-        $googleTransactionCommand = GooglePurchaseTransactionCommand::instanceFromArray($purchase_data);
         try {
-            \CommandBus::dispatch($googleTransactionCommand);
+            if ( ! is_null($command->userId)) {
+                return $this->userPurchase($command, $purchase_data);
+            } elseif ( ! is_null($command->deviceId)) {
+                return $this->devicePurchase($command, $purchase_data);
+            }
         } catch (DuplicateGoogleOrderException $googleOrderException) {
             $this->logger->error('duplicate order', [
                 'extra' => [
@@ -87,7 +88,7 @@ class GooglePurchaseHandler implements CommandHandlerContract
             ]);
             return new PurchaseResult(false);
         } catch (\Throwable $exception) {
-            $this->logger->error('error while saving transaction', [
+            $this->logger->error('error while acknowledge purchase', [
                 'extra' => [
                     'message' => $exception->getMessage(),
                     'purchase_data' => $purchase_data,
@@ -95,6 +96,22 @@ class GooglePurchaseHandler implements CommandHandlerContract
             ]);
             return new PurchaseResult(false);
         }
+
+        return new PurchaseResult(false);
+    }
+
+    public function isAsync(): bool
+    {
+        return false;
+    }
+
+    private function userPurchase(GooglePurchaseCommand|CommandContract $command, array $purchase_data)
+    {
+        $purchase_data['user_id'] = $command->userId->value();
+
+        $googleTransactionCommand = GooglePurchaseTransactionCommand::instanceFromArray($purchase_data);
+
+        \CommandBus::dispatch($googleTransactionCommand);
 
         $userBalanceCommand = UpdateUserBalanceCommand::instanceFromPrimitives(
             $command->userId->value(),
@@ -116,10 +133,5 @@ class GooglePurchaseHandler implements CommandHandlerContract
         ]);
 
         return new PurchaseResult(true, $user->balance->balance);
-    }
-
-    public function isAsync(): bool
-    {
-        return false;
     }
 }
