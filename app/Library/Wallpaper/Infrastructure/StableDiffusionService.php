@@ -111,7 +111,7 @@ class StableDiffusionService implements ImageGeneratorServiceContract
         $model = 'gpt-4';
         $max_tokens = 256;
 
-        $system_prompt = 'Please detect language and translate the prompt to English, you should return only the translated text nothing else.';
+        $system_prompt = 'Please detect language and translate the prompt to English, you should return only the translated text nothing else. If prompt is already in English, just return it as is.';
 
         $messages = [
             [
