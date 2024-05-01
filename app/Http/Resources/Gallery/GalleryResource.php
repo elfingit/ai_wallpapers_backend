@@ -69,11 +69,22 @@ class GalleryResource extends JsonResource
         if ($clazz == WallpaperController::class) {
             return [
                 'meta' => [
-                    'balance' => $request->user()->balance?->balance ?? 0
+                    'balance' => $this->getOwnerBalance($request->user())
                 ]
             ];
         }
 
         return parent::with($request);
+    }
+
+    private function getOwnerBalance(User | UserDevice $user): float
+    {
+        if ($user instanceof User) {
+            return $user->balance->balance;
+        } else if ($user instanceof UserDevice) {
+            return $user->balance;
+        }
+
+        return 0.0;
     }
 }
