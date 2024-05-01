@@ -170,6 +170,6 @@ class GooglePurchaseHandler implements CommandHandlerContract
             ]
         ]);
 
-        return new PurchaseResult(true, $device->balance);
+        return new PurchaseResult(true, $device->balance, 'need_account');
     }
 }

@@ -29,6 +29,7 @@ class CreateUserDeviceHandler implements CommandHandlerContract
             'uuid' => $command->idValue->value(),
             'ip_address' => $command->ipValue->value(),
             'user_agent' => $command->userAgentValue->value(),
+            'balance' => 0,
         ];
 
         if (!is_null($command->userIdValue)) {

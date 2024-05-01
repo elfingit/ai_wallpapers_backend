@@ -33,7 +33,8 @@ class UserDeviceController extends Controller
         }
 
         return response()->json([
-            'token' => $tokenResult->getResult()
+            'token' => $tokenResult->getResult(),
+            'balance' => $result->getResult()->balance,
         ]);
     }
 }

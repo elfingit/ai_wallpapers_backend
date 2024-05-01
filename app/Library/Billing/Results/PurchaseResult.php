@@ -12,15 +12,24 @@ use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 
 final class PurchaseResult implements CommandResultContract
 {
-    public function __construct(readonly private bool $success, readonly private int $amount = 0)
-    {
+    public function __construct(
+        readonly private bool $success,
+        readonly private int $amount = 0,
+        readonly private ?string $warn_code = null
+    ) {
     }
 
     public function getResult(): array
     {
-        return [
+        $data = [
             'success' => $this->success,
             'amount' => $this->amount,
         ];
+
+        if (!is_null($this->warn_code)) {
+            $data['warn_code'] = $this->warn_code;
+        }
+
+        return $data;
     }
 }
