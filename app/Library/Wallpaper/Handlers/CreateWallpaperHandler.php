@@ -149,6 +149,13 @@ class CreateWallpaperHandler implements CommandHandlerContract
             $gallery = $galleryResponse->getResult();
 
             if ($this->use_default_img) {
+                \CommandBus::dispatch(
+                    UpdateUserBalanceCommand::instanceFromPrimitives(
+                        $gallery->user_id,
+                        -1,
+                        'charge for default wallpaper'
+                    )
+                );
                 return new GalleryResult($gallery);
             }
 
