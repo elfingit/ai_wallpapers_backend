@@ -14,8 +14,10 @@ use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
 use App\Library\Billing\Results\PurchaseResult;
 use App\Library\Core\Logger\LoggerChannel;
+use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Models\User;
+use App\Models\UserDevice;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
@@ -43,7 +45,8 @@ class GooglePurchaseHandler implements CommandHandlerContract
             'extra' => [
                 'product_id' => $command->productId->value(),
                 'purchase_token' => $command->purchaseToken->value(),
-                'user_id' => $command->userId->value(),
+                'user_id' => $command->userId?->value(),
+                'device_id' => $command->deviceId?->value(),
             ]
         ]);
 
@@ -74,9 +77,9 @@ class GooglePurchaseHandler implements CommandHandlerContract
         }
 
         try {
-            if ( ! is_null($command->userId)) {
+            if (!is_null($command->userId)) {
                 return $this->userPurchase($command, $purchase_data);
-            } elseif ( ! is_null($command->deviceId)) {
+            } elseif (!is_null($command->deviceId)) {
                 return $this->devicePurchase($command, $purchase_data);
             }
         } catch (DuplicateGoogleOrderException $googleOrderException) {
@@ -84,6 +87,8 @@ class GooglePurchaseHandler implements CommandHandlerContract
                 'extra' => [
                     'message' => $googleOrderException->getMessage(),
                     'purchase_data' => $purchase_data,
+                    'file' => __FILE__,
+                    'line' => __LINE__,
                 ]
             ]);
             return new PurchaseResult(false);
@@ -92,6 +97,9 @@ class GooglePurchaseHandler implements CommandHandlerContract
                 'extra' => [
                     'message' => $exception->getMessage(),
                     'purchase_data' => $purchase_data,
+                    'trace' => $exception->getTraceAsString(),
+                    'file' => __FILE__,
+                    'line' => __LINE__,
                 ]
             ]);
             return new PurchaseResult(false);
@@ -105,7 +113,7 @@ class GooglePurchaseHandler implements CommandHandlerContract
         return false;
     }
 
-    private function userPurchase(GooglePurchaseCommand|CommandContract $command, array $purchase_data)
+    private function userPurchase(GooglePurchaseCommand $command, array $purchase_data): PurchaseResult
     {
         $purchase_data['user_id'] = $command->userId->value();
 
@@ -133,5 +141,35 @@ class GooglePurchaseHandler implements CommandHandlerContract
         ]);
 
         return new PurchaseResult(true, $user->balance->balance);
+    }
+
+    private function devicePurchase(GooglePurchaseCommand $command, array $purchase_data): PurchaseResult
+    {
+        $purchase_data['device_id'] = $command->deviceId->value();
+
+        $googleTransactionCommand = GooglePurchaseTransactionCommand::instanceFromArray($purchase_data);
+
+        \CommandBus::dispatch($googleTransactionCommand);
+
+        $deviceBalanceCommand = UpdateDeviceBalanceCommand::instanceFromPrimitives(
+            $command->deviceId->value(),
+            $command->productAmount->value(),
+            'Google purchase'
+        );
+
+        \CommandBus::dispatch($deviceBalanceCommand);
+
+        $device = UserDevice::find($command->deviceId->value());
+
+        $this->logger->info('device balance updated', [
+            'extra' => [
+                'device_id' => $command->deviceId->value(),
+                'balance' => $device->balance,
+                'file' => __FILE__,
+                'line' => __LINE__,
+            ]
+        ]);
+
+        return new PurchaseResult(true, $device->balance);
     }
 }

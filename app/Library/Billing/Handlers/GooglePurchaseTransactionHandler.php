@@ -38,7 +38,8 @@ class GooglePurchaseTransactionHandler implements CommandHandlerContract
             'purchase_type' => $command->purchaseType->value(),
             'acknowledgement_state' => $command->acknowledgementState->value(),
             'region_code' => $command->regionCode->value(),
-            'user_id' => $command->userId->value(),
+            'user_id' => $command->userId?->value(),
+            'device_id' => $command->deviceId?->value(),
         ]);
 
         return null;
