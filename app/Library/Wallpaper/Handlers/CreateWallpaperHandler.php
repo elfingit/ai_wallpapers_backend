@@ -27,10 +27,14 @@ class CreateWallpaperHandler implements CommandHandlerContract
     private ImageGeneratorServiceContract $aiService;
     private LoggerInterface $logger;
 
+    private bool $use_default_img;
+
     public function __construct()
     {
         $this->aiService = app(config('ai.current_service'));
         $this->logger = \LoggerService::getChannel(LoggerChannel::WALLPAPER);
+
+        $this->use_default_img = config('ai.use_default_img');
     }
 
     /**
@@ -143,6 +147,10 @@ class CreateWallpaperHandler implements CommandHandlerContract
 
         if ($galleryResponse) {
             $gallery = $galleryResponse->getResult();
+
+            if ($this->use_default_img) {
+                return new GalleryResult($gallery);
+            }
 
             if (!is_null($gallery->user_id) && $gallery->user_id != $command->userIdValue->value()) {
                 \CommandBus::dispatch(
@@ -265,6 +273,10 @@ class CreateWallpaperHandler implements CommandHandlerContract
 
         if ($galleryResponse) {
             $gallery = $galleryResponse->getResult();
+
+            if ($this->use_default_img) {
+                return new GalleryResult($gallery);
+            }
 
             if (!is_null($gallery->device_id) && $gallery->device_id != $command->deviceIdValue->value()) {
                 \CommandBus::dispatch(
