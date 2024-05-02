@@ -13,6 +13,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class GalleryResource extends JsonResource
 {
+    private ?string $warn_code = null;
+    public function __construct(array $resource)
+    {
+        parent::__construct($resource['gallery']);
+
+        $this->warn_code = $resource['warn_code'];
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -67,11 +75,17 @@ class GalleryResource extends JsonResource
         $clazz = get_class(\Route::getCurrentRoute()->getController());
 
         if ($clazz == WallpaperController::class) {
-            return [
+            $meta = [
                 'meta' => [
                     'balance' => $this->getOwnerBalance($request->user())
                 ]
             ];
+
+            if (!is_null($this->warn_code)) {
+                $meta['meta']['warn_code'] = $this->warn_code;
+            }
+
+            return $meta;
         }
 
         return parent::with($request);

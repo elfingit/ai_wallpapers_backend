@@ -2,7 +2,6 @@
 
 namespace App\Library\Wallpaper\Handlers;
 
-use App\Exceptions\ContentPolicyViolationException;
 use App\Exceptions\InsufficientBalanceException;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
@@ -288,7 +287,7 @@ class CreateWallpaperHandler implements CommandHandlerContract
                         'charge for default wallpaper'
                     )
                 );
-                return new GalleryResult($gallery);
+                return new GalleryResult($gallery, 'need_account_pic');
             }
 
             if (!is_null($gallery->device_id) && $gallery->device_id != $command->deviceIdValue->value()) {
@@ -309,7 +308,7 @@ class CreateWallpaperHandler implements CommandHandlerContract
 
                 \DB::commit();
 
-                return new GalleryResult($newGallery);
+                return new GalleryResult($newGallery, 'need_account_pic');
             }
         }
 
@@ -357,7 +356,7 @@ class CreateWallpaperHandler implements CommandHandlerContract
 
             \DB::commit();
 
-            return new GalleryResult($gallery);
+            return new GalleryResult($gallery, 'need_account_pic');
         } else {
             \DB::rollBack();
             $this->logger->error('can\'t get AI response', [

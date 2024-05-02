@@ -13,12 +13,15 @@ use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 
 class GalleryResult implements CommandResultContract
 {
-    public function __construct(private readonly Gallery $gallery)
+    public function __construct(private readonly Gallery $gallery, private readonly ?string $warn_code = null)
     {
     }
 
-    public function getResult(): Gallery
+    public function getResult(): array
     {
-        return $this->gallery;
+        return [
+            'gallery' => $this->gallery,
+            'warn_code' => $this->warn_code
+        ];
     }
 }
