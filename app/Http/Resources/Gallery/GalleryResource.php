@@ -14,11 +14,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class GalleryResource extends JsonResource
 {
     private ?string $warn_code = null;
-    public function __construct(array $resource)
+    public function __construct(array | Gallery $resource)
     {
-        parent::__construct($resource['gallery']);
-
-        $this->warn_code = $resource['warn_code'];
+        if (is_array($resource)) {
+            parent::__construct($resource['gallery']);
+            $this->warn_code = $resource['warn_code'];
+        } else {
+            parent::__construct($resource);
+        }
     }
 
     /**
