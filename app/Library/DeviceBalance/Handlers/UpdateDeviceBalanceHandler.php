@@ -29,7 +29,7 @@ class UpdateDeviceBalanceHandler implements CommandHandlerContract
 
         if (!$device) {
             \DB::rollBack();
-            return null;
+            throw new \Exception('Device not found');
         }
 
         $device->update([
