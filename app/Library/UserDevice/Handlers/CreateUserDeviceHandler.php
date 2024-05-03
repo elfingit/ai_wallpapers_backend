@@ -2,6 +2,7 @@
 
 namespace App\Library\UserDevice\Handlers;
 
+use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
 use App\Library\UserDevice\Results\CreateResult;
 use App\Models\UserDevice;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -37,6 +38,14 @@ class CreateUserDeviceHandler implements CommandHandlerContract
         }
 
         $device = UserDevice::create($data);
+
+        $balanceCommand = UpdateDeviceBalanceCommand::instanceFromPrimitives(
+            $device->uuid,
+            1,
+            'gift for new device'
+        );
+        \CommandBus::dispatch($balanceCommand);
+        $device->refresh();
 
         return new CreateResult($device);
     }
