@@ -232,8 +232,7 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 
 \CommandBus::addHandler(
     UserRegisteredFromSocialNetworkCommand::class, [
-        UserRegisteredFromSocialNetworkHandler::class,
-        GiftForBalanceHandler::class
+        UserRegisteredFromSocialNetworkHandler::class
     ]
 );
 

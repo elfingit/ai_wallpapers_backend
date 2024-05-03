@@ -10,6 +10,8 @@ namespace App\Library\Auth\Handlers;
 
 use App\Library\Auth\Commands\GoogleSignInCommand;
 use App\Library\Auth\Results\AuthResult;
+use App\Library\DeviceBalance\Command\SyncDeviceUserBalanceCommand;
+use App\Library\Gallery\Commands\SyncUserDeviceCommand;
 use App\Library\User\Commands\UserRegisteredFromSocialNetworkCommand;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
@@ -19,7 +21,7 @@ use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 
-class GoogleSignInHandler implements CommandHandlerContract
+class GoogleSignInHandler extends AbstractSocialSignInHandler
 {
     /**
      * @param GoogleSignInCommand $command
@@ -49,26 +51,9 @@ class GoogleSignInHandler implements CommandHandlerContract
             $user->save();
         }
 
-        $device = \CommandBus::dispatch(
-            GetUserDeviceCommand::createFromPrimitive(
-                $command->deviceId->value()
-            )
-        )->getResult();
-
-        if (!$device) {
-            $device = \CommandBus::dispatch(
-                CreateUserDeviceCommand::createFromPrimitive(
-                    $command->deviceId->value(),
-                    $command->ip->value(),
-                    $command->userAgent->value(),
-                    $user->id
-                )
-            )->getResult();
-        }
-
         return new AuthResult(
             $user->createToken(
-                $device->uuid,
+                $command->deviceId->value(),
                 \AbilityProvider::getAbilitiesForRole($user->role->title_slug)
             )->plainTextToken,
             $user
@@ -88,14 +73,7 @@ class GoogleSignInHandler implements CommandHandlerContract
             ]
         ]);
 
-        $device = \CommandBus::dispatch(
-            CreateUserDeviceCommand::createFromPrimitive(
-                $command->deviceId->value(),
-                $command->ip->value(),
-                $command->userAgent->value(),
-                $user->id
-            )
-        )->getResult();
+        $this->syncUserDevice($command->deviceId->value(), $user->id);
 
         $registeredCommand = UserRegisteredFromSocialNetworkCommand::instanceFromPrimitives(
             $user->id,
@@ -107,7 +85,7 @@ class GoogleSignInHandler implements CommandHandlerContract
 
         return new AuthResult(
             $user->createToken(
-                $device->uuid,
+                $command->deviceId->value(),
                 \AbilityProvider::getAbilitiesForRole($user->role->title_slug)
             )->plainTextToken,
             $user

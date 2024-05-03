@@ -33,8 +33,6 @@ Route::group(
         'namespace' => 'Api\V1',
     ],
     function () {
-        Route::post('/registration/social', [SocialNetworkController::class, 'store'])
-            ->middleware(AppSignRequestMiddleware::class);
         Route::post('/auth', [AuthController::class, 'store']);
         Route::post('/contact_form', [ContactFormController::class, 'store']);
         Route::post('/user_device', [UserDeviceController::class, 'store'])
@@ -47,7 +45,9 @@ Route::group(
             function () {
                 //User registration
                 Route::post('/registration', [RegistrationController::class, 'store']);
-                
+                Route::post('/registration/social', [SocialNetworkController::class, 'store'])
+                     ->middleware(AppSignRequestMiddleware::class);
+
 
                 //Gallery
                 Route::post('/gallery', [GalleryController::class, 'store']);
