@@ -63,6 +63,7 @@ class RegistrationController extends Controller
     public function store(AddRequest $request): JsonResponse
     {
         $dto = $request->getDto();
+        $dto->device_id = $request->user()->uuid;
 
         $command = CreateRegistrationCommand::createFromDto($dto);
         /** @var RegistrationResult $result */

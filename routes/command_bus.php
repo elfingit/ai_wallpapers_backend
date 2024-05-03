@@ -41,6 +41,7 @@ use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
+use App\Library\Gallery\Commands\SyncUserDeviceCommand;
 use App\Library\Gallery\Commands\UpdateGalleryCommand;
 use App\Library\Gallery\Commands\UserPicturesMakePublicCommand;
 use App\Library\Gallery\Handlers\CreateGalleryHandler;
@@ -53,6 +54,7 @@ use App\Library\Gallery\Handlers\GetThumbnailHandler;
 use App\Library\Gallery\Handlers\IndexGalleryHandler;
 use App\Library\Gallery\Handlers\MakePictureCopyHandler;
 use App\Library\Gallery\Handlers\NotifyUserFreeGalleryHandler;
+use App\Library\Gallery\Handlers\SyncUserDeviceHandler;
 use App\Library\Gallery\Handlers\ThumbnailHandler;
 use App\Library\Gallery\Handlers\UpdateGalleryHandler;
 use App\Library\Gallery\Handlers\UserPicturesMakePublicHandler;
@@ -303,4 +305,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     UpdateDeviceBalanceCommand::class,
     UpdateDeviceBalanceHandler::class
+);
+
+\CommandBus::addHandler(
+    SyncUserDeviceCommand::class,
+    SyncUserDeviceHandler::class
 );

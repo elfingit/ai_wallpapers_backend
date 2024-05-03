@@ -3,6 +3,7 @@
 namespace App\Library\UserDevice\Handlers;
 
 use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
+use App\Library\Gallery\Commands\SyncUserDeviceCommand;
 use App\Library\UserDevice\Results\CreateResult;
 use App\Models\UserDevice;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -23,6 +24,18 @@ class CreateUserDeviceHandler implements CommandHandlerContract
                     ->first();
 
         if ($device) {
+            if (!is_null($command->userIdValue)) {
+                $device->user_id = $command->userIdValue->value();
+                $device->save();
+
+                $syncCommand = SyncUserDeviceCommand::instanceFromPrimitives(
+                    $device->uuid,
+                    $command->userIdValue->value()
+                );
+
+                \CommandBus::dispatch($syncCommand);
+            }
+
             return new CreateResult($device);
         }
 
