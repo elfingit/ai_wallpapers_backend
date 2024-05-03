@@ -28,7 +28,9 @@ use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
 use App\Library\ContactForm\Commands\SendMessageCommand;
 use App\Library\ContactForm\Handlers\SendMessageHandler;
+use App\Library\DeviceBalance\Command\SyncDeviceUserBalanceCommand;
 use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
+use App\Library\DeviceBalance\Handlers\SyncDeviceUserBalanceHandler;
 use App\Library\DeviceBalance\Handlers\UpdateDeviceBalanceHandler;
 use App\Library\DeviceToken\Commands\CreateDeviceTokenCommand;
 use App\Library\DeviceToken\Handlers\CreateDeviceTokenHandler;
@@ -210,7 +212,6 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     UserRegisteredCommand::class,[
         WelcomeMailHandler::class,
-        GiftForBalanceHandler::class
     ]
 );
 
@@ -310,4 +311,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     SyncUserDeviceCommand::class,
     SyncUserDeviceHandler::class
+);
+
+\CommandBus::addHandler(
+    SyncDeviceUserBalanceCommand::class,
+    SyncDeviceUserBalanceHandler::class
 );

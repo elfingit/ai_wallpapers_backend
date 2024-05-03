@@ -2,6 +2,7 @@
 
 namespace App\Library\UserDevice\Handlers;
 
+use App\Library\DeviceBalance\Command\SyncDeviceUserBalanceCommand;
 use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
 use App\Library\Gallery\Commands\SyncUserDeviceCommand;
 use App\Library\UserDevice\Results\CreateResult;
@@ -24,7 +25,7 @@ class CreateUserDeviceHandler implements CommandHandlerContract
                     ->first();
 
         if ($device) {
-            if (!is_null($command->userIdValue)) {
+            if (!is_null($command->userIdValue) && is_null($device->user_id)) {
                 $device->user_id = $command->userIdValue->value();
                 $device->save();
 
@@ -34,6 +35,13 @@ class CreateUserDeviceHandler implements CommandHandlerContract
                 );
 
                 \CommandBus::dispatch($syncCommand);
+
+                $balanceSyncCommand = SyncDeviceUserBalanceCommand::instanceFromPrimitives(
+                    $device->uuid,
+                    $command->userIdValue->value()
+                );
+
+                \CommandBus::dispatch($balanceSyncCommand);
             }
 
             return new CreateResult($device);
