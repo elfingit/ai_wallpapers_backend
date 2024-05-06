@@ -76,7 +76,7 @@ class FacebookSignInHandler extends AbstractSocialSignInHandler
             ]
         ]);
 
-        $this->syncUserDevice($command->deviceId->value(), $user->id);
+        $this->syncUserDevice($user->id, $command->deviceId->value());
 
         $registeredCommand = UserRegisteredFromSocialNetworkCommand::instanceFromPrimitives(
             $user->id,
