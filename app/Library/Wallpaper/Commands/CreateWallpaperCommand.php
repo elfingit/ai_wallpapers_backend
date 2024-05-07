@@ -4,6 +4,7 @@ namespace App\Library\Wallpaper\Commands;
 
 use App\Library\Wallpaper\Values\DeviceIdValue;
 use App\Library\Wallpaper\Values\LocaleValue;
+use App\Library\Wallpaper\Values\StyleValue;
 use App\Library\Wallpaper\Values\UserIdValue;
 use App\Models\User;
 use App\Models\UserDevice;
@@ -15,6 +16,7 @@ use App\Library\Wallpaper\Dto\AddDto;
 class CreateWallpaperCommand extends AbstractCommand
 {
 	public PromptValue $promptValue;
+    public StyleValue $styleValue;
     public ?UserIdValue $userIdValue = null;
     public ?DeviceIdValue $deviceIdValue = null;
 
@@ -24,6 +26,7 @@ class CreateWallpaperCommand extends AbstractCommand
     {
         $command = new self();
 		$command->promptValue = new PromptValue($dto->prompt);
+        $command->styleValue = new StyleValue($dto->style);
 
         if ($owner instanceof User) {
             $command->userIdValue = new UserIdValue($owner->id);

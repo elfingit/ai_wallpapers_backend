@@ -42,18 +42,11 @@ class StableDiffusionService implements ImageGeneratorServiceContract
 
 
 
-    public function getImageByPrompt(string $prompt): array | null
+    public function getImageByPrompt(string $prompt, string $style = null): array | null
     {
         $translated_prompt = $this->translatePrompt($prompt);
 
         $url = $this->stable_base_uri . 'stable-image/generate/core';
-
-        $styles = [
-            'anime', 'cinematic', 'comic-book', 'digital-art', 'fantasy-art',
-            'neon-punk', 'photographic'
-        ];
-
-        $key = array_rand($styles, 1);
 
         $original_name = Uuid::uuid7();
 
@@ -78,7 +71,7 @@ class StableDiffusionService implements ImageGeneratorServiceContract
                 'contents' => '9:16'
             ],[
                 'name' => 'style_preset',
-                'contents' => $styles[$key]
+                'contents' => $style
             ]
         ];
 

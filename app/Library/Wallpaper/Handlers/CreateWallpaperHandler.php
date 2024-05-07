@@ -187,7 +187,7 @@ class CreateWallpaperHandler implements CommandHandlerContract
             'line'    => __LINE__
         ]);
 
-        $image_data = $this->aiService->getImageByPrompt($prompt);
+        $image_data = $this->aiService->getImageByPrompt($prompt, $command->styleValue->value());
 
         if ($image_data) {
             $this->logger->info('got it', [
@@ -321,7 +321,7 @@ class CreateWallpaperHandler implements CommandHandlerContract
             'file'    => __FILE__,
             'line'    => __LINE__
         ]);
-        $image_data = $this->aiService->getImageByPrompt($prompt);
+        $image_data = $this->aiService->getImageByPrompt($prompt, $command->styleValue->value());
 
         if ($image_data) {
             $this->logger->info('got it', [
