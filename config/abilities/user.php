@@ -16,4 +16,5 @@ return [
     RulesEnum::MAKE_WALLPAPER,
     RulesEnum::LOGOUT,
     RulesEnum::BILLING_PURCHASE,
+    RulesEnum::DELETE_SELF_ACCOUNT,
 ];

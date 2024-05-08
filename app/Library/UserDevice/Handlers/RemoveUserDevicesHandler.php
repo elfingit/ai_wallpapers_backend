@@ -9,6 +9,7 @@
 namespace App\Library\UserDevice\Handlers;
 
 use App\Library\UserDevice\Commands\RemoveUserDevicesCommand;
+use App\Models\DeviceBalanceTransaction;
 use App\Models\UserDevice;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -23,8 +24,14 @@ class RemoveUserDevicesHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
-        UserDevice::where('user_id', $command->userIdValue->value())
-            ->delete();
+        $devices_ids = UserDevice::query()
+            ->select('uuid')
+            ->where('user_id', $command->userIdValue->value())
+            ->pluck('uuid')
+            ->toArray();
+
+        DeviceBalanceTransaction::whereIn('device_id', $devices_ids)->delete();
+        UserDevice::where('user_id', $command->userIdValue->value())->delete();
 
         return null;
     }

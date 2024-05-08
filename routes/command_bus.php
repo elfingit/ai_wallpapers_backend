@@ -60,8 +60,10 @@ use App\Library\Gallery\Handlers\SyncUserDeviceHandler;
 use App\Library\Gallery\Handlers\ThumbnailHandler;
 use App\Library\Gallery\Handlers\UpdateGalleryHandler;
 use App\Library\Gallery\Handlers\UserPicturesMakePublicHandler;
+use App\Library\PersonalData\Commands\DeleteAccountCommand;
 use App\Library\PersonalData\Commands\EmailRemoveDataCommand;
 use App\Library\PersonalData\Commands\RemoveDataCommand;
+use App\Library\PersonalData\Handlers\DeleteAccountHandler;
 use App\Library\PersonalData\Handlers\EmailRemoveDataHandler;
 use App\Library\PersonalData\Handlers\RemoveDataHandler;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
@@ -315,4 +317,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     SyncDeviceUserBalanceCommand::class,
     SyncDeviceUserBalanceHandler::class
+);
+
+\CommandBus::addHandler(
+    DeleteAccountCommand::class,
+    DeleteAccountHandler::class
 );

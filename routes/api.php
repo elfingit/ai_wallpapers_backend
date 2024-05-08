@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BillingController;
 use App\Http\Controllers\Api\V1\ContactFormController;
+use App\Http\Controllers\Api\V1\DeleteAccountController;
 use App\Http\Controllers\Api\V1\GalleryController;
 use App\Http\Controllers\Api\V1\RegistrationController;
 use App\Http\Controllers\Api\V1\SocialNetworkController;
@@ -72,6 +73,7 @@ Route::group(
                 Route::get('/user/balance', [UserController::class, 'balance']);
                 Route::get('/user', [UserController::class, 'index']);
                 Route::get('/logout', [AuthController::class, 'logout']);
+                Route::delete('/account', [DeleteAccountController::class, 'delete']);
 
                 //Billing
                 Route::post('/billing/purchase/{type}', [BillingController::class, 'store'])

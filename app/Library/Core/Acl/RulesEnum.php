@@ -31,6 +31,9 @@ enum RulesEnum : string
     case PICTURE_LOCALE = 'pic:locale';
 
     case BILLING_PURCHASE = 'billing:purchase';
+
+    case DELETE_SELF_ACCOUNT = 'del_self:account';
+
     public function value(): string
     {
         return $this->value;
