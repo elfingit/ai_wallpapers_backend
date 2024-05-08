@@ -54,6 +54,7 @@ class CreateGalleryHandler implements CommandHandlerContract
             'prompt' => $command->promptValue->value(),
             'file_path' => $path . DIRECTORY_SEPARATOR . $hashed_name,
             'user_id' => $command->userIdValue?->value(),
+            'device_uuid' => $command->deviceIdValue?->value(),
             'locale' => $command->localeValue->value(),
             'revised_prompt' => $command->revisedPromptValue?->value()
         ]);

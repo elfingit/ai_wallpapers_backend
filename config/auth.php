@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'device' => [
+            'driver' => 'device',
+            'provider' => 'device',
+        ],
     ],
 
     /*

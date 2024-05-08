@@ -16,8 +16,6 @@ final class AddDto
 	#[ValidationRule('required|string|min:6|max:25|confirmed')]
 	public string $password;
 
-	#[RequestParam('device_id')]
-	#[ValidationRule('required|string|uuid')]
 	public string $device_id;
 
     #[RequestParam('agreement')]

@@ -8,7 +8,7 @@
 
 namespace App\Library\Wallpaper\Values;
 
-class UserIdValue
+final class UserIdValue
 {
     public function __construct(private readonly int $user_id)
     {

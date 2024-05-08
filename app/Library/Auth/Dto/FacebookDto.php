@@ -12,7 +12,7 @@ use Elfin\LaravelDto\Dto\Attributes\HeaderParam;
 use Elfin\LaravelDto\Dto\Attributes\RequestParam;
 use Elfin\LaravelDto\Dto\Attributes\ValidationRule;
 
-final class FacebookDto
+final class FacebookDto extends AbstractSocialDto
 {
     #[RequestParam('email')]
     #[ValidationRule('required|email|max:255')]
@@ -21,14 +21,4 @@ final class FacebookDto
     #[RequestParam('id')]
     #[ValidationRule('required|integer|max:' . PHP_INT_MAX)]
     public string $id;
-
-    #[RequestParam('device_id')]
-    #[ValidationRule('required|string|max:255|uuid')]
-    public string $device_id;
-
-    #[HeaderParam('X-App-Locale')]
-    public string $locale = 'en';
-
-    public string $ip;
-    public string $user_agent;
 }

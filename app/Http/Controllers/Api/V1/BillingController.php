@@ -9,6 +9,8 @@ use App\Library\Billing\Commands\ApplePurchaseCommand;
 use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Enums\MarketTypeEnum;
 use App\Library\Core\Logger\LoggerChannel;
+use App\Models\User;
+use App\Models\UserDevice;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +19,14 @@ class BillingController extends Controller
     public function store(PurchaseRequest $request, string $type): JsonResource
     {
         $dto = $request->getDto();
-        $dto->user_id = $request->user()->id;
+        $owner = $request->user();
+
+        if ($owner instanceof User) {
+            $dto->user_id = $owner->id;
+        } elseif ($owner instanceof UserDevice) {
+            $dto->device_id = $owner->uuid;
+        }
+
         $dto->product_amount = config('products.' . $dto->product_id);
 
         $market = MarketTypeEnum::tryFrom($type);

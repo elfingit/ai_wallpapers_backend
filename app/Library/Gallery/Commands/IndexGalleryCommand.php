@@ -2,6 +2,7 @@
 
 namespace App\Library\Gallery\Commands;
 
+use App\Library\Gallery\Values\DeviceIdValue;
 use App\Library\Gallery\Values\IsPublicValue;
 use App\Library\Gallery\Values\LocaleValue;
 use App\Library\Gallery\Values\QueryValue;
@@ -20,9 +21,10 @@ class IndexGalleryCommand extends AbstractCommand
 
     public LocaleValue $localeValue;
 
-    public UserIdValue $userIdValue;
+    public ?UserIdValue $userIdValue = null;
+    public ?DeviceIdValue $deviceIdValue = null;
 
-    public static function createFromDto(IndexDto $dto, int $user_id): self
+    public static function createFromDto(IndexDto $dto): self
     {
         $command = new self();
 		if(!is_null($dto->id)) {
@@ -34,7 +36,12 @@ class IndexGalleryCommand extends AbstractCommand
 
         $command->isPublicValue = new IsPublicValue($dto->is_public ?? true);
         $command->localeValue = new LocaleValue($dto->locale);
-        $command->userIdValue = new UserIdValue($user_id);
+
+        if (!is_null($dto->user_id)) {
+            $command->userIdValue = new UserIdValue($dto->user_id);
+        } else if (!is_null($dto->device_uuid)) {
+            $command->deviceIdValue = new DeviceIdValue($dto->device_uuid);
+        }
 
         return $command;
     }

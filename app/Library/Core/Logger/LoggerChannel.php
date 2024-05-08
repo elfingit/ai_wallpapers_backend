@@ -24,4 +24,6 @@ enum LoggerChannel: string
     case APPLE_PURCHASE = 'apple_purchase';
 
     case PUSHES = 'pushes';
+
+    case WALLPAPER = 'wallpaper';
 }

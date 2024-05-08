@@ -18,4 +18,5 @@ abstract class AbstractRequest extends AbstractDtoRequest
         $user = $this->user();
         return $user->tokenCan($rule->value());
     }
+
 }

@@ -27,7 +27,7 @@ class GalleryReplicateHandler implements CommandHandlerContract
         $locales = config('app.locales');
         $gallery = Gallery::find($command->idValue->value());
 
-        if (is_null($gallery) || !is_null($gallery->user_id)) {
+        if (is_null($gallery) || !is_null($gallery->user_id) || !is_null($gallery->device_uuid)) {
             return null;
         }
 

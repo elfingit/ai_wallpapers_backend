@@ -12,7 +12,7 @@ use Elfin\LaravelDto\Dto\Attributes\HeaderParam;
 use Elfin\LaravelDto\Dto\Attributes\RequestParam;
 use Elfin\LaravelDto\Dto\Attributes\ValidationRule;
 
-class GoogleDto
+final class GoogleDto extends AbstractSocialDto
 {
     #[RequestParam('email')]
     #[ValidationRule('required|email|max:255')]
@@ -21,14 +21,4 @@ class GoogleDto
     #[RequestParam('id')]
     #[ValidationRule('required|string|max:150')]
     public string $id;
-
-    #[RequestParam('device_id')]
-    #[ValidationRule('required|string|max:255|uuid')]
-    public string $device_id;
-
-    #[HeaderParam('X-App-Locale')]
-    public string $locale = 'en';
-
-    public string $ip;
-    public string $user_agent;
 }

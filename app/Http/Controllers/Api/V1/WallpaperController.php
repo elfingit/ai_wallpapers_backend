@@ -86,7 +86,7 @@ class WallpaperController extends Controller
      */
     public function store(AddRequest $request): GalleryResource
     {
-        $command = CreateWallpaperCommand::createFromDto($request->getDto(), $request->user()->id);
+        $command = CreateWallpaperCommand::createFromDto($request->getDto(), $request->user());
         $gallery = \CommandBus::dispatch($command);
         \LoggerService::getChannel(LoggerChannel::HTTP_REQUEST)
                       ->info('Wallpaper created', ['gallery' => $gallery->getResult()]);

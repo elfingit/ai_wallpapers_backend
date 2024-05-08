@@ -8,19 +8,18 @@
 
 namespace App\Library\Auth\Handlers;
 
-use App\Library\Auth\Commands\CreateAuthCommand;
 use App\Library\Auth\Commands\FacebookSignInCommand;
 use App\Library\Auth\Results\AuthResult;
+use App\Library\DeviceBalance\Command\SyncDeviceUserBalanceCommand;
+use App\Library\Gallery\Commands\SyncUserDeviceCommand;
 use App\Library\User\Commands\UserRegisteredFromSocialNetworkCommand;
-use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
-use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Models\Role;
 use App\Models\User;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 
-class FacebookSignInHandler implements CommandHandlerContract
+class FacebookSignInHandler extends AbstractSocialSignInHandler
 {
     /**
      * @param FacebookSignInCommand $command
@@ -55,26 +54,9 @@ class FacebookSignInHandler implements CommandHandlerContract
             $user->save();
         }
 
-        $device = \CommandBus::dispatch(
-            GetUserDeviceCommand::createFromPrimitive(
-                $command->deviceId->value()
-            )
-        )->getResult();
-
-        if (!$device) {
-            $device = \CommandBus::dispatch(
-                CreateUserDeviceCommand::createFromPrimitive(
-                    $command->deviceId->value(),
-                    $command->ip->value(),
-                    $command->userAgent->value(),
-                    $user->id
-                )
-            )->getResult();
-        }
-
         return new AuthResult(
             $user->createToken(
-                $device->uuid,
+                $command->deviceId->value(),
                 \AbilityProvider::getAbilitiesForRole($user->role->title_slug)
             )->plainTextToken,
             $user
@@ -94,14 +76,7 @@ class FacebookSignInHandler implements CommandHandlerContract
             ]
         ]);
 
-        $device = \CommandBus::dispatch(
-            CreateUserDeviceCommand::createFromPrimitive(
-                $command->deviceId->value(),
-                $command->ip->value(),
-                $command->userAgent->value(),
-                $user->id
-            )
-        )->getResult();
+        $this->syncUserDevice($user->id, $command->deviceId->value());
 
         $registeredCommand = UserRegisteredFromSocialNetworkCommand::instanceFromPrimitives(
             $user->id,
@@ -113,7 +88,7 @@ class FacebookSignInHandler implements CommandHandlerContract
 
         return new AuthResult(
             $user->createToken(
-                $device->uuid,
+                $command->deviceId->value(),
                 \AbilityProvider::getAbilitiesForRole($user->role->title_slug)
             )->plainTextToken,
             $user

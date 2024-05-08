@@ -10,5 +10,5 @@ namespace App\Library\Wallpaper\Contracts;
 
 interface ImageGeneratorServiceContract
 {
-    public function getImageByPrompt(string $prompt): array | null;
+    public function getImageByPrompt(string $prompt, string $style = null): array | null;
 }

@@ -14,9 +14,15 @@ class PurchaseResultResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $data = [
             'success' => $this->resource['success'],
             'amount' => $this->resource['amount']
         ];
+
+        if (isset($this->resource['warn_code'])) {
+            $data['warn_code'] = $this->resource['warn_code'];
+        }
+
+        return $data;
     }
 }

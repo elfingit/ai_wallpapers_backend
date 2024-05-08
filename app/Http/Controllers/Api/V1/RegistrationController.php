@@ -7,6 +7,7 @@ use App\Http\Requests\Registration\AddRequest;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
 use App\Library\Registration\Results\RegistrationResult;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
@@ -62,7 +63,18 @@ class RegistrationController extends Controller
      */
     public function store(AddRequest $request): JsonResponse
     {
+        $actingAs = $request->user();
+
+        if ($actingAs instanceof User) {
+            return response()->json([
+                'message' => 'You are already registered',
+                'user_id' => $actingAs->id,
+                'user_role' => $actingAs->role->title_slug,
+            ], 400);
+        }
+
         $dto = $request->getDto();
+        $dto->device_id = $actingAs->uuid;
 
         $command = CreateRegistrationCommand::createFromDto($dto);
         /** @var RegistrationResult $result */
