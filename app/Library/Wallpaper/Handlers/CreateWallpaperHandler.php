@@ -154,6 +154,7 @@ class CreateWallpaperHandler implements CommandHandlerContract
                         'charge for default wallpaper'
                     )
                 );
+                \DB::commit();
                 return new GalleryResult($gallery);
             }
 
