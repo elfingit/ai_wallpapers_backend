@@ -149,7 +149,7 @@ class CreateWallpaperHandler implements CommandHandlerContract
             if ($this->use_default_img) {
                 \CommandBus::dispatch(
                     UpdateUserBalanceCommand::instanceFromPrimitives(
-                        $gallery->user_id,
+                        $command->userIdValue->value(),
                         -1,
                         'charge for default wallpaper'
                     )

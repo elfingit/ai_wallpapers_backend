@@ -30,6 +30,7 @@ class DeleteAccountHandler implements CommandHandlerContract
 
         $user->remove_data_token = $token;
         $user->save();
+        $user->refresh();
 
         $removeDataCommand = RemoveDataCommand::instanceFromPrimitive(base64_encode($token));
 
