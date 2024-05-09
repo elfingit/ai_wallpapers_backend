@@ -2,6 +2,7 @@
 
 namespace App\Library\Gallery\Commands;
 
+use App\Library\Gallery\Values\DeviceIdValue;
 use App\Library\Gallery\Values\FilePathValue;
 use App\Library\Gallery\Values\LocaleValue;
 use App\Library\Gallery\Values\RevisedPromptValue;
@@ -21,6 +22,7 @@ class CreateGalleryCommand extends AbstractCommand
     public TagsValue $tagsValue;
     public LocaleValue $localeValue;
     public ?UserIdValue $userIdValue = null;
+    public ?DeviceIdValue $deviceIdValue = null;
 
     public ?FilePathValue $filePathValue = null;
 
@@ -45,8 +47,9 @@ class CreateGalleryCommand extends AbstractCommand
         string $prompt,
         array $tags,
         string $locale,
-        int $user_id,
         string $file_path,
+        ?int $user_id = null,
+        ?string $device_id = null,
         ?string $revised_prompt = null
     ): self
     {
@@ -55,7 +58,15 @@ class CreateGalleryCommand extends AbstractCommand
         $command->promptValue = new PromptValue($prompt);
         $command->tagsValue = new TagsValue($tags);
         $command->localeValue = new LocaleValue($locale);
-        $command->userIdValue = new UserIdValue($user_id);
+
+        if (!is_null($user_id)) {
+            $command->userIdValue = new UserIdValue($user_id);
+        }
+
+        if (!is_null($device_id)) {
+            $command->deviceIdValue = new DeviceIdValue($device_id);
+        }
+
         $command->filePathValue = new FilePathValue($file_path);
 
         if (!is_null($revised_prompt)) {

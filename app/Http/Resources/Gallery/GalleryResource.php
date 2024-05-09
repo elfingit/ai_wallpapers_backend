@@ -7,11 +7,23 @@ use App\Library\Core\Acl\RulesEnum;
 use App\Library\Core\Utils\Utils;
 use App\Models\Gallery;
 use App\Models\User;
+use App\Models\UserDevice;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GalleryResource extends JsonResource
 {
+    private ?string $warn_code = null;
+    public function __construct(array | Gallery $resource)
+    {
+        if (is_array($resource)) {
+            parent::__construct($resource['gallery']);
+            $this->warn_code = $resource['warn_code'];
+        } else {
+            parent::__construct($resource);
+        }
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -42,14 +54,22 @@ class GalleryResource extends JsonResource
         return $data;
     }
 
-    private function canSeePrompt(Gallery $gallery, User $user): bool
+    private function canSeePrompt(Gallery $gallery, User | UserDevice $user): bool
     {
+        if ($user instanceof UserDevice) {
+            return false;
+        }
+
         return $user->tokenCan(RulesEnum::PICTURE_PROMPT->value())
             || $gallery->user_id === $user->id;
     }
 
-    private function canSeeLocale(Gallery $gallery, User $user): bool
+    private function canSeeLocale(Gallery $gallery, User | UserDevice $user): bool
     {
+        if ($user instanceof UserDevice) {
+            return false;
+        }
+
         return $user->tokenCan(RulesEnum::PICTURE_LOCALE->value());
     }
 
@@ -58,13 +78,30 @@ class GalleryResource extends JsonResource
         $clazz = get_class(\Route::getCurrentRoute()->getController());
 
         if ($clazz == WallpaperController::class) {
-            return [
+            $meta = [
                 'meta' => [
-                    'balance' => $request->user()->balance?->balance ?? 0
+                    'balance' => $this->getOwnerBalance($request->user())
                 ]
             ];
+
+            if (!is_null($this->warn_code)) {
+                $meta['meta']['warn_code'] = $this->warn_code;
+            }
+
+            return $meta;
         }
 
         return parent::with($request);
+    }
+
+    private function getOwnerBalance(User | UserDevice $user): float
+    {
+        if ($user instanceof User) {
+            return $user->balance->balance;
+        } else if ($user instanceof UserDevice) {
+            return $user->balance;
+        }
+
+        return 0.0;
     }
 }

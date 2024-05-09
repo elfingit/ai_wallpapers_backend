@@ -20,6 +20,8 @@ use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
 use App\Library\Gallery\Commands\UpdateGalleryCommand;
 use App\Models\Gallery;
+use App\Models\User;
+use App\Models\UserDevice;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -186,7 +188,17 @@ class GalleryController extends Controller
                 'headers' => $request->header(),
                 'dto' => $request->getDto()
             ]);
-        $command = IndexGalleryCommand::createFromDto($request->getDto(), $request->user()->id);
+        $dto = $request->getDto();
+
+        $user = $request->user();
+
+        if ($user instanceof User) {
+            $dto->user_id = $user->id;
+        } elseif ($user instanceof UserDevice) {
+            $dto->device_uuid = $user->uuid;
+        }
+
+        $command = IndexGalleryCommand::createFromDto($dto);
         $result = \CommandBus::dispatch($command);
 
         return GalleryCollection::make($result->getResult());

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Library\Core\Acl\RulesEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\UserDevice
@@ -23,6 +25,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|UserDevice whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserDevice whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserDevice whereUuid($value)
+ * @property string $balance
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UserDeviceToken> $tokens
+ * @property-read int|null $tokens_count
+ * @method static \Illuminate\Database\Eloquent\Builder|UserDevice whereBalance($value)
  * @mixin \Eloquent
  */
 class UserDevice extends Model
@@ -35,4 +41,21 @@ class UserDevice extends Model
     public $incrementing = false;
 
     protected $keyType = 'string';
+
+    private UserDeviceToken $deviceToken;
+
+    public function tokens(): HasMany
+    {
+        return $this->hasMany(UserDeviceToken::class, 'device_uuid', 'uuid');
+    }
+    public function tokenCan(string $rule): bool
+    {
+        return $this->deviceToken->can($rule);
+    }
+
+    public function withAccessToken(UserDeviceToken $deviceToken): void
+    {
+        $this->deviceToken = $deviceToken;
+    }
+
 }

@@ -3,10 +3,12 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BillingController;
 use App\Http\Controllers\Api\V1\ContactFormController;
+use App\Http\Controllers\Api\V1\DeleteAccountController;
 use App\Http\Controllers\Api\V1\GalleryController;
 use App\Http\Controllers\Api\V1\RegistrationController;
 use App\Http\Controllers\Api\V1\SocialNetworkController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\UserDeviceController;
 use App\Http\Controllers\Api\V1\WallpaperController;
 use App\Http\Middleware\AppSignRequestMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -32,17 +34,22 @@ Route::group(
         'namespace' => 'Api\V1',
     ],
     function () {
-        Route::post('/registration', [RegistrationController::class, 'store']);
-        Route::post('/registration/social', [SocialNetworkController::class, 'store'])
-            ->middleware(AppSignRequestMiddleware::class);
         Route::post('/auth', [AuthController::class, 'store']);
         Route::post('/contact_form', [ContactFormController::class, 'store']);
+        Route::post('/user_device', [UserDeviceController::class, 'store'])
+            ->middleware(AppSignRequestMiddleware::class);
 
         Route::group(
             [
-                'middleware' => 'auth:sanctum',
+                'middleware' => 'auth:device',
             ],
             function () {
+                //User registration
+                Route::post('/registration', [RegistrationController::class, 'store']);
+                Route::post('/registration/social', [SocialNetworkController::class, 'store'])
+                     ->middleware(AppSignRequestMiddleware::class);
+
+
                 //Gallery
                 Route::post('/gallery', [GalleryController::class, 'store']);
                 Route::get('/gallery', [GalleryController::class, 'index']);
@@ -66,6 +73,7 @@ Route::group(
                 Route::get('/user/balance', [UserController::class, 'balance']);
                 Route::get('/user', [UserController::class, 'index']);
                 Route::get('/logout', [AuthController::class, 'logout']);
+                Route::delete('/account', [DeleteAccountController::class, 'delete']);
 
                 //Billing
                 Route::post('/billing/purchase/{type}', [BillingController::class, 'store'])

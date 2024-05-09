@@ -29,7 +29,7 @@ class DalleService implements ImageGeneratorServiceContract
         $this->api_key = config('openai.key');
     }
 
-    public function getImageByPrompt(string $prompt): array | null
+    public function getImageByPrompt(string $prompt, string $style = null): array | null
     {
         $url = 'images/generations';
 

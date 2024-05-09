@@ -28,17 +28,22 @@ use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
 use App\Library\ContactForm\Commands\SendMessageCommand;
 use App\Library\ContactForm\Handlers\SendMessageHandler;
+use App\Library\DeviceBalance\Command\SyncDeviceUserBalanceCommand;
+use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
+use App\Library\DeviceBalance\Handlers\SyncDeviceUserBalanceHandler;
+use App\Library\DeviceBalance\Handlers\UpdateDeviceBalanceHandler;
+use App\Library\DeviceToken\Commands\CreateDeviceTokenCommand;
+use App\Library\DeviceToken\Handlers\CreateDeviceTokenHandler;
 use App\Library\Gallery\Commands\CreateGalleryCommand;
 use App\Library\Gallery\Commands\DeleteGalleryCommand;
 use App\Library\Gallery\Commands\EditGalleryCommand;
-use App\Library\Gallery\Commands\GalleryReplicateCommand;
 use App\Library\Gallery\Commands\GetImageByPromptCommand;
 use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
-use App\Library\Gallery\Commands\NotifyUserFreeGalleryCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
+use App\Library\Gallery\Commands\SyncUserDeviceCommand;
 use App\Library\Gallery\Commands\UpdateGalleryCommand;
 use App\Library\Gallery\Commands\UserPicturesMakePublicCommand;
 use App\Library\Gallery\Handlers\CreateGalleryHandler;
@@ -51,11 +56,14 @@ use App\Library\Gallery\Handlers\GetThumbnailHandler;
 use App\Library\Gallery\Handlers\IndexGalleryHandler;
 use App\Library\Gallery\Handlers\MakePictureCopyHandler;
 use App\Library\Gallery\Handlers\NotifyUserFreeGalleryHandler;
+use App\Library\Gallery\Handlers\SyncUserDeviceHandler;
 use App\Library\Gallery\Handlers\ThumbnailHandler;
 use App\Library\Gallery\Handlers\UpdateGalleryHandler;
 use App\Library\Gallery\Handlers\UserPicturesMakePublicHandler;
+use App\Library\PersonalData\Commands\DeleteAccountCommand;
 use App\Library\PersonalData\Commands\EmailRemoveDataCommand;
 use App\Library\PersonalData\Commands\RemoveDataCommand;
+use App\Library\PersonalData\Handlers\DeleteAccountHandler;
 use App\Library\PersonalData\Handlers\EmailRemoveDataHandler;
 use App\Library\PersonalData\Handlers\RemoveDataHandler;
 use App\Library\Registration\Commands\CreateRegistrationCommand;
@@ -80,9 +88,11 @@ use App\Library\UserBalance\Handlers\UpdateUserBalanceHandler;
 use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionCommand;
 use App\Library\UserBalanceTransaction\Handlers\CreateUserBalanceTransactionHandler;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
+use App\Library\UserDevice\Commands\GetDeviceBalanceCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Library\UserDevice\Commands\RemoveUserDevicesCommand;
 use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
+use App\Library\UserDevice\Handlers\GetDeviceBalanceHandler;
 use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
 use App\Library\UserDevice\Handlers\RemoveUserDevicesHandler;
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
@@ -204,7 +214,6 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     UserRegisteredCommand::class,[
         WelcomeMailHandler::class,
-        GiftForBalanceHandler::class
     ]
 );
 
@@ -225,8 +234,7 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 
 \CommandBus::addHandler(
     UserRegisteredFromSocialNetworkCommand::class, [
-        UserRegisteredFromSocialNetworkHandler::class,
-        GiftForBalanceHandler::class
+        UserRegisteredFromSocialNetworkHandler::class
     ]
 );
 
@@ -283,4 +291,35 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     ApplePurchaseTransactionCommand::class,
     ApplePurchaseTransactionHandler::class
+);
+
+\CommandBus::addHandler(
+    CreateDeviceTokenCommand::class,
+    CreateDeviceTokenHandler::class
+);
+
+\CommandBus::addHandler(
+    GetDeviceBalanceCommand::class,
+    GetDeviceBalanceHandler::class
+);
+
+
+\CommandBus::addHandler(
+    UpdateDeviceBalanceCommand::class,
+    UpdateDeviceBalanceHandler::class
+);
+
+\CommandBus::addHandler(
+    SyncUserDeviceCommand::class,
+    SyncUserDeviceHandler::class
+);
+
+\CommandBus::addHandler(
+    SyncDeviceUserBalanceCommand::class,
+    SyncDeviceUserBalanceHandler::class
+);
+
+\CommandBus::addHandler(
+    DeleteAccountCommand::class,
+    DeleteAccountHandler::class
 );

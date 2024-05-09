@@ -37,17 +37,17 @@ Route::get('/gal_help.html', function () {
 
 Route::middleware(DetectBrowserLanguage::class)->group(function () {
     Route::get(
-        '/google/remove_data',
+        '/remove_data',
         [GoogleController::class, 'removeData']
     )->name('google.remove_data');
 
     Route::post(
-        '/google/remove_data',
+        '/remove_data',
         [GoogleController::class, 'sentRemoveData']
     )->name('google.remove_data_send');
 
     Route::get(
-        '/google/remove_data/confirm/{token}',
+        '/remove_data/confirm/{token}',
         [GoogleController::class, 'removeDataConfirm']
     )->name('google.remove_data_confirm');
 });

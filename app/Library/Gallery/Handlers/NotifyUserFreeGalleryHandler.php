@@ -48,8 +48,8 @@ class NotifyUserFreeGalleryHandler implements CommandHandlerContract
 
         $gallery = Gallery::find($command->idValue->value());
 
-        if (!$gallery || !is_null($gallery->user_id)) {
-            $this->logger->warning('Gallery not found or already has user_id', [
+        if (!$gallery || !is_null($gallery->user_id) || !is_null($gallery->device_uuid)) {
+            $this->logger->warning('Gallery not found or already has user_id or has device_uuid', [
                 'extra' => [
                     'id' => $command->idValue->value(),
                     'file' => __FILE__,
