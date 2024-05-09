@@ -155,6 +155,7 @@ return [
     "url" => "Format pola :attribute jest nieprawidłowy.",
     "user" => "Nie znaleziono użytkownika z takim adresem e-mail.",
     "uuid" => "Pole :attribute musi być poprawnym identyfikatorem UUID.",
+    "bad_prompt_symbols" => "Pole :attribute zawiera nieprawidłowe znaki.",
 
 
     'attributes' => [

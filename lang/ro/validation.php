@@ -154,6 +154,7 @@ return [
     "url" => "Câmpul :attribute nu este un URL valid.",
     "user" => "Nu există niciun utilizator cu această adresă de e-mail.",
     "uuid" => "Câmpul :attribute trebuie să fie un cod UUID valid.",
+    "bad_prompt_symbols" => "Câmpul :attribute conține caractere invalide.",
 
     'attributes' => [
         'password' => 'parolă',

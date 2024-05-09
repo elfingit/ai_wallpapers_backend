@@ -2,6 +2,7 @@
 
 namespace App\Library\Wallpaper\Dto;
 
+use App\Rules\BadPromptSymbols;
 use Elfin\LaravelDto\Dto\Attributes\HeaderParam;
 use Elfin\LaravelDto\Dto\Attributes\RequestParam;
 use Elfin\LaravelDto\Dto\Attributes\ValidationRule;
@@ -9,7 +10,7 @@ use Elfin\LaravelDto\Dto\Attributes\ValidationRule;
 final class AddDto
 {
 	#[RequestParam('prompt')]
-	#[ValidationRule('required|string|min:5|max:1500')]
+	#[ValidationRule(['required','string', 'min:5', 'max:1500', new BadPromptSymbols()])]
 	public string $prompt;
 
     #[RequestParam('style')]
