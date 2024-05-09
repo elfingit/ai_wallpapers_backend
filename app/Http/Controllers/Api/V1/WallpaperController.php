@@ -89,7 +89,13 @@ class WallpaperController extends Controller
         $command = CreateWallpaperCommand::createFromDto($request->getDto(), $request->user());
         $gallery = \CommandBus::dispatch($command);
         \LoggerService::getChannel(LoggerChannel::HTTP_REQUEST)
-                      ->info('Wallpaper created', ['gallery' => $gallery->getResult()]);
+                      ->info(
+                          'Wallpaper created',
+                          [
+                              'gallery' => $gallery->getResult(),
+                              'style' => $request->getDto()->style
+                          ]
+                      );
         return GalleryResource::make($gallery->getResult());
     }
 }
