@@ -154,6 +154,7 @@ return [
     "url" => "Polje :attribute mora biti ispravan URL.",
     "user" => "Korisnik s navedenom e-mail adresom nije pronađen.",
     "uuid" => "Polje :attribute mora biti valjani UUID.",
+    "bad_prompt_symbols" => "A :attribute mező rossz karaktereket tartalmaz.",
 
 
     'attributes' => [
