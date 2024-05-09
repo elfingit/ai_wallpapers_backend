@@ -72,6 +72,10 @@ class StableDiffusionService implements ImageGeneratorServiceContract
             ],[
                 'name' => 'style_preset',
                 'contents' => $style
+            ],
+            [
+                'name' => 'seed',
+                'contents' => random_int(1, 4294967294)
             ]
         ];
 
