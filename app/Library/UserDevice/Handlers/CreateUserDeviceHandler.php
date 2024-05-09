@@ -23,7 +23,6 @@ class CreateUserDeviceHandler implements CommandHandlerContract
     {
         $device = UserDevice::where('uuid', $command->idValue->value())
                     ->first();
-
         if ($device) {
             if (!is_null($command->userIdValue) && is_null($device->user_id)) {
                 $device->user_id = $command->userIdValue->value();
@@ -59,6 +58,14 @@ class CreateUserDeviceHandler implements CommandHandlerContract
         }
 
         $device = UserDevice::create($data);
+
+        $devices_count = UserDevice::where('ip_address', $device->ip_address)
+                                   ->where('user_agent', $device->user_agent)
+                                   ->count();
+
+        if ($devices_count > 1) {
+            return new CreateResult($device);
+        }
 
         $balanceCommand = UpdateDeviceBalanceCommand::instanceFromPrimitives(
             $device->uuid,
