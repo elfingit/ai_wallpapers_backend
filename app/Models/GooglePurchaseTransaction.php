@@ -34,6 +34,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|GooglePurchaseTransaction whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|GooglePurchaseTransaction whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|GooglePurchaseTransaction whereUuid($value)
+ * @property string|null $device_id
+ * @method static \Illuminate\Database\Eloquent\Builder|GooglePurchaseTransaction whereDeviceId($value)
  * @mixin \Eloquent
  */
 class GooglePurchaseTransaction extends Model
