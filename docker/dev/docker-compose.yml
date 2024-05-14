@@ -1,4 +1,3 @@
-version: '3.8'
 name: ai_wallpapers_backend
 
 services:
@@ -14,3 +13,11 @@ services:
             - ./postgres-data:/var/lib/postgresql/data
     redis:
         image: redis
+    php:
+        build:
+            context: .
+            dockerfile: ./php/Dockerfile
+        volumes:
+            - ../../:/srv/app
+        ports:
+            - "127.0.0.1:8000:8000"
