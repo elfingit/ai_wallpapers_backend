@@ -15,6 +15,7 @@ use App\Library\Billing\Values\AppleTransactionPriceValue;
 use App\Library\Billing\Values\AppleTransactionStorefrontIdValue;
 use App\Library\Billing\Values\AppleTransactionStorefrontValue;
 use App\Library\Billing\Values\AppleTransactionTypeValue;
+use App\Library\Billing\Values\DeviceIdValue;
 use App\Library\Billing\Values\ProductIdValue;
 use App\Library\Billing\Values\UserIdValue;
 use Elfin\LaravelCommandBus\Library\AbstractCommand;
@@ -30,7 +31,8 @@ class ApplePurchaseTransactionCommand extends AbstractCommand
     public AppleTransactionCurrencyValue $currency;
     public AppleTransactionPriceValue $price;
 
-    public UserIdValue $userId;
+    public ?UserIdValue $userId = null;
+    public ?DeviceIdValue $deviceId = null;
 
     public static function instanceFromPrimitives(
         string $transaction_id,
@@ -41,7 +43,8 @@ class ApplePurchaseTransactionCommand extends AbstractCommand
         string $storefront_id,
         string $currency,
         int $price,
-        string $user_id
+        ?int $user_id,
+        ?string $device_id
     ): self {
         $instance = new self();
         $instance->transactionId = new AppleTransactionIdValue($transaction_id);
@@ -52,7 +55,13 @@ class ApplePurchaseTransactionCommand extends AbstractCommand
         $instance->storefrontId = new AppleTransactionStorefrontIdValue($storefront_id);
         $instance->currency = new AppleTransactionCurrencyValue($currency);
         $instance->price = new AppleTransactionPriceValue($price);
-        $instance->userId = new UserIdValue($user_id);
+
+        if (!is_null($user_id)) {
+            $instance->userId = new UserIdValue($user_id);
+        } elseif (!is_null($device_id)) {
+            $instance->deviceId = new DeviceIdValue($device_id);
+        }
+
         return $instance;
     }
 }

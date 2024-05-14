@@ -41,7 +41,8 @@ class ApplePurchaseTransactionHandler implements CommandHandlerContract
             'storefront_id' => $command->storefrontId->value(),
             'currency' => $command->currency->value(),
             'price' => $command->price->value(),
-            'user_id' => $command->userId->value(),
+            'user_id' => $command->userId?->value(),
+            'device_id' => $command->deviceId?->value(),
         ]);
 
         return null;
