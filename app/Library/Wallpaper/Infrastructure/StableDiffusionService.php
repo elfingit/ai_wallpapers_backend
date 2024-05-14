@@ -8,9 +8,11 @@
 
 namespace App\Library\Wallpaper\Infrastructure;
 
+use App\Exceptions\ContentPolicyViolationException;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Library\Wallpaper\Contracts\ImageGeneratorServiceContract;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Facades\Storage;
 use Psr\Log\LoggerInterface;
@@ -72,10 +74,6 @@ class StableDiffusionService implements ImageGeneratorServiceContract
             ],[
                 'name' => 'style_preset',
                 'contents' => $style
-            ],
-            [
-                'name' => 'seed',
-                'contents' => random_int(1, 4294967294)
             ]
         ];
 
@@ -86,15 +84,30 @@ class StableDiffusionService implements ImageGeneratorServiceContract
                 'line'  => __LINE__,
             ]
         ]);
+        try {
+            $this->client->post($url,[
+                'multipart' => $multipart,
+                'headers' => [
+                    'authorization' => 'Bearer ' . $this->stable_api_key,
+                    'accept' => 'image/*',
+                ],
+                RequestOptions::SINK => $full_path
+            ]);
+        } catch (GuzzleException $e) {
+            $this->logger->error('error while generating image', [
+                'extra' => [
+                    'error' => $e->getMessage(),
+                    'file'  => __FILE__,
+                    'line'  => __LINE__,
+                ]
+            ]);
 
-        $this->client->post($url,[
-            'multipart' => $multipart,
-            'headers' => [
-                'authorization' => 'Bearer ' . $this->stable_api_key,
-                'accept' => 'image/*',
-            ],
-            RequestOptions::SINK => $full_path
-        ]);
+            if ($e->getCode() == 403) {
+                throw new ContentPolicyViolationException(
+                    form_field: 'prompt',
+                );
+            }
+        }
 
         return [
             'prompt' => $translated_prompt,
