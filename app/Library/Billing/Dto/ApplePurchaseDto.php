@@ -21,6 +21,8 @@ class ApplePurchaseDto
     #[ValidationRule('required|string|max:255')]
     public string $purchase_token;
 
-    public int $user_id;
+    public ?int $user_id = null;
+
+    public ?string $device_id = null;
     public int $product_amount;
 }
