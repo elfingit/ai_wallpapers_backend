@@ -12,6 +12,7 @@ use App\Library\Billing\Services\Apple\AppleEnvironment;
 use App\Library\Billing\Services\Apple\JwtTokenGenerator;
 use App\Library\Core\Logger\LoggerChannel;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Token\Parser;
 use Lcobucci\JWT\Token\Plain;
@@ -72,7 +73,7 @@ class AppleService
 
         $token = $this->jwtTokenGenerator->generate();
 
-        \Cache::put('apple_access_token', $token, 29);
+        \Cache::put('apple_access_token', $token, 14);
 
         return $token;
     }
@@ -85,11 +86,12 @@ class AppleService
         };
 
         try {
-            $response = $this->httpClient->get($url,
+            $response = $this->httpClient->get(
+                $url,
                 [
                     'headers' => [
                         'Authorization' => 'Bearer ' . $token,
-                        'Accept' => 'application/json'
+                        'Accept'        => 'application/json'
                     ]
                 ]
             );
@@ -100,13 +102,26 @@ class AppleService
                 flags: JSON_THROW_ON_ERROR
             );
 
-            if (!isset($data['signedTransactionInfo'])) {
+            if ( ! isset($data['signedTransactionInfo'])) {
                 return null;
             }
 
             $parser = new Parser(new JoseEncoder());
-            return $parser->parse($data['signedTransactionInfo']);
 
+            return $parser->parse($data['signedTransactionInfo']);
+        } catch (GuzzleException $e) {
+            if ($e->getCode() == 401 && $this->environment === AppleEnvironment::PRODUCTION) {
+
+                $this->logger->warning('401 in production mode, trying in sandbox', [
+                    'extra' => [
+                        'file' => __FILE__,
+                        'line' => __LINE__
+                    ]
+                ]);
+
+                $this->environment = AppleEnvironment::SANDBOX;
+                return $this->loadData($transaction_id, $token);
+            }
         } catch (\Exception $e) {
             $this->logger->error('error while loading data', [
                 'extra' => [

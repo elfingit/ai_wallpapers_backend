@@ -42,7 +42,7 @@ class JwtTokenGenerator
         return [
             'iss' => $this->issure_id,
             'iat' => Carbon::now()->timestamp,
-            'exp' => Carbon::now()->addMinutes(30)->timestamp,
+            'exp' => Carbon::now()->addMinutes(15)->timestamp,
             'aud' => $this->aud,
             'bid' => $this->bundle_id
         ];
