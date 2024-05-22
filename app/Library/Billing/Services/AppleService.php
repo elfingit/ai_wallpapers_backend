@@ -102,7 +102,7 @@ class AppleService
                 flags: JSON_THROW_ON_ERROR
             );
 
-            if ( ! isset($data['signedTransactionInfo'])) {
+            if (!isset($data['signedTransactionInfo'])) {
                 return null;
             }
 
@@ -121,6 +121,17 @@ class AppleService
 
                 $this->environment = AppleEnvironment::SANDBOX;
                 return $this->loadData($transaction_id, $token);
+            } else {
+                $this->logger->error('error while loading data', [
+                    'extra' => [
+                        'message' => $e->getMessage(),
+                        'trace' => $e->getTraceAsString(),
+                        'file' => __FILE__,
+                        'line' => __LINE__
+                    ]
+                ]);
+
+                return null;
             }
         } catch (\Exception $e) {
             $this->logger->error('error while loading data', [
