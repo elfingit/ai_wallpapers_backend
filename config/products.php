@@ -6,8 +6,8 @@
  * Time: 15:36
  */
 return [
-    'ai_requests_2' => 2,
-    'ai_requests_5' => 5,
-    'ai_requests_10' => 10,
-    'ai_requests_20' => 20,
+    'ai_requests_2' => 5,
+    'ai_requests_5' => 16,
+    'ai_requests_10' => 25,
+    'ai_requests_20' => 40,
 ];
