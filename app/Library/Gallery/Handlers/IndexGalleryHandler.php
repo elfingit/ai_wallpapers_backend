@@ -45,7 +45,7 @@ class IndexGalleryHandler implements CommandHandlerContract
 
         $query->orderBy('id', 'desc');
 
-        return new IndexResult($query->paginate(10));
+        return new IndexResult($query->paginate(20));
     }
 
     public function isAsync(): bool
