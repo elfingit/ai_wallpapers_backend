@@ -11,7 +11,17 @@ class IndexRequest extends AbstractRequest
 {
     public function authorize(): bool
     {
-        return $this->checkAccess(RulesEnum::INDEX_OF_GALLERY);
+        $access_to_endpoint = $this->checkAccess(RulesEnum::INDEX_OF_GALLERY);
+        $additional_access = true;
+        if ($this->has('show_by_devices')) {
+            $additional_access = $this->checkAccess(RulesEnum::INDEX_OF_GALLERY_BY_DEVICES);
+        }
+
+        if ($this->has('show_by_user')) {
+            $additional_access = $this->checkAccess(RulesEnum::INDEX_OF_GALLERY_BY_USERS);
+        }
+
+        return $access_to_endpoint && $additional_access;
     }
 
     protected function getDtoClass(): ?string

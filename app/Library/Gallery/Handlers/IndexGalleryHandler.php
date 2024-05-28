@@ -35,13 +35,18 @@ class IndexGalleryHandler implements CommandHandlerContract
         if ($command->isPublicValue->value()) {
             $query->whereNull('user_id');
             $query->whereNull('device_uuid');
-        } else {
+        } else if (
+            $command->showByDevicesValue->value() == false
+            && $command->showByUserValue->value() == false
+        ) {
             if ($command->deviceIdValue) {
                 $query->where('device_uuid', $command->deviceIdValue->value());
             } else if ($command->userIdValue) {
                 $query->where('user_id', $command->userIdValue->value());
             }
         }
+
+        $this->showByFlags($command, $query);
 
         $query->orderBy('id', 'desc');
 
@@ -51,5 +56,20 @@ class IndexGalleryHandler implements CommandHandlerContract
     public function isAsync(): bool
     {
         return false;
+    }
+
+    private function showByFlags(IndexGalleryCommand $command, $query): void
+    {
+        if (is_null($command->userIdValue)) {
+            return;
+        }
+
+        if ($command->showByUserValue->value() === true) {
+            $query->whereNotNull('user_id');
+        }
+
+        if ($command->showByDevicesValue->value() === true) {
+            $query->whereNotNull('device_uuid');
+        }
     }
 }

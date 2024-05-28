@@ -53,7 +53,7 @@ class DeviceGuard implements Guard
         if ($device_token) {
             $deviceToken = UserDeviceToken::findToken($device_token);
 
-            if ($deviceToken) {
+            if ($deviceToken && $deviceToken->userDevice) {
                 $this->device = $deviceToken->userDevice;
                 $this->device->withAccessToken($deviceToken);
                 $deviceToken->forceFill(['last_used_at' => now()])->save();

@@ -6,6 +6,8 @@ use App\Library\Gallery\Values\DeviceIdValue;
 use App\Library\Gallery\Values\IsPublicValue;
 use App\Library\Gallery\Values\LocaleValue;
 use App\Library\Gallery\Values\QueryValue;
+use App\Library\Gallery\Values\ShowByDevicesValue;
+use App\Library\Gallery\Values\ShowByUserValue;
 use App\Library\Gallery\Values\UserIdValue;
 use Elfin\LaravelCommandBus\Library\AbstractCommand;
 
@@ -24,6 +26,9 @@ class IndexGalleryCommand extends AbstractCommand
     public ?UserIdValue $userIdValue = null;
     public ?DeviceIdValue $deviceIdValue = null;
 
+    public ShowByUserValue $showByUserValue;
+    public ShowByDevicesValue $showByDevicesValue;
+
     public static function createFromDto(IndexDto $dto): self
     {
         $command = new self();
@@ -34,8 +39,10 @@ class IndexGalleryCommand extends AbstractCommand
 			$command->queryValue = new QueryValue($dto->query);
 		}
 
-        $command->isPublicValue = new IsPublicValue($dto->is_public ?? true);
+        $command->isPublicValue = new IsPublicValue($dto->is_public ?? false);
         $command->localeValue = new LocaleValue($dto->locale);
+        $command->showByUserValue = new ShowByUserValue($dto->show_by_user ?? false);
+        $command->showByDevicesValue = new ShowByDevicesValue($dto->show_by_devices ?? false);
 
         if (!is_null($dto->user_id)) {
             $command->userIdValue = new UserIdValue($dto->user_id);
