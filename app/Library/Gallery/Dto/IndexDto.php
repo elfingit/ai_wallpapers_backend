@@ -25,4 +25,11 @@ final class IndexDto
 
     public ?int $user_id = null;
     public ?string $device_uuid = null;
+
+    #[RequestParam('show_by_devices')]
+    #[ValidationRule('nullable|boolean')]
+    public ?bool $show_by_devices = false;
+    #[RequestParam('show_by_user')]
+    #[ValidationRule('nullable|boolean')]
+    public ?bool $show_by_user = false;
 }
