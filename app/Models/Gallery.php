@@ -39,6 +39,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Gallery withoutTrashed()
  * @property string|null $device_uuid
  * @method static \Illuminate\Database\Eloquent\Builder|Gallery whereDeviceUuid($value)
+ * @property string|null $style
+ * @method static \Illuminate\Database\Eloquent\Builder|Gallery whereStyle($value)
  * @mixin \Eloquent
  */
 class Gallery extends Model

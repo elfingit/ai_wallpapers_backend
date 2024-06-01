@@ -7,6 +7,7 @@ use App\Http\Requests\Gallery\AddRequest;
 use App\Http\Requests\Gallery\DeleteRequest;
 use App\Http\Requests\Gallery\EditRequest;
 use App\Http\Requests\Gallery\IndexRequest;
+use App\Http\Requests\Gallery\RefreshRequest;
 use App\Http\Requests\Gallery\ThumbnailRequest;
 use App\Http\Requests\Gallery\UpdateRequest;
 use App\Http\Resources\Gallery\EditResource;
@@ -18,6 +19,7 @@ use App\Library\Gallery\Commands\EditGalleryCommand;
 use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
+use App\Library\Gallery\Commands\RefreshGalleryCommand;
 use App\Library\Gallery\Commands\UpdateGalleryCommand;
 use App\Models\Gallery;
 use App\Models\User;
@@ -497,6 +499,14 @@ class GalleryController extends Controller
     public function delete(DeleteRequest $request, Gallery $pic): JsonResponse
     {
         $command = DeleteGalleryCommand::instanceFromPrimitive($pic->id);
+        \CommandBus::dispatch($command);
+
+        return response()->json(status: 204);
+    }
+
+    public function refresh(RefreshRequest $request, Gallery $pic): JsonResponse
+    {
+        $command = RefreshGalleryCommand::instanceFromPrimitive($pic->id);
         \CommandBus::dispatch($command);
 
         return response()->json(status: 204);

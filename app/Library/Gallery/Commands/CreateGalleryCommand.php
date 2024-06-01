@@ -6,6 +6,7 @@ use App\Library\Gallery\Values\DeviceIdValue;
 use App\Library\Gallery\Values\FilePathValue;
 use App\Library\Gallery\Values\LocaleValue;
 use App\Library\Gallery\Values\RevisedPromptValue;
+use App\Library\Gallery\Values\StyleValue;
 use App\Library\Gallery\Values\TagsValue;
 use App\Library\Gallery\Values\UserIdValue;
 use Elfin\LaravelCommandBus\Library\AbstractCommand;
@@ -27,6 +28,8 @@ class CreateGalleryCommand extends AbstractCommand
     public ?FilePathValue $filePathValue = null;
 
     public ?RevisedPromptValue $revisedPromptValue = null;
+
+    public ?StyleValue $styleValue = null;
 
     public static function createFromDto(AddDto $dto, int $user_id = null): self
     {
@@ -50,7 +53,8 @@ class CreateGalleryCommand extends AbstractCommand
         string $file_path,
         ?int $user_id = null,
         ?string $device_id = null,
-        ?string $revised_prompt = null
+        ?string $revised_prompt = null,
+        ?string $style = null
     ): self
     {
         $command = new self();
@@ -71,6 +75,10 @@ class CreateGalleryCommand extends AbstractCommand
 
         if (!is_null($revised_prompt)) {
             $command->revisedPromptValue = new RevisedPromptValue($revised_prompt);
+        }
+
+        if (!is_null($style)) {
+            $command->styleValue = new StyleValue($style);
         }
 
         return $command;

@@ -18,6 +18,7 @@ enum RulesEnum : string
     case INDEX_OF_GALLERY_BY_DEVICES = 'lst:gallery:devices';
     case INDEX_OF_GALLERY_BY_USERS = 'lst:gallery:users';
     case DELETE_FILE_FROM_GALLERY = 'del:gallery';
+    case REFRESH_PIC_GALLERY = 'refresh:gallery';
     case THUMBNAIL_OF_PICTURE = 'pic:thumb';
     case PICTURE_PROMPT = 'pic:prompt';
     case ADD_TAG = 'add:tag';

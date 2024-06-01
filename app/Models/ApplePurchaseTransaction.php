@@ -38,6 +38,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ApplePurchaseTransaction whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ApplePurchaseTransaction whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ApplePurchaseTransaction whereUuid($value)
+ * @property string|null $device_id
+ * @method static \Illuminate\Database\Eloquent\Builder|ApplePurchaseTransaction whereDeviceId($value)
  * @mixin \Eloquent
  */
 class ApplePurchaseTransaction extends Model
