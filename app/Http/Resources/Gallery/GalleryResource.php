@@ -49,6 +49,8 @@ class GalleryResource extends JsonResource
             'tags' => $resource->tags->pluck('title'),
             'thumbnail_url' => Utils::buildImageUrl($resource->id, 'thumbnail'),
             'download_url' => Utils::buildImageUrl($resource->id, 'download'),
+            'user_id' => $resource->user_id,
+            'device_uuid' => $resource->device_uuid,
         ];
 
         return $data;

@@ -210,7 +210,8 @@ class CreateWallpaperHandler implements CommandHandlerContract
                     $command->localeValue->value(),
                     $image_data['file_path'],
                     user_id: $command->userIdValue->value(),
-                    revised_prompt: $image_data['prompt']
+                    revised_prompt: $image_data['prompt'],
+                    style: $command->styleValue->value()
                 )
             )->getResult();
 
@@ -344,7 +345,8 @@ class CreateWallpaperHandler implements CommandHandlerContract
                     $command->localeValue->value(),
                     $image_data['file_path'],
                     device_id: $command->deviceIdValue->value(),
-                    revised_prompt: $image_data['prompt']
+                    revised_prompt: $image_data['prompt'],
+                    style: $command->styleValue->value()
                 )
             )->getResult();
 
