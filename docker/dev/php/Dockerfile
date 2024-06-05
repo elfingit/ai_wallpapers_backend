@@ -2,7 +2,9 @@ FROM php:8.2-cli
 
 RUN apt-get update && apt-get install -y \
     libpq-dev \
-  && docker-php-ext-install pgsql pdo_pgsql
+    zlib1g-dev \
+    libpng-dev \
+  && docker-php-ext-install pgsql pdo_pgsql gd
 
 VOLUME /srv/app
 WORKDIR /srv/app

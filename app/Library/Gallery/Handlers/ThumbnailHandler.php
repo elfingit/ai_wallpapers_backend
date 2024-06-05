@@ -8,8 +8,6 @@
 
 namespace App\Library\Gallery\Handlers;
 
-use App\Library\Gallery\Commands\GalleryReplicateCommand;
-use App\Library\Gallery\Commands\NotifyUserFreeGalleryCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Models\Gallery;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
