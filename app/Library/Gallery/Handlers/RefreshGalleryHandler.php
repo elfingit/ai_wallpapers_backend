@@ -32,7 +32,7 @@ class RefreshGalleryHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
-        $gallery = Gallery::find($command->idValue->value);
+        $gallery = Gallery::find($command->idValue->value());
 
         if (
             !$gallery

@@ -59,12 +59,17 @@ Route::group(
                      ->where('pic', '[0-9]+');
                 Route::get('/gallery/{pic}/edit', [GalleryController::class, 'edit'])
                      ->where('pic', '[0-9]+');
-                Route::get('/gallery/{pic}/thumbnail', [GalleryController::class, 'thumbnail'])
+
+                Route::get('/gallery/{pic}/refresh', [GalleryController::class, 'refresh'])
+                     ->where('pic', '[0-9]+');
+
+                /*Route::get('/gallery/{pic}/thumbnail', [GalleryController::class, 'thumbnail'])
                     ->name('gallery.thumbnail')
                     ->where('pic', '[0-9]+');
                 Route::get('/gallery/{pic}/download', [GalleryController::class, 'download'])
                      ->name('gallery.download')
                      ->where('pic', '[0-9]+');
+                */
 
                 //Wallpaper
                 Route::post('/wallpaper', [WallpaperController::class, 'store']);
