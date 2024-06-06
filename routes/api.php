@@ -88,6 +88,8 @@ Route::group(
 
                 //Category
                 Route::post('/category', [CategoryController::class, 'store']);
+                Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])
+                     ->where('category', '[0-9]+');
             }
         );
     }

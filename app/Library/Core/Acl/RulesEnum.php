@@ -38,6 +38,7 @@ enum RulesEnum : string
     case DELETE_SELF_ACCOUNT = 'del_self:account';
 
     case ADD_CATEGORY = 'add:category';
+    case EDIT_CATEGORY = 'edit:category';
 
     public function value(): string
     {

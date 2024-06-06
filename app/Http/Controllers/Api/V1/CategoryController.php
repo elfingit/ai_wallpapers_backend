@@ -10,7 +10,11 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\AddRequest;
+use App\Http\Requests\Gallery\EditRequest;
+use App\Http\Resources\Category\EditResource;
 use App\Library\Category\Commands\CreateCategoryCommand;
+use App\Library\Category\Commands\EditCategoryCommand;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -21,5 +25,12 @@ class CategoryController extends Controller
         \CommandBus::dispatch($command);
 
         return response()->json(['message' => 'Category created'], 201);
+    }
+
+    public function edit(EditRequest $request, Category $category)
+    {
+        $result = \CommandBus::dispatch(EditCategoryCommand::instanceFromPrimitive($category->id));
+
+        return EditResource::make($result->getResult());
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Library\Category\Handlers;
 
+use App\Library\Category\Results\EditResult;
+use App\Models\Category;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
@@ -16,7 +18,7 @@ class EditCategoryHandler implements CommandHandlerContract
      */
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
-        throw new \Exception('Not implemented');
+        return new EditResult(Category::find($command->idValue->value()));
     }
 
     public function isAsync(): bool
