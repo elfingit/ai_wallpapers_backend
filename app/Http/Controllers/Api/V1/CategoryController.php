@@ -10,11 +10,14 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\AddRequest;
+use App\Http\Requests\Category\IndexRequest;
 use App\Http\Requests\Category\UpdateRequest;
 use App\Http\Requests\Gallery\EditRequest;
+use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\EditResource;
 use App\Library\Category\Commands\CreateCategoryCommand;
 use App\Library\Category\Commands\EditCategoryCommand;
+use App\Library\Category\Commands\IndexCategoryCommand;
 use App\Library\Category\Commands\UpdateCategoryCommand;
 use App\Models\Category;
 
@@ -45,6 +48,15 @@ class CategoryController extends Controller
 
         \CommandBus::dispatch($command);
 
-        return response()->json(['message' => 'Category updated'], 200);
+        return response()->json(['message' => 'Category updated']);
+    }
+
+    public function index(IndexRequest $request)
+    {
+        $command = IndexCategoryCommand::createFromDto($request->getDto());
+        $result = \CommandBus::dispatch($command);
+
+
+        return CategoryCollection::make($result->getResult());
     }
 }

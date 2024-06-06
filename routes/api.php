@@ -88,6 +88,7 @@ Route::group(
 
                 //Category
                 Route::post('/category', [CategoryController::class, 'store']);
+                Route::get('/category', [CategoryController::class, 'index']);
                 Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])
                      ->where('category', '[0-9]+');
                 Route::patch('/category/{category}', [CategoryController::class, 'update'])

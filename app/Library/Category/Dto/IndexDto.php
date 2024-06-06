@@ -2,6 +2,7 @@
 
 namespace App\Library\Category\Dto;
 
+use Elfin\LaravelDto\Dto\Attributes\HeaderParam;
 use Elfin\LaravelDto\Dto\Attributes\RequestParam;
 use Elfin\LaravelDto\Dto\Attributes\ValidationRule;
 
@@ -15,11 +16,6 @@ final class IndexDto
 	#[ValidationRule('nullable|string|min:3|max:150')]
 	public ?string $title;
 
-	#[RequestParam('created_at')]
-	#[ValidationRule('nullable|date|date_format:Y-m-d H:i:s')]
-	public ?string $created_at;
-
-	#[RequestParam('updated_at')]
-	#[ValidationRule('nullable|date|date_format:Y-m-d H:i:s')]
-	public ?string $updated_at;
+    #[HeaderParam('X-App-Locale')]
+    public string $locale = 'en';
 }

@@ -40,6 +40,7 @@ enum RulesEnum : string
     case ADD_CATEGORY = 'add:category';
     case EDIT_CATEGORY = 'edit:category';
     case UPDATE_CATEGORY = 'update:category';
+    case LIST_CATEGORY = 'list:category';
 
     public function value(): string
     {
