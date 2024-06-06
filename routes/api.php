@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BillingController;
+use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ContactFormController;
 use App\Http\Controllers\Api\V1\DeleteAccountController;
 use App\Http\Controllers\Api\V1\GalleryController;
@@ -84,6 +85,9 @@ Route::group(
                 Route::post('/billing/purchase/{type}', [BillingController::class, 'store'])
                     ->where('type', 'google|apple')
                     ->middleware(AppSignRequestMiddleware::class);
+
+                //Category
+                Route::post('/category', [CategoryController::class, 'store']);
             }
         );
     }

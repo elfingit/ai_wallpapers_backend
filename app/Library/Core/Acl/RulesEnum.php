@@ -37,6 +37,8 @@ enum RulesEnum : string
 
     case DELETE_SELF_ACCOUNT = 'del_self:account';
 
+    case ADD_CATEGORY = 'add:category';
+
     public function value(): string
     {
         return $this->value;

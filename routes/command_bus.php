@@ -26,6 +26,8 @@ use App\Library\Billing\Handlers\ApplePurchaseHandler;
 use App\Library\Billing\Handlers\ApplePurchaseTransactionHandler;
 use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
+use App\Library\Category\Commands\CreateCategoryCommand;
+use App\Library\Category\Handlers\CreateCategoryHandler;
 use App\Library\ContactForm\Commands\SendMessageCommand;
 use App\Library\ContactForm\Handlers\SendMessageHandler;
 use App\Library\DeviceBalance\Command\SyncDeviceUserBalanceCommand;
@@ -329,4 +331,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     RefreshGalleryCommand::class,
     RefreshGalleryHandler::class
+);
+
+\CommandBus::addHandler(
+    CreateCategoryCommand::class,
+    CreateCategoryHandler::class
 );
