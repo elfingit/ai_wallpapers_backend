@@ -28,11 +28,13 @@ use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
 use App\Library\Category\Commands\CreateCategoryCommand;
 use App\Library\Category\Commands\EditCategoryCommand;
+use App\Library\Category\Commands\GetMainDataCommand;
 use App\Library\Category\Commands\IndexCategoryCommand;
 use App\Library\Category\Commands\MetaCommand;
 use App\Library\Category\Commands\UpdateCategoryCommand;
 use App\Library\Category\Handlers\CreateCategoryHandler;
 use App\Library\Category\Handlers\EditCategoryHandler;
+use App\Library\Category\Handlers\GetMainDataHandler;
 use App\Library\Category\Handlers\IndexCategoryHandler;
 use App\Library\Category\Handlers\MetaHandler;
 use App\Library\Category\Handlers\UpdateCategoryHandler;
@@ -94,7 +96,6 @@ use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use App\Library\UserBalance\Commands\RemoveUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Library\UserBalance\Handlers\GetUserBalanceHandler;
-use App\Library\UserBalance\Handlers\GiftForBalanceHandler;
 use App\Library\UserBalance\Handlers\RemoveUserBalanceHandler;
 use App\Library\UserBalance\Handlers\UpdateUserBalanceHandler;
 use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionCommand;
@@ -365,4 +366,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     MetaCommand::class,
     MetaHandler::class
+);
+
+\CommandBus::addHandler(
+    GetMainDataCommand::class,
+    GetMainDataHandler::class,
 );

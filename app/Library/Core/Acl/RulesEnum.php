@@ -43,6 +43,8 @@ enum RulesEnum : string
     case LIST_CATEGORY = 'list:category';
     case META_CATEGORY = 'meta:category';
 
+    case MAIN_INDEX = 'main:index';
+
     public function value(): string
     {
         return $this->value;

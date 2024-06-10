@@ -14,7 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class GalleryResource extends JsonResource
 {
     private ?string $warn_code = null;
-    public function __construct(array | Gallery $resource)
+    public function __construct(array | Gallery | \stdClass $resource)
     {
         if (is_array($resource)) {
             parent::__construct($resource['gallery']);
@@ -46,7 +46,7 @@ class GalleryResource extends JsonResource
                 $this->canSeeLocale($resource, $user),
                 fn() => ['locale' => $resource->locale],
             ),
-            'tags' => $resource->tags->pluck('title'),
+            $this->mergeWhen(isset($resource->tags), fn() => ['tags' => $resource->tags->pluck('title')]),
             'thumbnail_url' => Utils::buildImageUrl($resource->id, 'thumbnail'),
             'download_url' => Utils::buildImageUrl($resource->id, 'download'),
             'user_id' => $resource->user_id,
@@ -56,7 +56,7 @@ class GalleryResource extends JsonResource
         return $data;
     }
 
-    private function canSeePrompt(Gallery $gallery, User | UserDevice $user): bool
+    private function canSeePrompt(Gallery | \stdClass $gallery, User | UserDevice $user): bool
     {
         if ($user instanceof UserDevice) {
             return false;
@@ -66,7 +66,7 @@ class GalleryResource extends JsonResource
             || $gallery->user_id === $user->id;
     }
 
-    private function canSeeLocale(Gallery $gallery, User | UserDevice $user): bool
+    private function canSeeLocale(Gallery | \stdClass $gallery, User | UserDevice $user): bool
     {
         if ($user instanceof UserDevice) {
             return false;

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ContactFormController;
 use App\Http\Controllers\Api\V1\DeleteAccountController;
 use App\Http\Controllers\Api\V1\GalleryController;
+use App\Http\Controllers\Api\V1\MainController;
 use App\Http\Controllers\Api\V1\RegistrationController;
 use App\Http\Controllers\Api\V1\SocialNetworkController;
 use App\Http\Controllers\Api\V1\UserController;
@@ -45,6 +46,9 @@ Route::group(
                 'middleware' => 'auth:device',
             ],
             function () {
+
+                Route::get('/', [MainController::class, 'index']);
+
                 //User registration
                 Route::post('/registration', [RegistrationController::class, 'store']);
                 Route::post('/registration/social', [SocialNetworkController::class, 'store'])

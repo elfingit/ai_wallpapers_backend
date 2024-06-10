@@ -17,4 +17,5 @@ return [
     RulesEnum::LOGOUT,
     RulesEnum::BILLING_PURCHASE,
     RulesEnum::DELETE_SELF_ACCOUNT,
+    RulesEnum::MAIN_INDEX,
 ];
