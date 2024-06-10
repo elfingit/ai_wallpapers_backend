@@ -37,6 +37,12 @@ enum RulesEnum : string
 
     case DELETE_SELF_ACCOUNT = 'del_self:account';
 
+    case ADD_CATEGORY = 'add:category';
+    case EDIT_CATEGORY = 'edit:category';
+    case UPDATE_CATEGORY = 'update:category';
+    case LIST_CATEGORY = 'list:category';
+    case META_CATEGORY = 'meta:category';
+
     public function value(): string
     {
         return $this->value;
