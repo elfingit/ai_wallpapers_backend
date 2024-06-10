@@ -57,7 +57,8 @@ class CreateGalleryHandler implements CommandHandlerContract
             'device_uuid' => $command->deviceIdValue?->value(),
             'locale' => $command->localeValue->value(),
             'revised_prompt' => $command->revisedPromptValue?->value(),
-            'style' => $command->styleValue?->value()
+            'style' => $command->styleValue?->value(),
+            'category_id' => $command->categoryIdValue->value(),
         ]);
 
         foreach ($tag_ids as $tag_id) {

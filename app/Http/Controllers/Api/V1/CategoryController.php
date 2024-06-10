@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\AddRequest;
 use App\Http\Requests\Category\IndexRequest;
+use App\Http\Requests\Category\MetaRequest;
 use App\Http\Requests\Category\UpdateRequest;
 use App\Http\Requests\Gallery\EditRequest;
 use App\Http\Resources\Category\CategoryCollection;
@@ -18,6 +19,7 @@ use App\Http\Resources\Category\EditResource;
 use App\Library\Category\Commands\CreateCategoryCommand;
 use App\Library\Category\Commands\EditCategoryCommand;
 use App\Library\Category\Commands\IndexCategoryCommand;
+use App\Library\Category\Commands\MetaCommand;
 use App\Library\Category\Commands\UpdateCategoryCommand;
 use App\Models\Category;
 
@@ -58,5 +60,10 @@ class CategoryController extends Controller
 
 
         return CategoryCollection::make($result->getResult());
+    }
+
+    public function meta(MetaRequest $request)
+    {
+        return \CommandBus::dispatch(MetaCommand::instance())->getResult();
     }
 }

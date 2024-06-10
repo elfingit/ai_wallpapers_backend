@@ -29,6 +29,7 @@ class UpdateGalleryHandler implements CommandHandlerContract
         $gallery->tags()->sync($tagsResult);
         $gallery->prompt = $command->promptValue->value();
         $gallery->locale = $command->localeValue->value();
+        $gallery->category_id = $command->categoryIdValue->value();
         $gallery->save();
 
         return null;

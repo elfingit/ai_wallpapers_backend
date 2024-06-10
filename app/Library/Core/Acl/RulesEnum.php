@@ -41,6 +41,7 @@ enum RulesEnum : string
     case EDIT_CATEGORY = 'edit:category';
     case UPDATE_CATEGORY = 'update:category';
     case LIST_CATEGORY = 'list:category';
+    case META_CATEGORY = 'meta:category';
 
     public function value(): string
     {
