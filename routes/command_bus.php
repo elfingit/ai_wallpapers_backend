@@ -154,7 +154,6 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     PictureUploadedCommand::class, [
         ThumbnailHandler::class,
-        GalleryReplicateHandler::class,
         NotifyUserFreeGalleryHandler::class
     ]
 );
