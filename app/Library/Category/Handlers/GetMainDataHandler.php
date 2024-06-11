@@ -39,16 +39,18 @@ where row_number <= 3;
 SQL;
 
         $res = \DB::select($sql);
-
         $data = [];
 
         foreach ($categories as $category) {
+
+            $pictures = array_filter($res, function ($item) use ($category) {
+                return $item->category_id === $category->id;
+            });
+
             $data[] = [
                 'id' => $category->id,
                 'title' => $category->title,
-                'pictures' => array_filter($res, function ($item) use ($category) {
-                    return $item->category_id === $category->id;
-                }),
+                'pictures' => array_values($pictures),
             ];
         }
 
