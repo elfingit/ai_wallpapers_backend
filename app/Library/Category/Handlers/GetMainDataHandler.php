@@ -33,7 +33,7 @@ class GetMainDataHandler implements CommandHandlerContract
 $sql = <<<SQL
 select * from (
     select *, row_number() over (PARTITION BY category_id ORDER BY created_at DESC)
-    FROM galleries WHERE category_id IN ({$ids})
+    FROM galleries WHERE category_id IN ({$ids}) AND locale = 'en'
               ) g
 where row_number <= 3;
 SQL;
