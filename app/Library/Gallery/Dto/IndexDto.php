@@ -23,6 +23,10 @@ final class IndexDto
     #[HeaderParam('X-App-Locale')]
     public string $locale = 'en';
 
+    #[RequestParam('category_id')]
+    #[ValidationRule('nullable|integer|max:' . PHP_INT_MAX . '|exists:categories,id')]
+    public ?int $category_id = null;
+
     public ?int $user_id = null;
     public ?string $device_uuid = null;
 
