@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\WebhookController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Middleware\DetectBrowserLanguage;
 use Illuminate\Support\Facades\Route;

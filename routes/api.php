@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\V1\SocialNetworkController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\UserDeviceController;
 use App\Http\Controllers\Api\V1\WallpaperController;
+use App\Http\Controllers\Api\V1\WebhookController;
 use App\Http\Middleware\AppSignRequestMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,9 @@ Route::group(
         'namespace' => 'Api\V1',
     ],
     function () {
+
+        Route::any('/webhook/apple', [WebhookController::class, 'apple']);
+
         Route::post('/auth', [AuthController::class, 'store']);
         Route::post('/contact_form', [ContactFormController::class, 'store']);
         Route::post('/user_device', [UserDeviceController::class, 'store'])
