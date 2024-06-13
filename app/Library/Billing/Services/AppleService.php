@@ -48,7 +48,15 @@ class AppleService
     public function getPurchase(string $transaction_id): ?Plain
     {
         $token = $this->getToken();
-        return $this->loadData($transaction_id, $token);
+        $signedData = $this->loadData($transaction_id, $token);
+
+        if (!isset($signedData['signedTransactionInfo'])) {
+            return null;
+        }
+
+        $parser = new Parser(new JoseEncoder());
+
+        return $parser->parse($signedData['signedTransactionInfo']);
     }
 
     private function getToken(): string
@@ -59,26 +67,11 @@ class AppleService
                 'line' => __LINE__
             ]
         ]);
-        $token = \Cache::get('apple_access_token');
 
-        if ($token) {
-            $this->logger->info('found in cache', [
-                'extra' => [
-                    'file' => __FILE__,
-                    'line' => __LINE__
-                ]
-            ]);
-            return $token;
-        }
-
-        $token = $this->jwtTokenGenerator->generate();
-
-        \Cache::put('apple_access_token', $token, 14);
-
-        return $token;
+        return $this->jwtTokenGenerator->generate();
     }
 
-    private function loadData(string $transaction_id, string $token): ?Plain
+    private function loadData(string $transaction_id, string $token): ?array
     {
         $url = match ($this->environment) {
             AppleEnvironment::PRODUCTION => sprintf(self::PROD_URL, $transaction_id),
@@ -102,13 +95,7 @@ class AppleService
                 flags: JSON_THROW_ON_ERROR
             );
 
-            if (!isset($data['signedTransactionInfo'])) {
-                return null;
-            }
-
-            $parser = new Parser(new JoseEncoder());
-
-            return $parser->parse($data['signedTransactionInfo']);
+            return $data;
         } catch (GuzzleException $e) {
             if ($e->getCode() == 401 && $this->environment === AppleEnvironment::PRODUCTION) {
 

@@ -20,10 +20,12 @@ use App\Library\Auth\Handlers\LogoutHandler;
 use App\Library\Auth\Handlers\RemoveUserTokensHandler;
 use App\Library\Billing\Commands\ApplePurchaseCommand;
 use App\Library\Billing\Commands\ApplePurchaseTransactionCommand;
+use App\Library\Billing\Commands\AppleSubscriptionCommand;
 use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
 use App\Library\Billing\Handlers\ApplePurchaseHandler;
 use App\Library\Billing\Handlers\ApplePurchaseTransactionHandler;
+use App\Library\Billing\Handlers\AppleSubscriptionHandler;
 use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
 use App\Library\Category\Commands\CreateCategoryCommand;
@@ -370,4 +372,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     GetMainDataCommand::class,
     GetMainDataHandler::class,
+);
+
+\CommandBus::addHandler(
+    AppleSubscriptionCommand::class,
+    AppleSubscriptionHandler::class
 );

@@ -2,13 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: Andrei Siarheyeu <andreylong@gmail.com>
- * Date: 16.04.24
- * Time: 14:57
+ * Date: 13.06.24
+ * Time: 11:51
  */
 
 namespace App\Library\Billing\Commands;
 
-use App\Library\Billing\Dto\ApplePurchaseDto;
 use App\Library\Billing\Dto\AppleSubscriptionDto;
 use App\Library\Billing\Values\DeviceIdValue;
 use App\Library\Billing\Values\ProductAmountValue;
@@ -17,15 +16,15 @@ use App\Library\Billing\Values\PurchaseTokenValue;
 use App\Library\Billing\Values\UserIdValue;
 use Elfin\LaravelCommandBus\Library\AbstractCommand;
 
-class ApplePurchaseCommand extends AbstractCommand
+class AppleSubscriptionCommand extends AbstractCommand
 {
     public ProductIdValue $productId;
     public PurchaseTokenValue $purchaseToken;
 
-    public ProductAmountValue $productAmount;
-
     public ?UserIdValue $userId = null;
     public ?DeviceIdValue $deviceId = null;
+
+    public ProductAmountValue $productAmount;
 
     static public function instanceFromDto(AppleSubscriptionDto $dto): self
     {
