@@ -2,18 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: Andrei Siarheyeu <andreylong@gmail.com>
- * Date: 6.04.24
- * Time: 11:42
+ * Date: 14.06.24
+ * Time: 11:46
  */
 
 namespace App\Library\Billing\Enums;
 
 use App\Library\Core\Utils\Traits\EnumValues;
 
-enum MarketTypeEnum: string
+enum AccountTypeEnum: string
 {
     use EnumValues;
-
-    case GOOGLE = 'google';
-    case APPLE = 'apple';
+    case DEVICE = 'device';
+    case USER = 'user';
 }

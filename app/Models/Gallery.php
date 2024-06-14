@@ -43,6 +43,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Gallery whereStyle($value)
  * @property int $view_count
  * @method static \Illuminate\Database\Eloquent\Builder|Gallery whereViewCount($value)
+ * @property int $category_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Gallery whereCategoryId($value)
  * @mixin \Eloquent
  */
 class Gallery extends Model
