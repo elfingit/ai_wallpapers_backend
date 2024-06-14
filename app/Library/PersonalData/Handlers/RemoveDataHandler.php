@@ -52,6 +52,19 @@ final class RemoveDataHandler implements CommandHandlerContract
             return null;
         }
 
+        if ($user->email == 'test_f1@test.com' || $user->email == 'test_p1@test.com') {
+            $this->logger->warning('Trying delete test user', [
+                'extra' => [
+                    'token' => $token,
+                    'user_id' => $user->id,
+                    'email' => $user->email,
+                    'file' => __FILE__,
+                    'line' => __LINE__
+                ]
+            ]);
+            return null;
+        }
+
         if (!\Hash::check($user->email . '|' . $user->id, $token)) {
             $this->logger->warning('Invalid token', [
                 'extra' => [
