@@ -112,6 +112,8 @@ use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
 use App\Library\UserDevice\Handlers\RemoveUserDevicesHandler;
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
 use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
+use App\Library\Webhook\Commands\AppleWebhookCommand;
+use App\Library\Webhook\Handlers\AppleWebhookHandler;
 
 \CommandBus::addHandler(
     CreateRoleCommand::class,
@@ -377,4 +379,9 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     AppleSubscriptionCommand::class,
     AppleSubscriptionHandler::class
+);
+
+\CommandBus::addHandler(
+    AppleWebhookCommand::class,
+    AppleWebhookHandler::class
 );

@@ -9,14 +9,19 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Webhook\AppleRequest;
+use App\Library\Webhook\Commands\AppleWebhookCommand;
 
 class WebhookController extends Controller
 {
-    public function apple(Request $request)
+    public function apple(AppleRequest $request)
     {
-        \Log::info('apple webhook', [
-            'data' => $request->all()
+        \CommandBus::dispatch(
+            AppleWebhookCommand::instanceFromDto($request->getDto())
+        );
+
+        return response()->json([
+            'status' => 'ok'
         ]);
     }
 }
