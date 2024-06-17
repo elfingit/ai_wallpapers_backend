@@ -65,5 +65,7 @@ class BillingController extends Controller
             MarketTypeEnum::APPLE => \CommandBus::dispatch(AppleSubscriptionCommand::instanceFromDto($dto)),
             default => throw new \InvalidArgumentException('Unknown market type')
         };
+
+        return PurchaseResultResource::make($result->getResult());
     }
 }
