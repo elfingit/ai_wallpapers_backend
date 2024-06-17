@@ -27,6 +27,11 @@ return new class extends Migration
             $table->uuid('account_uuid')->nullable()->index();
             $table->unsignedBigInteger('account_id')->nullable()->index();
 
+            $table->foreignUuid('transaction_uuid')
+                ->index()
+                ->constrained('apple_purchase_transactions', 'uuid')
+                ->restrictOnDelete();
+
             $table->timestamps();
             $table->softDeletes();
         });
