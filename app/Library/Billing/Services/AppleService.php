@@ -65,7 +65,7 @@ class AppleService
         return $parser->parse($signedData['signedTransactionInfo']);
     }
 
-    public function getSubscription(string $transaction_id): ?Plain
+    public function getSubscription(string $transaction_id): ?array
     {
         $token = $this->getToken();
         $url = match ($this->environment) {
@@ -73,16 +73,17 @@ class AppleService
             AppleEnvironment::SANDBOX => sprintf(self::SANDBOX_SUBSCRIPTION_URL, $transaction_id)
         };
         $signedData = $this->loadData($url, $transaction_id, $token);
-
         $signedData = $signedData['data'][0]['lastTransactions'][0];
 
-        if (!isset($signedData['signedTransactionInfo'])) {
+        if (!isset($signedData['signedTransactionInfo']) || !isset($signedData['signedRenewalInfo'])) {
             return null;
         }
 
         $parser = new Parser(new JoseEncoder());
+        $transactionInfo = $parser->parse($signedData['signedTransactionInfo']);
+        $renewalInfo = $parser->parse($signedData['signedRenewalInfo']);
 
-        return $parser->parse($signedData['signedTransactionInfo']);
+        return [$transactionInfo, $renewalInfo];
     }
 
     private function getToken(): string

@@ -45,8 +45,9 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             ]
         ]);
 
-        $subscriptionData = $this->appleService->getSubscription($command->purchaseToken->value());
+        list($subscriptionData, $renewalData) = $this->appleService->getSubscription($command->purchaseToken->value());
         $claims = $subscriptionData->claims();
+        $renewClaims = $renewalData->claims();
 
         $transactionCommand = ApplePurchaseTransactionCommand::instanceFromPrimitives(
             $claims->get('transactionId'),
@@ -93,7 +94,7 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             return new SubscriptionResult(false);
         }
         $now = Carbon::now();
-        $endDate = Carbon::createFromTimestamp($claims->get('expiresDate'));
+        $endDate = Carbon::createFromTimestamp($renewClaims->get('renewalDate'));
 
         $data = [
             'subscription_id' => $claims->get('originalTransactionId'),
@@ -101,7 +102,7 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             'price' => $claims->get('price'),
             'currency' => $claims->get('currency'),
             'start_date' => $claims->get('purchaseDate'),
-            'end_date' => $claims->get('expiresDate'),
+            'end_date' => $renewClaims->get('expiresDate'),
             'status' => $now->gt($endDate) ? SubscriptionStatusEnum::ACTIVE : SubscriptionStatusEnum::EXPIRED,
             'account_type' => is_null($command->userId) ? AccountTypeEnum::DEVICE : AccountTypeEnum::USER,
             'account_id' => $command->userId?->value(),
