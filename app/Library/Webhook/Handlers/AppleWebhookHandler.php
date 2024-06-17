@@ -57,6 +57,7 @@ class AppleWebhookHandler implements CommandHandlerContract
         return match ($notificationType) {
             AppleNotificationTypeEnum::SUBSCRIBED => $this->handleSubscribed($info),
             AppleNotificationTypeEnum::EXPIRED => $this->handleExpired($info),
+            AppleNotificationTypeEnum::DID_CHANGE_RENEWAL_PREF => $this->changePref($info),
         };
     }
 
@@ -180,6 +181,38 @@ class AppleWebhookHandler implements CommandHandlerContract
 
         $subscription->status = SubscriptionStatusEnum::EXPIRED;
         $subscription->save();
+
+        return null;
+    }
+
+    private function changePref(DataSet $info)
+    {
+        $data = $info->get('data');
+
+        if (!isset($data['signedTransactionInfo'])) {
+            $this->logger->warning('signedTransactionInfo not found', [
+                'extra' => [
+                    'claims' => $info->all(),
+                    'file' => __FILE__,
+                    'line' => __LINE__,
+                ]
+            ]);
+            return null;
+        }
+
+        $parser = new Parser(new JoseEncoder());
+        $purchaseData = $parser->parse($data['signedTransactionInfo']);
+
+        //Transaction info
+        $claims = $purchaseData->claims();
+
+        $this->logger->info('change renewal pref', [
+            'extra' => [
+                'claims' => $claims->all(),
+                'file' => __FILE__,
+                'line' => __LINE__,
+            ]
+        ]);
 
         return null;
     }

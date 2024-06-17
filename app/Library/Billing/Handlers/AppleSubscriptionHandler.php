@@ -94,8 +94,9 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             return new SubscriptionResult(false);
         }
         $now = Carbon::now();
-        $endDate = Carbon::parse($claims->get('expiresDate'));
-        $subscription = AppleSubscription::create([
+        $endDate = Carbon::createFromTimestamp($claims->get('expiresDate'));
+
+        $data = [
             'subscription_id' => $claims->get('originalTransactionId'),
             'product_id' => $claims->get('productId'),
             'price' => $claims->get('price'),
@@ -107,17 +108,28 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             'account_id' => $command->userId?->value(),
             'account_uuid' => $command->deviceId?->value(),
             'transaction_uuid' => $transaction_id,
-        ]);
+        ];
+
+        $subscription = AppleSubscription::where('subscription_id', $claims->get('originalTransactionId'))
+            ->first();
+
+        if ($subscription) {
+            $subscription->update($data);
+            return new SubscriptionResult(true, 0, $subscription->end_date);
+        }
+
+        $subscription = AppleSubscription::create($data);
 
         $amount = 0;
 
-        if ($command->userId) {
-            $amount = $this->addToUserBalance($command);
-        } elseif ($command->deviceId) {
-            $amount = $this->addToDeviceBalance($command);
-        }
-
         if ($subscription->status == SubscriptionStatusEnum::ACTIVE) {
+
+            if ($command->userId) {
+                $amount = $this->addToUserBalance($command);
+            } elseif ($command->deviceId) {
+                $amount = $this->addToDeviceBalance($command);
+            }
+
             $this->makeSubscriptionScheduler($subscription);
         }
 
