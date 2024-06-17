@@ -57,7 +57,7 @@ class AppleWebhookHandler implements CommandHandlerContract
         return match ($notificationType) {
             AppleNotificationTypeEnum::SUBSCRIBED => $this->handleSubscribed($info),
             AppleNotificationTypeEnum::EXPIRED => $this->handleExpired($info),
-            AppleNotificationTypeEnum::DID_CHANGE_RENEWAL_PREF => $this->changePref($info),
+            AppleNotificationTypeEnum::DID_CHANGE_RENEWAL_PREF, AppleNotificationTypeEnum::DID_RENEW => $this->changePref($info),
         };
     }
 

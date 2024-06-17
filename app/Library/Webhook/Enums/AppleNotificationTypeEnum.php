@@ -13,4 +13,5 @@ enum AppleNotificationTypeEnum: string
     case SUBSCRIBED = 'SUBSCRIBED';
     case EXPIRED = 'EXPIRED';
     case DID_CHANGE_RENEWAL_PREF = 'DID_CHANGE_RENEWAL_PREF';
+    case DID_RENEW = 'DID_RENEW';
 }

@@ -45,9 +45,8 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             ]
         ]);
 
-        $purchaseData = $this->appleService->getPurchase($command->purchaseToken->value());
-        $claims = $purchaseData->claims();
-
+        $subscriptionData = $this->appleService->getSubscription($command->purchaseToken->value());
+        $claims = $subscriptionData->claims();
 
         $transactionCommand = ApplePurchaseTransactionCommand::instanceFromPrimitives(
             $claims->get('transactionId'),

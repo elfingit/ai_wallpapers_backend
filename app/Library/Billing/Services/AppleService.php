@@ -21,7 +21,9 @@ use Psr\Log\LoggerInterface;
 class AppleService
 {
     const PROD_URL = 'https://api.storekit.itunes.apple.com/inApps/v1/transactions/%s';
+    const PROD_SUBSCRIPTION_URL = 'https://api.storekit.itunes.apple.com/inApps/v1/subscriptions/%s';
     const SANDBOX_URL = 'https://api.storekit-sandbox.itunes.apple.com/inApps/v1/transactions/%s';
+    const SANDBOX_SUBSCRIPTION_URL = 'https://api.storekit-sandbox.itunes.apple.com/inApps/v1/subscriptions/%s';
 
     private JwtTokenGenerator $jwtTokenGenerator;
     private AppleEnvironment $environment;
@@ -48,7 +50,31 @@ class AppleService
     public function getPurchase(string $transaction_id): ?Plain
     {
         $token = $this->getToken();
-        $signedData = $this->loadData($transaction_id, $token);
+        $url = match ($this->environment) {
+            AppleEnvironment::PRODUCTION => sprintf(self::PROD_URL, $transaction_id),
+            AppleEnvironment::SANDBOX => sprintf(self::SANDBOX_URL, $transaction_id)
+        };
+        $signedData = $this->loadData($url, $transaction_id, $token);
+
+        if (!isset($signedData['signedTransactionInfo'])) {
+            return null;
+        }
+
+        $parser = new Parser(new JoseEncoder());
+
+        return $parser->parse($signedData['signedTransactionInfo']);
+    }
+
+    public function getSubscription(string $transaction_id): ?Plain
+    {
+        $token = $this->getToken();
+        $url = match ($this->environment) {
+            AppleEnvironment::PRODUCTION => sprintf(self::PROD_SUBSCRIPTION_URL, $transaction_id),
+            AppleEnvironment::SANDBOX => sprintf(self::SANDBOX_SUBSCRIPTION_URL, $transaction_id)
+        };
+        $signedData = $this->loadData($url, $transaction_id, $token);
+
+        $signedData = $signedData['data'][0]['lastTransactions'][0];
 
         if (!isset($signedData['signedTransactionInfo'])) {
             return null;
@@ -71,13 +97,8 @@ class AppleService
         return $this->jwtTokenGenerator->generate();
     }
 
-    private function loadData(string $transaction_id, string $token): ?array
+    private function loadData(string $url, string $transaction_id, string $token): ?array
     {
-        $url = match ($this->environment) {
-            AppleEnvironment::PRODUCTION => sprintf(self::PROD_URL, $transaction_id),
-            AppleEnvironment::SANDBOX => sprintf(self::SANDBOX_URL, $transaction_id),
-        };
-
         try {
             $response = $this->httpClient->get(
                 $url,
@@ -107,7 +128,8 @@ class AppleService
                 ]);
 
                 $this->environment = AppleEnvironment::SANDBOX;
-                return $this->loadData($transaction_id, $token);
+                $url = sprintf(self::SANDBOX_URL, $transaction_id);
+                return $this->loadData($url, $transaction_id, $token);
             } else {
                 $this->logger->error('error while loading data', [
                     'extra' => [
@@ -132,5 +154,9 @@ class AppleService
 
             return null;
         }
+    }
+
+    private function loadSubscriptionData(string $transaction_id, string $token)
+    {
     }
 }
