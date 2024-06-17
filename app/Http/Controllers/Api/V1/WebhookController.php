@@ -16,6 +16,7 @@ class WebhookController extends Controller
 {
     public function apple(AppleRequest $request)
     {
+        \Log::info('Apple webhook', $request->all());
         \CommandBus::dispatch(
             AppleWebhookCommand::instanceFromDto($request->getDto())
         );
