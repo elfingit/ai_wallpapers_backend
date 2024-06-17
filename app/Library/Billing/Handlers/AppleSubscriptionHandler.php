@@ -103,7 +103,7 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             'currency' => $claims->get('currency'),
             'start_date' => $claims->get('purchaseDate'),
             'end_date' => $renewClaims->get('renewalDate'),
-            'status' => $now->gt($endDate) ? SubscriptionStatusEnum::ACTIVE : SubscriptionStatusEnum::EXPIRED,
+            'status' => $now->lte($endDate) ? SubscriptionStatusEnum::ACTIVE : SubscriptionStatusEnum::EXPIRED,
             'account_type' => is_null($command->userId) ? AccountTypeEnum::DEVICE : AccountTypeEnum::USER,
             'account_id' => $command->userId?->value(),
             'account_uuid' => $command->deviceId?->value(),
