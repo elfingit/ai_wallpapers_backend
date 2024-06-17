@@ -8,9 +8,11 @@
 
 namespace App\Library\Webhook\Handlers;
 
+use App\Library\Billing\Enums\SubscriptionStatusEnum;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Library\Webhook\Commands\AppleWebhookCommand;
 use App\Library\Webhook\Enums\AppleNotificationTypeEnum;
+use App\Models\AppleSubscription;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
@@ -48,6 +50,7 @@ class AppleWebhookHandler implements CommandHandlerContract
             ]);
             return null;
         }
+
         //originalTransactionId == subscription id
         $notificationType = AppleNotificationTypeEnum::tryFrom($info->get('notificationType'));
 
@@ -96,7 +99,32 @@ class AppleWebhookHandler implements CommandHandlerContract
 
         $renewalData = $parser->parse($data['signedRenewalInfo']);
 
-        dd($renewalData, $claims);
+        $subscription_id = $claims->get('originalTransactionId');
+
+        $subscription = AppleSubscription::where('subscription_id', $subscription_id)->first();
+
+
+        if (!$subscription) {
+            $this->logger->warning('subscription not found', [
+                'extra' => [
+                    'subscription_id' => $subscription_id,
+                    'file' => __FILE__,
+                    'line' => __LINE__,
+                ]
+            ]);
+            return null;
+        }
+
+        if ($subscription->status == SubscriptionStatusEnum::ACTIVE) {
+            $this->logger->info('subscription already active', [
+                'extra' => [
+                    'subscription_id' => $subscription_id,
+                    'file' => __FILE__,
+                    'line' => __LINE__,
+                ]
+            ]);
+            return null;
+        }
     }
 
     private function handleExpired(DataSet $info)
@@ -134,6 +162,25 @@ class AppleWebhookHandler implements CommandHandlerContract
 
         $renewalData = $parser->parse($data['signedRenewalInfo']);
 
-        dd($renewalData, $claims);
+        $subscription_id = $claims->get('originalTransactionId');
+
+        $subscription = AppleSubscription::where('subscription_id', $subscription_id)->first();
+
+
+        if (!$subscription) {
+            $this->logger->warning('subscription not found', [
+                'extra' => [
+                    'subscription_id' => $subscription_id,
+                    'file' => __FILE__,
+                    'line' => __LINE__,
+                ]
+            ]);
+            return null;
+        }
+
+        $subscription->status = SubscriptionStatusEnum::EXPIRED;
+        $subscription->save();
+
+        return null;
     }
 }
