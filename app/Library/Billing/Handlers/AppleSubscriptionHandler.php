@@ -12,13 +12,16 @@ use App\Exceptions\DuplicateAppleTransactionException;
 use App\Library\Billing\Commands\ApplePurchaseTransactionCommand;
 use App\Library\Billing\Commands\AppleSubscriptionCommand;
 use App\Library\Billing\Enums\AccountTypeEnum;
+use App\Library\Billing\Enums\MarketTypeEnum;
 use App\Library\Billing\Enums\SubscriptionStatusEnum;
 use App\Library\Billing\Results\SubscriptionResult;
 use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Models\AppleSubscription;
+use App\Models\SubscriptionScheduler;
 use App\Models\User;
 use App\Models\UserDevice;
+use Carbon\Carbon;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
 
@@ -90,7 +93,8 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
 
             return new SubscriptionResult(false);
         }
-
+        $now = Carbon::now();
+        $endDate = Carbon::parse($claims->get('expiresDate'));
         $subscription = AppleSubscription::create([
             'subscription_id' => $claims->get('originalTransactionId'),
             'product_id' => $claims->get('productId'),
@@ -98,7 +102,7 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             'currency' => $claims->get('currency'),
             'start_date' => $claims->get('purchaseDate'),
             'end_date' => $claims->get('expiresDate'),
-            'status' => SubscriptionStatusEnum::ACTIVE,
+            'status' => $now->gt($endDate) ? SubscriptionStatusEnum::ACTIVE : SubscriptionStatusEnum::EXPIRED,
             'account_type' => is_null($command->userId) ? AccountTypeEnum::DEVICE : AccountTypeEnum::USER,
             'account_id' => $command->userId?->value(),
             'account_uuid' => $command->deviceId?->value(),
@@ -111,6 +115,10 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             $amount = $this->addToUserBalance($command);
         } elseif ($command->deviceId) {
             $amount = $this->addToDeviceBalance($command);
+        }
+
+        if ($subscription->status == SubscriptionStatusEnum::ACTIVE) {
+            $this->makeSubscriptionScheduler($subscription);
         }
 
         return new SubscriptionResult(true, $amount, $subscription->end_date);
@@ -169,5 +177,15 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
         ]);
 
         return $device->balance;
+    }
+
+    private function makeSubscriptionScheduler(AppleSubscription $subscription): void
+    {
+        SubscriptionScheduler::create([
+            'subscription_uuid' => $subscription->uuid,
+            'market' => MarketTypeEnum::APPLE,
+            'next_check_date' => Carbon::parse($subscription->end_date)->subHour(),
+            'last_check_date' => Carbon::now(),
+        ]);
     }
 }

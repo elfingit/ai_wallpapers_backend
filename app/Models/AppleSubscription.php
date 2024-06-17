@@ -46,6 +46,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|AppleSubscription whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AppleSubscription withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|AppleSubscription withoutTrashed()
+ * @property string $transaction_uuid
+ * @method static \Illuminate\Database\Eloquent\Builder|AppleSubscription whereTransactionUuid($value)
  * @mixin \Eloquent
  */
 class AppleSubscription extends Model
