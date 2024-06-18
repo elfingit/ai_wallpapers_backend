@@ -116,7 +116,8 @@ class AppleScheduleSubscriptionHandler implements CommandHandlerContract
 
         $scheduler->appleSubscription->status = SubscriptionStatusEnum::ACTIVE;
         $scheduler->appleSubscription->save();
-        $scheduler->next_check_date = Carbon::createFromTimestamp($renewalInfo->get('renewalDate') / 1000);
+        $scheduler->next_check_date = Carbon::createFromTimestamp($renewalInfo->get('renewalDate') / 1000)
+                                            ->subHour();
         $scheduler->last_check_date = Carbon::now();
         $scheduler->status = SchedulerStatusEnum::WAITING;
         $scheduler->save();
