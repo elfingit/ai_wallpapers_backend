@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Billing\PurchaseRequest;
 use App\Http\Requests\Billing\SubscriptionRequest;
+use App\Http\Resources\Billing\SubscriptionResource;
 use App\Http\Resources\User\PurchaseResultResource;
 use App\Library\Billing\Commands\ApplePurchaseCommand;
 use App\Library\Billing\Commands\AppleSubscriptionCommand;
@@ -13,7 +14,6 @@ use App\Library\Billing\Enums\MarketTypeEnum;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Models\User;
 use App\Models\UserDevice;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BillingController extends Controller
@@ -66,6 +66,6 @@ class BillingController extends Controller
             default => throw new \InvalidArgumentException('Unknown market type')
         };
 
-        return PurchaseResultResource::make($result->getResult());
+        return SubscriptionResource::make($result->getResult());
     }
 }

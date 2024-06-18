@@ -114,7 +114,6 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             ->first();
 
         if ($subscription) {
-
             if (
                 ($subscription->status == SubscriptionStatusEnum::EXPIRED
                 || $subscription->status == SubscriptionStatusEnum::CANCELLED)
