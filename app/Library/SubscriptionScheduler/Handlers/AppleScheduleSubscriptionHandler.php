@@ -105,6 +105,8 @@ class AppleScheduleSubscriptionHandler implements CommandHandlerContract
             return null;
         }
 
+        \DB::commit();
+
         return null;
     }
 
