@@ -14,6 +14,7 @@ use App\Library\Core\Logger\LoggerChannel;
 use App\Library\SubscriptionScheduler\Commands\AppleScheduleSubscriptionCommand;
 use App\Library\SubscriptionScheduler\Enums\SchedulerStatusEnum;
 use App\Models\SubscriptionScheduler;
+use Carbon\Carbon;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandResultContract;
@@ -57,6 +58,14 @@ class AppleScheduleSubscriptionHandler implements CommandHandlerContract
 
         $scheduler->status = SchedulerStatusEnum::IN_PROGRESS;
         $scheduler->save();
+
+        $this->logger->info('trying check subscription', [
+            'extra' => [
+                'subscription' => $scheduler->appleSubscription,
+                'file' => __FILE__,
+                'line' => __LINE__,
+            ]
+        ]);
 
         $subscription = $this->appleService->getSubscription($scheduler->appleSubscription->subscription_id);
 
@@ -105,7 +114,24 @@ class AppleScheduleSubscriptionHandler implements CommandHandlerContract
             return null;
         }
 
+        $scheduler->appleSubscription->status = SubscriptionStatusEnum::ACTIVE;
+        $scheduler->appleSubscription->save();
+        $scheduler->next_check_date = Carbon::createFromTimestamp($renewalInfo->get('renewalDate') / 1000);
+        $scheduler->last_check_date = Carbon::now();
+        $scheduler->status = SchedulerStatusEnum::WAITING;
+        $scheduler->save();
+
         \DB::commit();
+
+        $this->logger->info('Subscription data', [
+            'extra' => [
+                'data' => $renewalInfo->all(),
+                'file' => __FILE__,
+                'line' => __LINE__,
+            ]
+        ]);
+
+
 
         return null;
     }
