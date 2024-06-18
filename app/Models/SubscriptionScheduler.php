@@ -6,6 +6,7 @@ use App\Library\Billing\Enums\MarketTypeEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -33,6 +34,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionScheduler whereSubscriptionUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionScheduler whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionScheduler whereUuid($value)
+ * @property string $status
+ * @property-read \App\Models\AppleSubscription|null $appleSubscription
+ * @method static \Illuminate\Database\Eloquent\Builder|SubscriptionScheduler whereStatus($value)
  * @mixin \Eloquent
  */
 class SubscriptionScheduler extends Model
@@ -41,6 +45,8 @@ class SubscriptionScheduler extends Model
     use HasUuids;
     use SoftDeletes;
 
+    protected $primaryKey = 'uuid';
+
     protected $guarded = ['uuid', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $casts = [
@@ -48,4 +54,9 @@ class SubscriptionScheduler extends Model
         'next_check_date' => 'datetime',
         'last_check_date' => 'datetime',
     ];
+
+    public function appleSubscription(): BelongsTo
+    {
+        return $this->belongsTo(AppleSubscription::class, 'subscription_uuid', 'uuid');
+    }
 }

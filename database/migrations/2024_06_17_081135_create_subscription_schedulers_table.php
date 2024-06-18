@@ -1,6 +1,7 @@
 <?php
 
 use App\Library\Billing\Enums\MarketTypeEnum;
+use App\Library\SubscriptionScheduler\Enums\SchedulerStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,7 @@ return new class extends Migration
             $table->uuid()->primary();
             $table->uuid('subscription_uuid')->index();
             $table->enum('market', MarketTypeEnum::values());
+            $table->enum('status', SchedulerStatusEnum::values())->default(SchedulerStatusEnum::WAITING);
             $table->dateTime('next_check_date')->index();
             $table->dateTime('last_check_date');
             $table->timestamps();

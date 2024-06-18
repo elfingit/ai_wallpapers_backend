@@ -156,8 +156,4 @@ class AppleService
             return null;
         }
     }
-
-    private function loadSubscriptionData(string $transaction_id, string $token)
-    {
-    }
 }

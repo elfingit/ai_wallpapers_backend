@@ -114,8 +114,18 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             ->first();
 
         if ($subscription) {
+
+            if (
+                ($subscription->status == SubscriptionStatusEnum::EXPIRED
+                || $subscription->status == SubscriptionStatusEnum::CANCELLED)
+                && $data['status'] == SubscriptionStatusEnum::ACTIVE
+            ) {
+                $this->updateBalance($command);
+                $this->makeSubscriptionScheduler($subscription);
+            }
+
             $subscription->update($data);
-            return new SubscriptionResult(true, 0, $subscription->end_date);
+            return new SubscriptionResult(true, $this->getAmount($command), $subscription->end_date);
         }
 
         $subscription = AppleSubscription::create($data);
@@ -123,13 +133,7 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
         $amount = 0;
 
         if ($subscription->status == SubscriptionStatusEnum::ACTIVE) {
-
-            if ($command->userId) {
-                $amount = $this->addToUserBalance($command);
-            } elseif ($command->deviceId) {
-                $amount = $this->addToDeviceBalance($command);
-            }
-
+            $amount = $this->updateBalance($command);
             $this->makeSubscriptionScheduler($subscription);
         }
 
@@ -193,11 +197,42 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
 
     private function makeSubscriptionScheduler(AppleSubscription $subscription): void
     {
-        SubscriptionScheduler::create([
+        $data = [
             'subscription_uuid' => $subscription->uuid,
             'market' => MarketTypeEnum::APPLE,
             'next_check_date' => Carbon::parse($subscription->end_date)->subHour(),
             'last_check_date' => Carbon::now(),
-        ]);
+        ];
+
+        $scheduler = SubscriptionScheduler::where('subscription_uuid', $subscription->uuid)->first();
+
+        if ($scheduler) {
+            $scheduler->update($data);
+            return;
+        }
+
+        SubscriptionScheduler::create($data);
+    }
+
+    private function getAmount(AppleSubscriptionCommand $command): float
+    {
+        if (!is_null($command->userId)) {
+            return User::find($command->userId->value())->balance->balance;
+        }
+
+        return UserDevice::find($command->deviceId->value())->balance;
+    }
+
+    private function updateBalance(CommandContract|AppleSubscriptionCommand $command): float
+    {
+        $amount = 0;
+
+        if ($command->userId) {
+            $amount = $this->addToUserBalance($command);
+        } elseif ($command->deviceId) {
+            $amount = $this->addToDeviceBalance($command);
+        }
+
+        return $amount;
     }
 }

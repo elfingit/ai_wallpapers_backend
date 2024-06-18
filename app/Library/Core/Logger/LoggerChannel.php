@@ -22,6 +22,7 @@ enum LoggerChannel: string
 
     case GOOGLE_PURCHASE = 'google_purchase';
     case APPLE_PURCHASE = 'apple_purchase';
+    case SUBSCRIPTION_SCHEDULER = 'subscription_scheduler';
 
     case PUSHES = 'pushes';
 

@@ -86,6 +86,8 @@ use App\Library\Registration\Commands\CreateRegistrationCommand;
 use App\Library\Registration\Handlers\CreateRegistrationHandler;
 use App\Library\Role\Commands\CreateRoleCommand;
 use App\Library\Role\Handlers\CreateRoleHandler;
+use App\Library\SubscriptionScheduler\Commands\AppleScheduleSubscriptionCommand;
+use App\Library\SubscriptionScheduler\Handlers\AppleScheduleSubscriptionHandler;
 use App\Library\Tag\Commands\CreateTagCommand;
 use App\Library\Tag\Handlers\CreateTagHandler;
 use App\Library\User\Commands\IndexUserCommand;
@@ -384,4 +386,9 @@ use App\Library\Webhook\Handlers\AppleWebhookHandler;
 \CommandBus::addHandler(
     AppleWebhookCommand::class,
     AppleWebhookHandler::class
+);
+
+\CommandBus::addHandler(
+    AppleScheduleSubscriptionCommand::class,
+    AppleScheduleSubscriptionHandler::class
 );
