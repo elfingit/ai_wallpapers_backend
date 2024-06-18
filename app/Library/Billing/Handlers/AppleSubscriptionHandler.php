@@ -200,7 +200,7 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
         $data = [
             'subscription_uuid' => $subscription->uuid,
             'market' => MarketTypeEnum::APPLE,
-            'next_check_date' => Carbon::parse($subscription->end_date)->subHour(),
+            'next_check_date' => Carbon::createFromTimestamp($subscription->end_date / 1000)->subHour(),
             'last_check_date' => Carbon::now(),
         ];
 
