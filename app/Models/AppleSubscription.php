@@ -7,6 +7,7 @@ use App\Library\Billing\Enums\SubscriptionStatusEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $start_date
  * @property int $end_date
  * @property string $status
- * @property string $account_type
+ * @property AccountTypeEnum $account_type
  * @property string|null $account_uuid
  * @property int|null $account_id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -48,6 +49,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|AppleSubscription withoutTrashed()
  * @property string $transaction_uuid
  * @method static \Illuminate\Database\Eloquent\Builder|AppleSubscription whereTransactionUuid($value)
+ * @property-read \App\Models\SubscriptionScheduler|null $subscription
+ * @property-read \App\Models\SubscriptionScheduler|null $scheduler
  * @mixin \Eloquent
  */
 class AppleSubscription extends Model
@@ -64,4 +67,9 @@ class AppleSubscription extends Model
         'account_type' => AccountTypeEnum::class,
         'status' => SubscriptionStatusEnum::class
     ];
+
+    public function scheduler(): HasOne
+    {
+        return $this->hasOne(SubscriptionScheduler::class, 'subscription_uuid', 'uuid');
+    }
 }
