@@ -29,7 +29,7 @@ class ApplePurchaseTransactionHandler implements CommandHandlerContract
         $transaction = ApplePurchaseTransaction::where('transaction_id', $transaction_id)->first();
 
         if (!is_null($transaction)) {
-            throw new DuplicateAppleTransactionException("Transaction with id $transaction_id already exists.");
+            throw new DuplicateAppleTransactionException($transaction);
         }
 
         $transaction = ApplePurchaseTransaction::create([

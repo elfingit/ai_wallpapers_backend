@@ -76,6 +76,16 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
                 ]
             ]);
 
+            $transaction = $e->getTransaction();
+            if (!is_null($transaction->user_id)) {
+                //TODO implement later
+            } elseif (!is_null($transaction->device_id)) {
+                $device = $transaction->device;
+                $subscription = AppleSubscription::where('subscription_id', $claims->get('originalTransactionId'))
+                    ->first();
+                return new SubscriptionResult(true, $device->balance, $subscription->end_date);
+            }
+
             return new SubscriptionResult(false);
         } catch (\Throwable $e) {
             $this->logger->error('error while saving transaction', [
