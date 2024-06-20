@@ -232,7 +232,7 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
         return UserDevice::find($command->deviceId->value())->balance;
     }
 
-    private function updateBalance(CommandContract|AppleSubscriptionCommand $command): float
+    private function updateBalance(AppleSubscriptionCommand $command): float
     {
         $amount = 0;
 
