@@ -15,6 +15,7 @@ use App\Library\Billing\Enums\AccountTypeEnum;
 use App\Library\Billing\Enums\MarketTypeEnum;
 use App\Library\Billing\Enums\SubscriptionStatusEnum;
 use App\Library\Billing\Results\SubscriptionResult;
+use App\Library\Billing\Values\ProductAmountValue;
 use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Models\AppleSubscription;
@@ -131,6 +132,8 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             ) {
                 $this->updateBalance($command);
                 $this->makeSubscriptionScheduler($subscription);
+            } elseif ($subscription->status == SubscriptionStatusEnum::ACTIVE) {
+                $command->productAmount = $this->calculateAmount($subscription, $command, $data);
             }
 
             $subscription->update($data);
@@ -243,5 +246,26 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
         }
 
         return $amount;
+    }
+
+    private function calculateAmount(AppleSubscription $subscription, AppleSubscriptionCommand $command, array $data): ProductAmountValue
+    {
+        $products_weights = array_combine(
+            array_keys(config('products.subscriptions')),
+            array_values(config('products.subscriptions'))
+        );
+
+        $old_weight = $products_weights[$subscription->product_id];
+        $new_weight = $products_weights[$data['product_id']];
+
+        if ($old_weight > $new_weight) {
+            return new ProductAmountValue(0);
+        }
+
+        if ($old_weight < $new_weight) {
+            return new ProductAmountValue($new_weight - $old_weight);
+        }
+
+        return new ProductAmountValue(0);
     }
 }
