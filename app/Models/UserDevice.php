@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Library\Billing\Enums\AccountTypeEnum;
 use App\Library\Core\Acl\RulesEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\UserDevice
@@ -29,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UserDeviceToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Illuminate\Database\Eloquent\Builder|UserDevice whereBalance($value)
+ * @property-read \App\Models\AppleSubscription|null $subscription
  * @mixin \Eloquent
  */
 class UserDevice extends Model
@@ -58,4 +61,9 @@ class UserDevice extends Model
         $this->deviceToken = $deviceToken;
     }
 
+    public function subscription(): HasOne
+    {
+        return $this->hasOne(AppleSubscription::class, 'account_uuid', 'uuid')
+            ->where('account_type', AccountTypeEnum::DEVICE);
+    }
 }

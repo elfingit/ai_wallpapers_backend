@@ -44,6 +44,7 @@ enum RulesEnum : string
     case META_CATEGORY = 'meta:category';
 
     case MAIN_INDEX = 'main:index';
+    case MAIN_PROFILE = 'main:profile';
 
     public function value(): string
     {

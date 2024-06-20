@@ -106,10 +106,12 @@ use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionComm
 use App\Library\UserBalanceTransaction\Handlers\CreateUserBalanceTransactionHandler;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetDeviceBalanceCommand;
+use App\Library\UserDevice\Commands\GetDeviceProfileCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Library\UserDevice\Commands\RemoveUserDevicesCommand;
 use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
 use App\Library\UserDevice\Handlers\GetDeviceBalanceHandler;
+use App\Library\UserDevice\Handlers\GetDeviceProfileHandler;
 use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
 use App\Library\UserDevice\Handlers\RemoveUserDevicesHandler;
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
@@ -391,4 +393,9 @@ use App\Library\Webhook\Handlers\AppleWebhookHandler;
 \CommandBus::addHandler(
     AppleScheduleSubscriptionCommand::class,
     AppleScheduleSubscriptionHandler::class
+);
+
+\CommandBus::addHandler(
+    GetDeviceProfileCommand::class,
+    GetDeviceProfileHandler::class
 );

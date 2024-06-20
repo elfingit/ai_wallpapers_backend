@@ -52,6 +52,7 @@ Route::group(
             function () {
 
                 Route::get('/', [MainController::class, 'index']);
+                Route::get('/profile', [MainController::class, 'profile']);
 
                 //User registration
                 Route::post('/registration', [RegistrationController::class, 'store']);
