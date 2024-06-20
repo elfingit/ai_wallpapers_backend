@@ -33,7 +33,15 @@ class UpdateAbilitiesCommand extends Command
         $sql = 'UPDATE user_device_tokens SET abilities = ?';
         \DB::update($sql, [json_encode($device_abilities)]);
 
-        $sql = 'UPDATE personal_access_tokens SET abilities = ?';
+        $sql = 'SELECT u.id FROM roles r INNER JOIN users u ON u.role_id = r.id
+         WHERE r.title_slug = \'admin\'';
+        $admin_ids = \DB::select($sql);
+        $admin_ids = array_map(function ($item) {
+            return $item->id;
+        }, $admin_ids);
+
+
+        $sql = 'UPDATE personal_access_tokens SET abilities = ? WHERE tokenable_id NOT IN (' . implode(',', $admin_ids) . ')';
         \DB::update($sql, [json_encode($user_abilities)]);
 
         $this->info('...done');
