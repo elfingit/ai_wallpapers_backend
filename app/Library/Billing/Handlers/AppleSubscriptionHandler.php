@@ -132,8 +132,6 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
             ) {
                 $this->updateBalance($command);
                 $this->makeSubscriptionScheduler($subscription);
-            } elseif ($subscription->status == SubscriptionStatusEnum::ACTIVE) {
-                $command->productAmount = $this->calculateAmount($subscription, $command, $data);
             }
 
             $subscription->update($data);
