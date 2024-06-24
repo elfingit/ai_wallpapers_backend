@@ -92,9 +92,11 @@ use App\Library\SubscriptionScheduler\Commands\AppleScheduleSubscriptionCommand;
 use App\Library\SubscriptionScheduler\Handlers\AppleScheduleSubscriptionHandler;
 use App\Library\Tag\Commands\CreateTagCommand;
 use App\Library\Tag\Handlers\CreateTagHandler;
+use App\Library\User\Commands\GetUserProfileCommand;
 use App\Library\User\Commands\IndexUserCommand;
 use App\Library\User\Commands\UserRegisteredCommand;
 use App\Library\User\Commands\UserRegisteredFromSocialNetworkCommand;
+use App\Library\User\Handlers\GetUserProfileHandler;
 use App\Library\User\Handlers\IndexUserHandler;
 use App\Library\User\Handlers\UserRegisteredFromSocialNetworkHandler;
 use App\Library\User\Handlers\WelcomeMailHandler;
@@ -405,4 +407,9 @@ use App\Library\Webhook\Handlers\AppleWebhookHandler;
 \CommandBus::addHandler(
     SyncDeviceSubscriptionCommand::class,
     SyncDeviceSubscriptionHandler::class
+);
+
+\CommandBus::addHandler(
+    GetUserProfileCommand::class,
+    GetUserProfileHandler::class
 );

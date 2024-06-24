@@ -13,6 +13,7 @@ use App\Http\Requests\Main\IndexRequest;
 use App\Http\Requests\Main\ProfileRequest;
 use App\Http\Resources\MainData\MainDataResource;
 use App\Library\Category\Commands\GetMainDataCommand;
+use App\Library\User\Commands\GetUserProfileCommand;
 use App\Library\UserDevice\Commands\GetDeviceProfileCommand;
 use App\Models\User;
 use App\Models\UserDevice;
@@ -36,7 +37,7 @@ class MainController extends Controller
                 GetDeviceProfileCommand::instanceFromPrimitives($request->user()->uuid)
             )->getResult(),
             User::class => \CommandBus::dispatch(
-                GetDeviceProfileCommand::instanceFromPrimitives($request->user()->id)
+                GetUserProfileCommand::instanceFromPrimitives($request->user()->id)
             )->getResult(),
         };
 
