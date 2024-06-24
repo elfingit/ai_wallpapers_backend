@@ -23,11 +23,13 @@ use App\Library\Billing\Commands\ApplePurchaseTransactionCommand;
 use App\Library\Billing\Commands\AppleSubscriptionCommand;
 use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
+use App\Library\Billing\Commands\SyncDeviceSubscriptionCommand;
 use App\Library\Billing\Handlers\ApplePurchaseHandler;
 use App\Library\Billing\Handlers\ApplePurchaseTransactionHandler;
 use App\Library\Billing\Handlers\AppleSubscriptionHandler;
 use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
+use App\Library\Billing\Handlers\SyncDeviceSubscriptionHandler;
 use App\Library\Category\Commands\CreateCategoryCommand;
 use App\Library\Category\Commands\EditCategoryCommand;
 use App\Library\Category\Commands\GetMainDataCommand;
@@ -398,4 +400,9 @@ use App\Library\Webhook\Handlers\AppleWebhookHandler;
 \CommandBus::addHandler(
     GetDeviceProfileCommand::class,
     GetDeviceProfileHandler::class
+);
+
+\CommandBus::addHandler(
+    SyncDeviceSubscriptionCommand::class,
+    SyncDeviceSubscriptionHandler::class
 );

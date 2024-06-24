@@ -2,8 +2,8 @@
 
 namespace App\Library\UserDevice\Handlers;
 
+use App\Library\Billing\Commands\SyncDeviceSubscriptionCommand;
 use App\Library\DeviceBalance\Command\SyncDeviceUserBalanceCommand;
-use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
 use App\Library\Gallery\Commands\SyncUserDeviceCommand;
 use App\Library\UserDevice\Results\CreateResult;
 use App\Models\UserDevice;
@@ -41,6 +41,13 @@ class CreateUserDeviceHandler implements CommandHandlerContract
                 );
 
                 \CommandBus::dispatch($balanceSyncCommand);
+
+                $subscriptionSyncCommand = SyncDeviceSubscriptionCommand::instanceFromPrimitives(
+                    $device->uuid,
+                    $command->userIdValue->value()
+                );
+
+                \CommandBus::dispatch($subscriptionSyncCommand);
             }
 
             return new CreateResult($device);
