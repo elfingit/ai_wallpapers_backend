@@ -8,6 +8,7 @@ use App\Http\Requests\Billing\SubscriptionRequest;
 use App\Http\Resources\Billing\SubscriptionResource;
 use App\Http\Resources\User\PurchaseResultResource;
 use App\Library\Billing\Commands\ApplePurchaseCommand;
+use App\Library\Billing\Commands\AppleRestoreCommand;
 use App\Library\Billing\Commands\AppleSubscriptionCommand;
 use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Enums\MarketTypeEnum;
@@ -63,6 +64,27 @@ class BillingController extends Controller
 
         $result = match ($market) {
             MarketTypeEnum::APPLE => \CommandBus::dispatch(AppleSubscriptionCommand::instanceFromDto($dto)),
+            default => throw new \InvalidArgumentException('Unknown market type')
+        };
+
+        return SubscriptionResource::make($result->getResult());
+    }
+
+    public function restore(SubscriptionRequest $request, string $type)
+    {
+        $dto = $request->getDto();
+        $owner = $request->user();
+
+        if ($owner instanceof User) {
+            $dto->user_id = $owner->id;
+        } elseif ($owner instanceof UserDevice) {
+            $dto->device_id = $owner->uuid;
+        }
+
+        $market = MarketTypeEnum::tryFrom($type);
+
+        $result = match ($market) {
+            MarketTypeEnum::APPLE => \CommandBus::dispatch(AppleRestoreCommand::instanceFromDto($dto)),
             default => throw new \InvalidArgumentException('Unknown market type')
         };
 

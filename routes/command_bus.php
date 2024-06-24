@@ -20,12 +20,14 @@ use App\Library\Auth\Handlers\LogoutHandler;
 use App\Library\Auth\Handlers\RemoveUserTokensHandler;
 use App\Library\Billing\Commands\ApplePurchaseCommand;
 use App\Library\Billing\Commands\ApplePurchaseTransactionCommand;
+use App\Library\Billing\Commands\AppleRestoreCommand;
 use App\Library\Billing\Commands\AppleSubscriptionCommand;
 use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
 use App\Library\Billing\Commands\SyncDeviceSubscriptionCommand;
 use App\Library\Billing\Handlers\ApplePurchaseHandler;
 use App\Library\Billing\Handlers\ApplePurchaseTransactionHandler;
+use App\Library\Billing\Handlers\AppleRestoreHandler;
 use App\Library\Billing\Handlers\AppleSubscriptionHandler;
 use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
@@ -412,4 +414,9 @@ use App\Library\Webhook\Handlers\AppleWebhookHandler;
 \CommandBus::addHandler(
     GetUserProfileCommand::class,
     GetUserProfileHandler::class
+);
+
+\CommandBus::addHandler(
+    AppleRestoreCommand::class,
+    AppleRestoreHandler::class
 );

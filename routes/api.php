@@ -99,6 +99,10 @@ Route::group(
                      ->where('type', 'google|apple')
                      ->middleware(AppSignRequestMiddleware::class);
 
+                Route::post('/billing/restore/{type}', [BillingController::class, 'restore'])
+                     ->where('type', 'google|apple')
+                     ->middleware(AppSignRequestMiddleware::class);
+
                 //Category
                 Route::post('/category', [CategoryController::class, 'store']);
                 Route::get('/category', [CategoryController::class, 'index']);

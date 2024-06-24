@@ -34,6 +34,7 @@ class SyncDeviceSubscriptionHandler implements CommandHandlerContract
 
         $subscription->account_type = AccountTypeEnum::USER;
         $subscription->account_id = $command->userId->value();
+        $subscription->account_uuid = null;
         $subscription->save();
 
         return null;
