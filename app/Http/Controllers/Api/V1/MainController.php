@@ -36,7 +36,7 @@ class MainController extends Controller
                 GetDeviceProfileCommand::instanceFromPrimitives($request->user()->uuid)
             )->getResult(),
             User::class => \CommandBus::dispatch(
-                GetDeviceProfileCommand::instanceFromPrimitives($request->user()->device->uuid)
+                GetDeviceProfileCommand::instanceFromPrimitives($request->user()->id)
             )->getResult(),
         };
 
