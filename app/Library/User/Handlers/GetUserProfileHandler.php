@@ -9,6 +9,7 @@
 namespace App\Library\User\Handlers;
 
 use App\Library\User\Commands\GetUserProfileCommand;
+use App\Library\User\Results\ProfileResult;
 use App\Models\User;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -23,6 +24,8 @@ class GetUserProfileHandler implements CommandHandlerContract
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
         $user = User::find($command->userId->value());
+
+        return new ProfileResult($user);
     }
 
     public function isAsync(): bool
