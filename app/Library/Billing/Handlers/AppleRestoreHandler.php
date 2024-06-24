@@ -14,6 +14,7 @@ use App\Library\Billing\Results\SubscriptionResult;
 use App\Library\Billing\Services\AppleService;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Models\AppleSubscription;
+use App\Models\User;
 use App\Models\UserDevice;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -44,7 +45,7 @@ class AppleRestoreHandler implements CommandHandlerContract
         if (!is_null($command->deviceId)) {
             return $this->restoreForDevice($command, $claims);
         } elseif (!is_null($command->userId)) {
-            return $this->restoreForUser($command, $claims, $renewClaims);
+            return $this->restoreForUser($command, $claims);
         }
 
         return null;
@@ -95,5 +96,42 @@ class AppleRestoreHandler implements CommandHandlerContract
         $subscription->save();
 
         return new SubscriptionResult(true, $device->balance, $subscription->end_date);
+    }
+
+    private function restoreForUser(AppleRestoreCommand $command, $claims): SubscriptionResult
+    {
+        $user = User::find($command->userId->value());
+
+        if (is_null($user)) {
+            $this->logger->warning('user not found', [
+                'extra' => [
+                    'user_id' => $command->userId->value(),
+                    'file' => __FILE__,
+                    'line' => __LINE__,
+                ]
+            ]);
+            return new SubscriptionResult(false);
+        }
+
+        $subscription = AppleSubscription::where('subscription_id', $claims->get('originalTransactionId'))
+                                                         ->first();
+
+        if (is_null($subscription)) {
+            $this->logger->warning('subscription not found', [
+                'extra' => [
+                    'subscription_id' => $claims->get('originalTransactionId'),
+                    'file' => __FILE__,
+                    'line' => __LINE__,
+                ]
+            ]);
+            return new SubscriptionResult(false);
+        }
+
+        $subscription->account_id = $user->id;
+        $subscription->account_type = AccountTypeEnum::USER;
+        $subscription->account_uuid = null;
+        $subscription->save();
+
+        return new SubscriptionResult(true, $user->balance->balance, $subscription->end_date);
     }
 }

@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $device_id
  * @method static \Illuminate\Database\Eloquent\Builder|ApplePurchaseTransaction whereDeviceId($value)
  * @property-read \App\Models\UserDevice|null $device
+ * @property-read \App\Models\User|null $user
  * @mixin \Eloquent
  */
 class ApplePurchaseTransaction extends Model
@@ -56,5 +57,10 @@ class ApplePurchaseTransaction extends Model
     public function device(): BelongsTo
     {
         return $this->belongsTo(UserDevice::class, 'device_id', 'uuid');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

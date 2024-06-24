@@ -79,7 +79,10 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
 
             $transaction = $e->getTransaction();
             if (!is_null($transaction->user_id)) {
-                //TODO implement later
+                $user = $transaction->user;
+                $subscription = AppleSubscription::where('subscription_id', $claims->get('originalTransactionId'))
+                    ->first();
+                return new SubscriptionResult(true, $user->balance->balance, $subscription->end_date);
             } elseif (!is_null($transaction->device_id)) {
                 $device = $transaction->device;
                 $subscription = AppleSubscription::where('subscription_id', $claims->get('originalTransactionId'))
