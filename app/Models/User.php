@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Library\Billing\Enums\AccountTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -43,6 +44,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereParams($value)
  * @property string|null $remove_data_token
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRemoveDataToken($value)
+ * @property-read \App\Models\AppleSubscription|null $subscription
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -91,5 +93,11 @@ class User extends Authenticatable
     public function balance(): HasOne
     {
         return $this->hasOne(UserBalance::class);
+    }
+
+    public function subscription(): HasOne
+    {
+        return $this->hasOne(AppleSubscription::class, 'account_id', 'id')
+            ->where('account_type', AccountTypeEnum::USER);
     }
 }

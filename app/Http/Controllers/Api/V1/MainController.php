@@ -14,6 +14,7 @@ use App\Http\Requests\Main\ProfileRequest;
 use App\Http\Resources\MainData\MainDataResource;
 use App\Library\Category\Commands\GetMainDataCommand;
 use App\Library\UserDevice\Commands\GetDeviceProfileCommand;
+use App\Models\User;
 use App\Models\UserDevice;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -33,6 +34,9 @@ class MainController extends Controller
         $result = match (get_class($request->user())) {
             UserDevice::class => \CommandBus::dispatch(
                 GetDeviceProfileCommand::instanceFromPrimitives($request->user()->uuid)
+            )->getResult(),
+            User::class => \CommandBus::dispatch(
+                GetDeviceProfileCommand::instanceFromPrimitives($request->user()->device->uuid)
             )->getResult(),
         };
 
