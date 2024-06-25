@@ -92,6 +92,7 @@ class AppleRestoreHandler implements CommandHandlerContract
         }
 
         $subscription->account_uuid = $device->uuid;
+        $subscription->account_id = null;
         $subscription->account_type = AccountTypeEnum::DEVICE;
         $subscription->save();
 
