@@ -5,6 +5,7 @@ namespace App\Library\Gallery\Commands;
 use App\Library\Gallery\Values\CategoryIdValue;
 use App\Library\Gallery\Values\DeviceIdValue;
 use App\Library\Gallery\Values\FilePathValue;
+use App\Library\Gallery\Values\IsFeaturedValue;
 use App\Library\Gallery\Values\LocaleValue;
 use App\Library\Gallery\Values\RevisedPromptValue;
 use App\Library\Gallery\Values\StyleValue;
@@ -33,6 +34,8 @@ class CreateGalleryCommand extends AbstractCommand
 
     public ?StyleValue $styleValue = null;
 
+    public ?IsFeaturedValue $isFeaturedValue = null;
+
     public static function createFromDto(AddDto $dto, int $user_id = null): self
     {
         $command = new self();
@@ -41,6 +44,7 @@ class CreateGalleryCommand extends AbstractCommand
         $command->tagsValue = new TagsValue($dto->tags);
         $command->localeValue = new LocaleValue($dto->locale);
         $command->categoryIdValue = new CategoryIdValue($dto->category_id);
+        $command->isFeaturedValue = new IsFeaturedValue($dto->is_featured);
 
         if (!is_null($user_id)) {
             $command->userIdValue = new UserIdValue($user_id);

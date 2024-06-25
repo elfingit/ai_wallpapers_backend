@@ -51,6 +51,7 @@ class GalleryResource extends JsonResource
             'download_url' => Utils::buildImageUrl($resource->id, 'download'),
             'user_id' => $resource->user_id,
             'device_uuid' => $resource->device_uuid,
+            'is_featured' => $resource->featured,
         ];
 
         return $data;

@@ -26,6 +26,10 @@ final class AddDto
     #[ValidationRule('required|integer|exists:categories,id')]
     public int $category_id;
 
+    #[RequestParam('is_featured')]
+    #[ValidationRule('required|bool')]
+    public bool $is_featured;
+
     #[HeaderParam('X-App-Locale')]
     public string $locale = 'en';
 }
