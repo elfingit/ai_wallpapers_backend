@@ -30,6 +30,7 @@ class UpdateGalleryHandler implements CommandHandlerContract
         $gallery->prompt = $command->promptValue->value();
         $gallery->locale = $command->localeValue->value();
         $gallery->category_id = $command->categoryIdValue->value();
+        $gallery->featured = $command->isFeaturedValue->value();
         $gallery->save();
 
         return null;
