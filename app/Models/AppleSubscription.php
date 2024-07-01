@@ -77,7 +77,6 @@ class AppleSubscription extends Model
 
     public function device(): BelongsTo
     {
-        return $this->belongsTo(UserDevice::class, 'account_uuid', 'uuid')
-            ->where('account_type', AccountTypeEnum::DEVICE);
+        return $this->belongsTo(UserDevice::class, 'account_uuid', 'uuid');
     }
 }
