@@ -21,7 +21,9 @@ use Psr\Log\LoggerInterface;
 class AppleService
 {
     const PROD_URL = 'https://api.storekit.itunes.apple.com/inApps/v1/transactions/%s';
+    const PROD_SUBSCRIPTION_URL = 'https://api.storekit.itunes.apple.com/inApps/v1/subscriptions/%s';
     const SANDBOX_URL = 'https://api.storekit-sandbox.itunes.apple.com/inApps/v1/transactions/%s';
+    const SANDBOX_SUBSCRIPTION_URL = 'https://api.storekit-sandbox.itunes.apple.com/inApps/v1/subscriptions/%s';
 
     private JwtTokenGenerator $jwtTokenGenerator;
     private AppleEnvironment $environment;
@@ -48,7 +50,40 @@ class AppleService
     public function getPurchase(string $transaction_id): ?Plain
     {
         $token = $this->getToken();
-        return $this->loadData($transaction_id, $token);
+        $url = match ($this->environment) {
+            AppleEnvironment::PRODUCTION => sprintf(self::PROD_URL, $transaction_id),
+            AppleEnvironment::SANDBOX => sprintf(self::SANDBOX_URL, $transaction_id)
+        };
+        $signedData = $this->loadData($url, $transaction_id, $token);
+
+        if (!isset($signedData['signedTransactionInfo'])) {
+            return null;
+        }
+
+        $parser = new Parser(new JoseEncoder());
+
+        return $parser->parse($signedData['signedTransactionInfo']);
+    }
+
+    public function getSubscription(string $transaction_id): ?array
+    {
+        $token = $this->getToken();
+        $url = match ($this->environment) {
+            AppleEnvironment::PRODUCTION => sprintf(self::PROD_SUBSCRIPTION_URL, $transaction_id),
+            AppleEnvironment::SANDBOX => sprintf(self::SANDBOX_SUBSCRIPTION_URL, $transaction_id)
+        };
+        $signedData = $this->loadData($url, $transaction_id, $token);
+        $signedData = $signedData['data'][0]['lastTransactions'][0];
+
+        if (!isset($signedData['signedTransactionInfo']) || !isset($signedData['signedRenewalInfo'])) {
+            return null;
+        }
+
+        $parser = new Parser(new JoseEncoder());
+        $transactionInfo = $parser->parse($signedData['signedTransactionInfo']);
+        $renewalInfo = $parser->parse($signedData['signedRenewalInfo']);
+
+        return [$transactionInfo, $renewalInfo];
     }
 
     private function getToken(): string
@@ -59,32 +94,12 @@ class AppleService
                 'line' => __LINE__
             ]
         ]);
-        $token = \Cache::get('apple_access_token');
 
-        if ($token) {
-            $this->logger->info('found in cache', [
-                'extra' => [
-                    'file' => __FILE__,
-                    'line' => __LINE__
-                ]
-            ]);
-            return $token;
-        }
-
-        $token = $this->jwtTokenGenerator->generate();
-
-        \Cache::put('apple_access_token', $token, 14);
-
-        return $token;
+        return $this->jwtTokenGenerator->generate();
     }
 
-    private function loadData(string $transaction_id, string $token): ?Plain
+    private function loadData(string $url, string $transaction_id, string $token): ?array
     {
-        $url = match ($this->environment) {
-            AppleEnvironment::PRODUCTION => sprintf(self::PROD_URL, $transaction_id),
-            AppleEnvironment::SANDBOX => sprintf(self::SANDBOX_URL, $transaction_id),
-        };
-
         try {
             $response = $this->httpClient->get(
                 $url,
@@ -102,13 +117,7 @@ class AppleService
                 flags: JSON_THROW_ON_ERROR
             );
 
-            if (!isset($data['signedTransactionInfo'])) {
-                return null;
-            }
-
-            $parser = new Parser(new JoseEncoder());
-
-            return $parser->parse($data['signedTransactionInfo']);
+            return $data;
         } catch (GuzzleException $e) {
             if ($e->getCode() == 401 && $this->environment === AppleEnvironment::PRODUCTION) {
 
@@ -120,7 +129,8 @@ class AppleService
                 ]);
 
                 $this->environment = AppleEnvironment::SANDBOX;
-                return $this->loadData($transaction_id, $token);
+                $url = sprintf(self::SANDBOX_URL, $transaction_id);
+                return $this->loadData($url, $transaction_id, $token);
             } else {
                 $this->logger->error('error while loading data', [
                     'extra' => [

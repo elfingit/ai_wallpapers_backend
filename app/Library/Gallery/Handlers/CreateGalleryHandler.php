@@ -49,6 +49,13 @@ class CreateGalleryHandler implements CommandHandlerContract
             $hashed_name = basename($path);
             $path = dirname($path);
         }
+
+        $is_featured = false;
+
+        if (!is_null($command->isFeaturedValue)) {
+            $is_featured = $command->isFeaturedValue->value();
+        }
+
         /** @var Gallery $gallery */
         $gallery = Gallery::create([
             'prompt' => $command->promptValue->value(),
@@ -57,7 +64,9 @@ class CreateGalleryHandler implements CommandHandlerContract
             'device_uuid' => $command->deviceIdValue?->value(),
             'locale' => $command->localeValue->value(),
             'revised_prompt' => $command->revisedPromptValue?->value(),
-            'style' => $command->styleValue?->value()
+            'style' => $command->styleValue?->value(),
+            'category_id' => $command->categoryIdValue->value(),
+            'featured' => $is_featured,
         ]);
 
         foreach ($tag_ids as $tag_id) {

@@ -23,6 +23,8 @@ class EditResource extends JsonResource
             'prompt' => $resource->prompt,
             'locale' => $resource->locale,
             'tags' => $resource->tags->pluck('title')->toArray(),
+            'category_id' => $resource->category_id,
+            'is_featured' => $resource->featured,
         ];
     }
 }

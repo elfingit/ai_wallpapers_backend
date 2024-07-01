@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\ApplePurchaseTransaction
@@ -40,6 +41,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ApplePurchaseTransaction whereUuid($value)
  * @property string|null $device_id
  * @method static \Illuminate\Database\Eloquent\Builder|ApplePurchaseTransaction whereDeviceId($value)
+ * @property-read \App\Models\UserDevice|null $device
+ * @property-read \App\Models\User|null $user
  * @mixin \Eloquent
  */
 class ApplePurchaseTransaction extends Model
@@ -50,4 +53,14 @@ class ApplePurchaseTransaction extends Model
     protected $primaryKey = 'uuid';
 
     protected $guarded = ['uuid', 'created_at', 'updated_at', 'deleted_at'];
+
+    public function device(): BelongsTo
+    {
+        return $this->belongsTo(UserDevice::class, 'device_id', 'uuid');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

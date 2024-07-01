@@ -14,7 +14,7 @@ use Elfin\LaravelDto\Dto\Attributes\ValidationRule;
 class ApplePurchaseDto
 {
     #[RequestParam('product_id')]
-    #[ValidationRule('required|string|max:150|in:ai_requests_2,ai_requests_5,ai_requests_10,ai_requests_20')]
+    #[ValidationRule('required|string|max:150|in:weekly_5_tokens,monthly_20_tokens,yearly_80_tokens')]
     public string $product_id;
 
     #[RequestParam('purchase_token')]

@@ -19,4 +19,12 @@ final class UpdateDto
     #[RequestParam('locale')]
     #[ValidationRule('required|string|size:2')]
     public string $locale;
+
+    #[RequestParam('category')]
+    #[ValidationRule('required|integer|exists:categories,id')]
+    public int $category_id;
+
+    #[RequestParam('is_featured')]
+    #[ValidationRule('required|bool')]
+    public bool $is_featured;
 }

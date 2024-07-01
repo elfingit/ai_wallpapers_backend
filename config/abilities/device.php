@@ -16,4 +16,6 @@ return [
     RulesEnum::MAIN_BALANCE,
     RulesEnum::LOGOUT,
     RulesEnum::BILLING_PURCHASE,
+    RulesEnum::MAIN_INDEX,
+    RulesEnum::MAIN_PROFILE,
 ];

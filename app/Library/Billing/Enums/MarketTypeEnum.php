@@ -8,8 +8,12 @@
 
 namespace App\Library\Billing\Enums;
 
+use App\Library\Core\Utils\Traits\EnumValues;
+
 enum MarketTypeEnum: string
 {
+    use EnumValues;
+
     case GOOGLE = 'google';
     case APPLE = 'apple';
 }

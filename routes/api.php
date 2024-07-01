@@ -2,14 +2,17 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BillingController;
+use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ContactFormController;
 use App\Http\Controllers\Api\V1\DeleteAccountController;
 use App\Http\Controllers\Api\V1\GalleryController;
+use App\Http\Controllers\Api\V1\MainController;
 use App\Http\Controllers\Api\V1\RegistrationController;
 use App\Http\Controllers\Api\V1\SocialNetworkController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\UserDeviceController;
 use App\Http\Controllers\Api\V1\WallpaperController;
+use App\Http\Controllers\Api\V1\WebhookController;
 use App\Http\Middleware\AppSignRequestMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +37,9 @@ Route::group(
         'namespace' => 'Api\V1',
     ],
     function () {
+
+        Route::any('/webhook/apple', [WebhookController::class, 'apple']);
+
         Route::post('/auth', [AuthController::class, 'store']);
         Route::post('/contact_form', [ContactFormController::class, 'store']);
         Route::post('/user_device', [UserDeviceController::class, 'store'])
@@ -44,6 +50,10 @@ Route::group(
                 'middleware' => 'auth:device',
             ],
             function () {
+
+                Route::get('/', [MainController::class, 'index']);
+                Route::get('/profile', [MainController::class, 'profile']);
+
                 //User registration
                 Route::post('/registration', [RegistrationController::class, 'store']);
                 Route::post('/registration/social', [SocialNetworkController::class, 'store'])
@@ -84,6 +94,23 @@ Route::group(
                 Route::post('/billing/purchase/{type}', [BillingController::class, 'store'])
                     ->where('type', 'google|apple')
                     ->middleware(AppSignRequestMiddleware::class);
+
+                Route::post('/billing/subscription/{type}', [BillingController::class, 'subscription'])
+                     ->where('type', 'google|apple')
+                     ->middleware(AppSignRequestMiddleware::class);
+
+                Route::post('/billing/restore/{type}', [BillingController::class, 'restore'])
+                     ->where('type', 'google|apple')
+                     ->middleware(AppSignRequestMiddleware::class);
+
+                //Category
+                Route::post('/category', [CategoryController::class, 'store']);
+                Route::get('/category', [CategoryController::class, 'index']);
+                Route::get('/category/meta', [CategoryController::class, 'meta']);
+                Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])
+                     ->where('category', '[0-9]+');
+                Route::patch('/category/{category}', [CategoryController::class, 'update'])
+                     ->where('category', '[0-9]+');
             }
         );
     }

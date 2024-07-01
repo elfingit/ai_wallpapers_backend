@@ -20,12 +20,30 @@ use App\Library\Auth\Handlers\LogoutHandler;
 use App\Library\Auth\Handlers\RemoveUserTokensHandler;
 use App\Library\Billing\Commands\ApplePurchaseCommand;
 use App\Library\Billing\Commands\ApplePurchaseTransactionCommand;
+use App\Library\Billing\Commands\AppleRestoreCommand;
+use App\Library\Billing\Commands\AppleSubscriptionCommand;
 use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
+use App\Library\Billing\Commands\SyncDeviceSubscriptionCommand;
 use App\Library\Billing\Handlers\ApplePurchaseHandler;
 use App\Library\Billing\Handlers\ApplePurchaseTransactionHandler;
+use App\Library\Billing\Handlers\AppleRestoreHandler;
+use App\Library\Billing\Handlers\AppleSubscriptionHandler;
 use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
+use App\Library\Billing\Handlers\SyncDeviceSubscriptionHandler;
+use App\Library\Category\Commands\CreateCategoryCommand;
+use App\Library\Category\Commands\EditCategoryCommand;
+use App\Library\Category\Commands\GetMainDataCommand;
+use App\Library\Category\Commands\IndexCategoryCommand;
+use App\Library\Category\Commands\MetaCommand;
+use App\Library\Category\Commands\UpdateCategoryCommand;
+use App\Library\Category\Handlers\CreateCategoryHandler;
+use App\Library\Category\Handlers\EditCategoryHandler;
+use App\Library\Category\Handlers\GetMainDataHandler;
+use App\Library\Category\Handlers\IndexCategoryHandler;
+use App\Library\Category\Handlers\MetaHandler;
+use App\Library\Category\Handlers\UpdateCategoryHandler;
 use App\Library\ContactForm\Commands\SendMessageCommand;
 use App\Library\ContactForm\Handlers\SendMessageHandler;
 use App\Library\DeviceBalance\Command\SyncDeviceUserBalanceCommand;
@@ -72,11 +90,15 @@ use App\Library\Registration\Commands\CreateRegistrationCommand;
 use App\Library\Registration\Handlers\CreateRegistrationHandler;
 use App\Library\Role\Commands\CreateRoleCommand;
 use App\Library\Role\Handlers\CreateRoleHandler;
+use App\Library\SubscriptionScheduler\Commands\AppleScheduleSubscriptionCommand;
+use App\Library\SubscriptionScheduler\Handlers\AppleScheduleSubscriptionHandler;
 use App\Library\Tag\Commands\CreateTagCommand;
 use App\Library\Tag\Handlers\CreateTagHandler;
+use App\Library\User\Commands\GetUserProfileCommand;
 use App\Library\User\Commands\IndexUserCommand;
 use App\Library\User\Commands\UserRegisteredCommand;
 use App\Library\User\Commands\UserRegisteredFromSocialNetworkCommand;
+use App\Library\User\Handlers\GetUserProfileHandler;
 use App\Library\User\Handlers\IndexUserHandler;
 use App\Library\User\Handlers\UserRegisteredFromSocialNetworkHandler;
 use App\Library\User\Handlers\WelcomeMailHandler;
@@ -84,21 +106,24 @@ use App\Library\UserBalance\Commands\GetUserBalanceCommand;
 use App\Library\UserBalance\Commands\RemoveUserBalanceCommand;
 use App\Library\UserBalance\Commands\UpdateUserBalanceCommand;
 use App\Library\UserBalance\Handlers\GetUserBalanceHandler;
-use App\Library\UserBalance\Handlers\GiftForBalanceHandler;
 use App\Library\UserBalance\Handlers\RemoveUserBalanceHandler;
 use App\Library\UserBalance\Handlers\UpdateUserBalanceHandler;
 use App\Library\UserBalanceTransaction\Commands\CreateUserBalanceTransactionCommand;
 use App\Library\UserBalanceTransaction\Handlers\CreateUserBalanceTransactionHandler;
 use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetDeviceBalanceCommand;
+use App\Library\UserDevice\Commands\GetDeviceProfileCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
 use App\Library\UserDevice\Commands\RemoveUserDevicesCommand;
 use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
 use App\Library\UserDevice\Handlers\GetDeviceBalanceHandler;
+use App\Library\UserDevice\Handlers\GetDeviceProfileHandler;
 use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
 use App\Library\UserDevice\Handlers\RemoveUserDevicesHandler;
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
 use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
+use App\Library\Webhook\Commands\AppleWebhookCommand;
+use App\Library\Webhook\Handlers\AppleWebhookHandler;
 
 \CommandBus::addHandler(
     CreateRoleCommand::class,
@@ -143,7 +168,6 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     PictureUploadedCommand::class, [
         ThumbnailHandler::class,
-        GalleryReplicateHandler::class,
         NotifyUserFreeGalleryHandler::class
     ]
 );
@@ -329,4 +353,70 @@ use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
 \CommandBus::addHandler(
     RefreshGalleryCommand::class,
     RefreshGalleryHandler::class
+);
+
+\CommandBus::addHandler(
+    CreateCategoryCommand::class,
+    CreateCategoryHandler::class
+);
+
+\CommandBus::addHandler(
+    EditCategoryCommand::class,
+    EditCategoryHandler::class
+);
+
+\CommandBus::addHandler(
+    UpdateCategoryCommand::class,
+    UpdateCategoryHandler::class
+);
+
+
+\CommandBus::addHandler(
+    IndexCategoryCommand::class,
+    IndexCategoryHandler::class
+);
+
+\CommandBus::addHandler(
+    MetaCommand::class,
+    MetaHandler::class
+);
+
+\CommandBus::addHandler(
+    GetMainDataCommand::class,
+    GetMainDataHandler::class,
+);
+
+\CommandBus::addHandler(
+    AppleSubscriptionCommand::class,
+    AppleSubscriptionHandler::class
+);
+
+\CommandBus::addHandler(
+    AppleWebhookCommand::class,
+    AppleWebhookHandler::class
+);
+
+\CommandBus::addHandler(
+    AppleScheduleSubscriptionCommand::class,
+    AppleScheduleSubscriptionHandler::class
+);
+
+\CommandBus::addHandler(
+    GetDeviceProfileCommand::class,
+    GetDeviceProfileHandler::class
+);
+
+\CommandBus::addHandler(
+    SyncDeviceSubscriptionCommand::class,
+    SyncDeviceSubscriptionHandler::class
+);
+
+\CommandBus::addHandler(
+    GetUserProfileCommand::class,
+    GetUserProfileHandler::class
+);
+
+\CommandBus::addHandler(
+    AppleRestoreCommand::class,
+    AppleRestoreHandler::class
 );

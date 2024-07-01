@@ -9,6 +9,7 @@
 namespace App\Library\Billing\Commands;
 
 use App\Library\Billing\Dto\ApplePurchaseDto;
+use App\Library\Billing\Dto\AppleSubscriptionDto;
 use App\Library\Billing\Values\DeviceIdValue;
 use App\Library\Billing\Values\ProductAmountValue;
 use App\Library\Billing\Values\ProductIdValue;
@@ -26,7 +27,7 @@ class ApplePurchaseCommand extends AbstractCommand
     public ?UserIdValue $userId = null;
     public ?DeviceIdValue $deviceId = null;
 
-    static public function instanceFromDto(ApplePurchaseDto $dto): self
+    static public function instanceFromDto(AppleSubscriptionDto $dto): self
     {
         $command =  new self();
         $command->productId = new ProductIdValue($dto->product_id);
@@ -36,7 +37,7 @@ class ApplePurchaseCommand extends AbstractCommand
         } elseif (!is_null($dto->device_id)) {
             $command->deviceId = new DeviceIdValue($dto->device_id);
         }
-        
+
         $command->productAmount = new ProductAmountValue($dto->product_amount);
 
         return $command;

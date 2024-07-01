@@ -25,8 +25,8 @@ use Psr\Log\LoggerInterface;
 
 class ApplePurchaseHandler implements CommandHandlerContract
 {
-    private LoggerInterface $logger;
-    private AppleService $appleService;
+    protected LoggerInterface $logger;
+    protected AppleService $appleService;
 
     public function __construct()
     {

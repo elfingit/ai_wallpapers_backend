@@ -2,7 +2,9 @@
 
 namespace App\Library\Gallery\Commands;
 
+use App\Library\Gallery\Values\CategoryIdValue;
 use App\Library\Gallery\Values\IdValue;
+use App\Library\Gallery\Values\IsFeaturedValue;
 use App\Library\Gallery\Values\LocaleValue;
 use App\Library\Gallery\Values\TagsValue;
 use Elfin\LaravelCommandBus\Library\AbstractCommand;
@@ -18,6 +20,9 @@ class UpdateGalleryCommand extends AbstractCommand
     public TagsValue $tagsValue;
     public LocaleValue $localeValue;
 
+    public CategoryIdValue $categoryIdValue;
+    public IsFeaturedValue $isFeaturedValue;
+
     public static function createFromDto(UpdateDto $dto, int $pic_id): self
     {
         $command = new self();
@@ -25,6 +30,8 @@ class UpdateGalleryCommand extends AbstractCommand
         $command->idValue = new IdValue($pic_id);
         $command->tagsValue = new TagsValue($dto->tags);
         $command->localeValue = new LocaleValue($dto->locale);
+        $command->categoryIdValue = new CategoryIdValue($dto->category_id);
+        $command->isFeaturedValue = new IsFeaturedValue($dto->is_featured);
 
         return $command;
     }

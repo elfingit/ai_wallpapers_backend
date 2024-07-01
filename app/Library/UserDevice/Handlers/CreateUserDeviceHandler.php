@@ -2,8 +2,8 @@
 
 namespace App\Library\UserDevice\Handlers;
 
+use App\Library\Billing\Commands\SyncDeviceSubscriptionCommand;
 use App\Library\DeviceBalance\Command\SyncDeviceUserBalanceCommand;
-use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
 use App\Library\Gallery\Commands\SyncUserDeviceCommand;
 use App\Library\UserDevice\Results\CreateResult;
 use App\Models\UserDevice;
@@ -41,6 +41,13 @@ class CreateUserDeviceHandler implements CommandHandlerContract
                 );
 
                 \CommandBus::dispatch($balanceSyncCommand);
+
+                $subscriptionSyncCommand = SyncDeviceSubscriptionCommand::instanceFromPrimitives(
+                    $device->uuid,
+                    $command->userIdValue->value()
+                );
+
+                \CommandBus::dispatch($subscriptionSyncCommand);
             }
 
             return new CreateResult($device);
@@ -58,22 +65,6 @@ class CreateUserDeviceHandler implements CommandHandlerContract
         }
 
         $device = UserDevice::create($data);
-
-        $devices_count = UserDevice::where('ip_address', $device->ip_address)
-                                   ->where('user_agent', $device->user_agent)
-                                   ->count();
-
-        if ($devices_count > 1) {
-            return new CreateResult($device);
-        }
-
-        $balanceCommand = UpdateDeviceBalanceCommand::instanceFromPrimitives(
-            $device->uuid,
-            1,
-            'gift for new device'
-        );
-        \CommandBus::dispatch($balanceCommand);
-        $device->refresh();
 
         return new CreateResult($device);
     }

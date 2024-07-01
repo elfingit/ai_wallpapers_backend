@@ -19,17 +19,13 @@ class IndexGalleryHandler implements CommandHandlerContract
     public function __invoke(CommandContract $command): ?CommandResultContract
     {
         $query = Gallery::with('tags:title');
-        $locale = $command->localeValue->value();
-        $query->where('locale', $locale);
 
         if ($command->idValue) {
             $query->where('id', $command->idValue->value());
         }
 
-        if ($command->queryValue) {
-            $tags = explode(' ', $command->queryValue->value());
-            $tags = array_filter($tags, fn($tag) => !empty($tag) || strlen($tag) > 2);
-            $query->whereHas('tags', fn($q) => $q->whereIn("title->{$locale}", $tags));
+        if ($command->categoryIdValue) {
+            $query->where('category_id', $command->categoryIdValue->value());
         }
 
         if ($command->isPublicValue->value()) {

@@ -22,6 +22,14 @@ final class AddDto
     #[ValidationArrayRule('required|string|min:2|max:20')]
     public array $tags;
 
+    #[RequestParam('category')]
+    #[ValidationRule('required|integer|exists:categories,id')]
+    public int $category_id;
+
+    #[RequestParam('is_featured')]
+    #[ValidationRule('required|bool')]
+    public bool $is_featured;
+
     #[HeaderParam('X-App-Locale')]
     public string $locale = 'en';
 }

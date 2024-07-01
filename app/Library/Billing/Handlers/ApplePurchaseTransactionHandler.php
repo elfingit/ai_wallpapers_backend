@@ -9,8 +9,8 @@
 namespace App\Library\Billing\Handlers;
 
 use App\Exceptions\DuplicateAppleTransactionException;
-use App\Exceptions\DuplicateGoogleOrderException;
 use App\Library\Billing\Commands\ApplePurchaseTransactionCommand;
+use App\Library\Billing\Results\ApplePurchaseTransactionResult;
 use App\Models\ApplePurchaseTransaction;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandHandlerContract;
@@ -29,10 +29,10 @@ class ApplePurchaseTransactionHandler implements CommandHandlerContract
         $transaction = ApplePurchaseTransaction::where('transaction_id', $transaction_id)->first();
 
         if (!is_null($transaction)) {
-            throw new DuplicateAppleTransactionException("Transaction with id $transaction_id already exists.");
+            throw new DuplicateAppleTransactionException($transaction);
         }
 
-        ApplePurchaseTransaction::create([
+        $transaction = ApplePurchaseTransaction::create([
             'transaction_id' => $command->transactionId->value(),
             'product_id' => $command->productId->value(),
             'type' => $command->transactionType->value(),
@@ -45,7 +45,7 @@ class ApplePurchaseTransactionHandler implements CommandHandlerContract
             'device_id' => $command->deviceId?->value(),
         ]);
 
-        return null;
+        return new ApplePurchaseTransactionResult($transaction->uuid);
     }
 
     public function isAsync(): bool
