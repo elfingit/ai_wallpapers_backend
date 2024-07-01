@@ -76,7 +76,10 @@ class AppleRestoreHandler implements CommandHandlerContract
             $device->subscription->save();
         }
 
+        \DB::beginTransaction();
+
         $subscription = AppleSubscription::where('subscription_id', $claims->get('originalTransactionId'))
+                                        ->lockForUpdate()
                                          ->first();
 
         if (is_null($subscription)) {
@@ -87,6 +90,7 @@ class AppleRestoreHandler implements CommandHandlerContract
                     'line' => __LINE__,
                 ]
             ]);
+            \DB::rollBack();
             return new SubscriptionResult(false);
         }
 
@@ -100,7 +104,7 @@ class AppleRestoreHandler implements CommandHandlerContract
         $subscription->account_id = null;
         $subscription->account_type = AccountTypeEnum::DEVICE;
         $subscription->save();
-
+        \DB::commit();
         return new SubscriptionResult(true, $device->balance, $subscription->end_date);
     }
 
