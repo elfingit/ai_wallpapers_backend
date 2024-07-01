@@ -40,7 +40,6 @@ class AppleRestoreHandler implements CommandHandlerContract
     {
         list($subscriptionData, $renewalData) = $this->appleService->getSubscription($command->purchaseToken->value());
         $claims = $subscriptionData->claims();
-        $renewClaims = $renewalData->claims();
 
         if (!is_null($command->deviceId)) {
             return $this->restoreForDevice($command, $claims);
@@ -89,6 +88,12 @@ class AppleRestoreHandler implements CommandHandlerContract
                 ]
             ]);
             return new SubscriptionResult(false);
+        }
+
+        if ($subscription->device) {
+            $device->balance = $subscription->device->balance;
+            $subscription->device->balance = 0;
+            $subscription->device->save();
         }
 
         $subscription->account_uuid = $device->uuid;

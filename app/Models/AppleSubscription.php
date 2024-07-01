@@ -7,6 +7,7 @@ use App\Library\Billing\Enums\SubscriptionStatusEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -51,6 +52,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|AppleSubscription whereTransactionUuid($value)
  * @property-read \App\Models\SubscriptionScheduler|null $subscription
  * @property-read \App\Models\SubscriptionScheduler|null $scheduler
+ * @property-read \App\Models\UserDevice|null $device
  * @mixin \Eloquent
  */
 class AppleSubscription extends Model
@@ -71,5 +73,11 @@ class AppleSubscription extends Model
     public function scheduler(): HasOne
     {
         return $this->hasOne(SubscriptionScheduler::class, 'subscription_uuid', 'uuid');
+    }
+
+    public function device(): BelongsTo
+    {
+        return $this->belongsTo(UserDevice::class, 'account_uuid', 'uuid')
+            ->where('account_type', AccountTypeEnum::DEVICE);
     }
 }
