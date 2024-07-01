@@ -53,6 +53,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Models\SubscriptionScheduler|null $subscription
  * @property-read \App\Models\SubscriptionScheduler|null $scheduler
  * @property-read \App\Models\UserDevice|null $device
+ * @property-read \App\Models\User|null $user
  * @mixin \Eloquent
  */
 class AppleSubscription extends Model
@@ -78,5 +79,10 @@ class AppleSubscription extends Model
     public function device(): BelongsTo
     {
         return $this->belongsTo(UserDevice::class, 'account_uuid', 'uuid');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'account_id', 'id');
     }
 }

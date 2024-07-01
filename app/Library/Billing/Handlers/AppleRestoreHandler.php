@@ -100,6 +100,12 @@ class AppleRestoreHandler implements CommandHandlerContract
             $subscription->device->save();
         }
 
+        if ($subscription->user) {
+            $device->balance = $subscription->user->balance->balance;
+            $subscription->user->balance->balance = 0;
+            $subscription->user->balance->save();
+        }
+
         $subscription->account_uuid = $device->uuid;
         $subscription->account_id = null;
         $subscription->account_type = AccountTypeEnum::DEVICE;
@@ -123,8 +129,11 @@ class AppleRestoreHandler implements CommandHandlerContract
             return new SubscriptionResult(false);
         }
 
+        \DB::beginTransaction();
+
         $subscription = AppleSubscription::where('subscription_id', $claims->get('originalTransactionId'))
-                                                         ->first();
+                                        ->lockForUpdate()
+                                        ->first();
 
         if (is_null($subscription)) {
             $this->logger->warning('subscription not found', [
@@ -134,6 +143,7 @@ class AppleRestoreHandler implements CommandHandlerContract
                     'line' => __LINE__,
                 ]
             ]);
+            \DB::rollBack();
             return new SubscriptionResult(false);
         }
 
@@ -142,6 +152,7 @@ class AppleRestoreHandler implements CommandHandlerContract
         $subscription->account_uuid = null;
         $subscription->save();
 
+        \DB::commit();
         return new SubscriptionResult(true, $user->balance->balance, $subscription->end_date);
     }
 }
