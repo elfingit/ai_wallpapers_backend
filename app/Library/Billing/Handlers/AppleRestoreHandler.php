@@ -13,6 +13,7 @@ use App\Library\Billing\Enums\AccountTypeEnum;
 use App\Library\Billing\Results\SubscriptionResult;
 use App\Library\Billing\Services\AppleService;
 use App\Library\Core\Logger\LoggerChannel;
+use App\Library\DeviceBalance\Command\UpdateDeviceBalanceCommand;
 use App\Models\AppleSubscription;
 use App\Models\User;
 use App\Models\UserDevice;
@@ -94,14 +95,16 @@ class AppleRestoreHandler implements CommandHandlerContract
             return new SubscriptionResult(false);
         }
 
+        $balance = 0;
+
         if ($subscription->device) {
-            $device->balance = $subscription->device->balance;
-            $subscription->device->balance = 0;
-            $subscription->device->save();
+            $balance = $subscription->device->balance;
+            $this->addToDeviceBalance($subscription->device, 0, 'move to another device while restore purchase');
+            $this->addToDeviceBalance($device, $balance, 'move from another device while restore purchase');
         }
 
         if ($subscription->user) {
-            $device->balance = $subscription->user->balance->balance;
+            $this->addToDeviceBalance($device, $subscription->user->balance->balance, 'move from user to device while restore purchase');
             $subscription->user->balance->balance = 0;
             $subscription->user->balance->save();
         }
@@ -154,5 +157,27 @@ class AppleRestoreHandler implements CommandHandlerContract
 
         \DB::commit();
         return new SubscriptionResult(true, $user->balance->balance, $subscription->end_date);
+    }
+
+    private function addToDeviceBalance(UserDevice $device, float $balance, string $notice = ''): void
+    {
+        $deviceBalanceCommand = UpdateDeviceBalanceCommand::instanceFromPrimitives(
+            $device->uuid,
+            $balance,
+            $notice
+        );
+
+        \CommandBus::dispatch($deviceBalanceCommand);
+
+        $device = UserDevice::find($device->uuid);
+
+        $this->logger->info('device balance updated', [
+            'extra' => [
+                'device_id' => $device->uuid,
+                'balance' => $device->balance,
+                'file' => __FILE__,
+                'line' => __LINE__,
+            ]
+        ]);
     }
 }

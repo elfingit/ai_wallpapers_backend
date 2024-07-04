@@ -184,7 +184,7 @@ class AppleSubscriptionHandler extends ApplePurchaseHandler
         return $user->balance->balance;
     }
 
-    private function addToDeviceBalance(CommandContract|AppleSubscriptionCommand $command): float
+    private function addToDeviceBalance(AppleSubscriptionCommand $command): float
     {
         $deviceBalanceCommand = UpdateDeviceBalanceCommand::instanceFromPrimitives(
             $command->deviceId->value(),
