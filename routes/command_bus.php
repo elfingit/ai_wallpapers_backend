@@ -60,6 +60,7 @@ use App\Library\Gallery\Commands\GetMainFileCommand;
 use App\Library\Gallery\Commands\GetThumbnailCommand;
 use App\Library\Gallery\Commands\IndexGalleryCommand;
 use App\Library\Gallery\Commands\MakePictureCopyCommand;
+use App\Library\Gallery\Commands\NotifyUserFreeGalleryCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Library\Gallery\Commands\RefreshGalleryCommand;
 use App\Library\Gallery\Commands\SyncUserDeviceCommand;
@@ -68,7 +69,6 @@ use App\Library\Gallery\Commands\UserPicturesMakePublicCommand;
 use App\Library\Gallery\Handlers\CreateGalleryHandler;
 use App\Library\Gallery\Handlers\DeleteGalleryHandler;
 use App\Library\Gallery\Handlers\EditGalleryHandler;
-use App\Library\Gallery\Handlers\GalleryReplicateHandler;
 use App\Library\Gallery\Handlers\GetImageByPromptHandler;
 use App\Library\Gallery\Handlers\GetMailFileHandler;
 use App\Library\Gallery\Handlers\GetThumbnailHandler;
@@ -167,8 +167,7 @@ use App\Library\Webhook\Handlers\AppleWebhookHandler;
 
 \CommandBus::addHandler(
     PictureUploadedCommand::class, [
-        ThumbnailHandler::class,
-        NotifyUserFreeGalleryHandler::class
+        ThumbnailHandler::class
     ]
 );
 
@@ -419,4 +418,9 @@ use App\Library\Webhook\Handlers\AppleWebhookHandler;
 \CommandBus::addHandler(
     AppleRestoreCommand::class,
     AppleRestoreHandler::class
+);
+
+\CommandBus::addHandler(
+    NotifyUserFreeGalleryCommand::class,
+    NotifyUserFreeGalleryHandler::class
 );
