@@ -48,7 +48,6 @@ class NotifyUserFreeGalleryHandler implements CommandHandlerContract
 
         $this->logger->info('Sending push to user', [
             'extra' => [
-                'id' => $command->idValue->value(),
                 'file' => __FILE__,
                 'line' => __LINE__
             ]
