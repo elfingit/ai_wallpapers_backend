@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('app:subs-schedule')
                 ->everyMinute();
+        $schedule->command('app:notify-new-wallpapers')
+            ->dailyAt('16:00');
     }
 
     /**

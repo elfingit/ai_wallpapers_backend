@@ -10,6 +10,7 @@ namespace App\Library\Gallery\Handlers;
 
 use App\GlobalServices\GoogleService;
 use App\Library\Core\Logger\LoggerChannel;
+use App\Library\Gallery\Commands\NotifyUserFreeGalleryCommand;
 use App\Library\Gallery\Commands\PictureUploadedCommand;
 use App\Models\Gallery;
 use Elfin\LaravelCommandBus\Contracts\CommandBus\CommandContract;
@@ -28,7 +29,7 @@ class NotifyUserFreeGalleryHandler implements CommandHandlerContract
     }
 
     /**
-     * @param PictureUploadedCommand $command
+     * @param NotifyUserFreeGalleryCommand $command
      *
      * @return CommandResultContract|null
      */
@@ -37,7 +38,6 @@ class NotifyUserFreeGalleryHandler implements CommandHandlerContract
         if (!\App::isProduction()) {
             $this->logger->info('Service not in production mode, ignore this push', [
                 'extra' => [
-                    'id' => $command->idValue->value(),
                     'file' => __FILE__,
                     'line' => __LINE__
                 ]
@@ -46,18 +46,6 @@ class NotifyUserFreeGalleryHandler implements CommandHandlerContract
             return null;
         }
 
-        $gallery = Gallery::find($command->idValue->value());
-
-        if (!$gallery || !is_null($gallery->user_id) || !is_null($gallery->device_uuid)) {
-            $this->logger->warning('Gallery not found or already has user_id or has device_uuid', [
-                'extra' => [
-                    'id' => $command->idValue->value(),
-                    'file' => __FILE__,
-                    'line' => __LINE__
-                ]
-            ]);
-            return null;
-        }
         $this->logger->info('Sending push to user', [
             'extra' => [
                 'id' => $command->idValue->value(),

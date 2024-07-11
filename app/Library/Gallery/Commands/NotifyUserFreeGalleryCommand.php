@@ -13,13 +13,4 @@ use Elfin\LaravelCommandBus\Library\AbstractCommand;
 
 class NotifyUserFreeGalleryCommand extends AbstractCommand
 {
-    public IdValue $id;
-
-    public static function createFromPrimitives(int $id): self
-    {
-        $command = new self();
-        $command->id = new IdValue($id);
-
-        return $command;
-    }
 }
