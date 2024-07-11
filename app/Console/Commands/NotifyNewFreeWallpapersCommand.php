@@ -30,7 +30,7 @@ class NotifyNewFreeWallpapersCommand extends Command
         $gallery_count = Gallery::query()
             ->whereNull('user_id')
             ->whereNull('device_uuid')
-            ->whereBetween('created_at', [now()->subDay(), now()])
+            ->whereBetween('created_at', [now()->startOfDay(), now()])
             ->count();
 
         if ($gallery_count > 0) {
