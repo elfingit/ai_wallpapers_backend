@@ -45,6 +45,7 @@ enum RulesEnum : string
 
     case MAIN_INDEX = 'main:index';
     case MAIN_PROFILE = 'main:profile';
+    case ADMIN_DASHBOARD = 'admin:dashboard';
 
     public function value(): string
     {

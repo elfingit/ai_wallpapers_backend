@@ -52,6 +52,7 @@ Route::group(
             function () {
 
                 Route::get('/', [MainController::class, 'index']);
+                Route::get('/dashboard', [MainController::class, 'adminDashboard']);
                 Route::get('/profile', [MainController::class, 'profile']);
 
                 //User registration

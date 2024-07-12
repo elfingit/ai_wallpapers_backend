@@ -24,6 +24,7 @@ use App\Library\Billing\Commands\AppleRestoreCommand;
 use App\Library\Billing\Commands\AppleSubscriptionCommand;
 use App\Library\Billing\Commands\GooglePurchaseCommand;
 use App\Library\Billing\Commands\GooglePurchaseTransactionCommand;
+use App\Library\Billing\Commands\PotentialDebtCommand;
 use App\Library\Billing\Commands\SyncDeviceSubscriptionCommand;
 use App\Library\Billing\Handlers\ApplePurchaseHandler;
 use App\Library\Billing\Handlers\ApplePurchaseTransactionHandler;
@@ -31,6 +32,7 @@ use App\Library\Billing\Handlers\AppleRestoreHandler;
 use App\Library\Billing\Handlers\AppleSubscriptionHandler;
 use App\Library\Billing\Handlers\GooglePurchaseHandler;
 use App\Library\Billing\Handlers\GooglePurchaseTransactionHandler;
+use App\Library\Billing\Handlers\PotentialDebtHandler;
 use App\Library\Billing\Handlers\SyncDeviceSubscriptionHandler;
 use App\Library\Category\Commands\CreateCategoryCommand;
 use App\Library\Category\Commands\EditCategoryCommand;
@@ -114,11 +116,13 @@ use App\Library\UserDevice\Commands\CreateUserDeviceCommand;
 use App\Library\UserDevice\Commands\GetDeviceBalanceCommand;
 use App\Library\UserDevice\Commands\GetDeviceProfileCommand;
 use App\Library\UserDevice\Commands\GetUserDeviceCommand;
+use App\Library\UserDevice\Commands\NewDevicesCountCommand;
 use App\Library\UserDevice\Commands\RemoveUserDevicesCommand;
 use App\Library\UserDevice\Handlers\CreateUserDeviceHandler;
 use App\Library\UserDevice\Handlers\GetDeviceBalanceHandler;
 use App\Library\UserDevice\Handlers\GetDeviceProfileHandler;
 use App\Library\UserDevice\Handlers\GetUserDeviceHandler;
+use App\Library\UserDevice\Handlers\NewDevicesCountHandler;
 use App\Library\UserDevice\Handlers\RemoveUserDevicesHandler;
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
 use App\Library\Wallpaper\Handlers\CreateWallpaperHandler;
@@ -423,4 +427,14 @@ use App\Library\Webhook\Handlers\AppleWebhookHandler;
 \CommandBus::addHandler(
     NotifyUserFreeGalleryCommand::class,
     NotifyUserFreeGalleryHandler::class
+);
+
+\CommandBus::addHandler(
+    PotentialDebtCommand::class,
+    PotentialDebtHandler::class
+);
+
+\CommandBus::addHandler(
+    NewDevicesCountCommand::class,
+    NewDevicesCountHandler::class
 );
