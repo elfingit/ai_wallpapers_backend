@@ -1,0 +1,15 @@
+{
+    "Your prompt violate our content policy, please rephrase it.": "Komutunuz içerik politikamızı ihlal ediyor, lütfen yeniden ifade edin.",
+    "Request for remove personal data": "Kişisel verilerin silinmesi talebi",
+    "Enter below your email address to remove your personal data from our service.": "Hizmetimizden kişisel verilerinizi kaldırmak için aşağıya e-posta adresinizi girin.",
+    "Submit": "Gönder",
+    "Remove personal data from AI Wallpapers": "AI Duvar Kağıtlarından kişisel verileri kaldır",
+    "We received a request to remove your personal data from AI Wallpapers.": "AI Duvar Kağıtlarından kişisel verilerinizi kaldırmak için bir talep aldık.",
+    "If you did not make this request, just ignore this letter.": "Bu talebi siz yapmadıysanız, bu mektubu görmezden gelin.",
+    "To confirm the request, click the link below.": "Talebi onaylamak için aşağıdaki bağlantıya tıklayın.",
+    "If link not working, just copy below url and paste it to browser": "Bağlantı çalışmıyorsa, aşağıdaki URL'yi kopyalayıp tarayıcıya yapıştırın",
+    "Request was accepted": "Talep kabul edildi",
+    "We sent email to address such as your provided.": "Verdiğiniz adrese bir e-posta gönderdik.",
+    "Please check your email and follow the instructions to remove your personal data from our service.": "Lütfen e-postanızı kontrol edin ve hizmetimizden kişisel verilerinizi kaldırmak için talimatları izleyin.",
+    "All your personal data has been removed": "Tüm kişisel verileriniz kaldırıldı"
+}
