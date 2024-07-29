@@ -4,7 +4,8 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     zlib1g-dev \
     libpng-dev \
-  && docker-php-ext-install pgsql pdo_pgsql gd
+    libicu-dev \
+  && docker-php-ext-install pgsql pdo_pgsql gd intl
 
 VOLUME /srv/app
 WORKDIR /srv/app

@@ -26,6 +26,7 @@ enum RulesEnum : string
     case MAIN_BALANCE = 'balance:main';
 
     case MAKE_WALLPAPER = 'make:wallpaper';
+    case SHOW_WALLPAPER = 'show:wallpaper';
 
     case LOGOUT = 'logout';
 

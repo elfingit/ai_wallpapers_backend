@@ -84,6 +84,8 @@ Route::group(
 
                 //Wallpaper
                 Route::post('/wallpaper', [WallpaperController::class, 'store']);
+                Route::get('/wallpaper/{wallpaper}', [WallpaperController::class, 'show'])
+                     ->where('wallpaper', '[0-9]+');
 
                 //User
                 Route::get('/user/balance', [UserController::class, 'balance']);
