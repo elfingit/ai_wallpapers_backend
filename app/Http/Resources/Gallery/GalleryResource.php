@@ -34,7 +34,7 @@ class GalleryResource extends JsonResource
         /** @var Gallery $resource */
         $resource = $this->resource;
 
-        $views_count = $resource->view_count > 1000 ? $resource->view_count : random_int(1000, 10000);
+        $views_count = $resource->view_count > 1000 ? $resource->view_count : random_int(1000, 2000);
 
         if (!is_null($resource->user_id) || !is_null($resource->device_uuid)) {
             $views_count = 1;
