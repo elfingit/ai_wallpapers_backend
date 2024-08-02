@@ -19,4 +19,5 @@ return [
     RulesEnum::DELETE_SELF_ACCOUNT,
     RulesEnum::MAIN_INDEX,
     RulesEnum::MAIN_PROFILE,
+    RulesEnum::SHOW_WALLPAPER,
 ];

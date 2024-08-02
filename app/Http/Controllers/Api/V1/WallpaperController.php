@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Wallpaper\AddRequest;
+use App\Http\Requests\Wallpaper\ShowRequest;
 use App\Http\Resources\Gallery\GalleryResource;
 use App\Library\Core\Logger\LoggerChannel;
 use App\Library\Wallpaper\Commands\CreateWallpaperCommand;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
 
 class WallpaperController extends Controller
@@ -97,5 +99,10 @@ class WallpaperController extends Controller
                           ]
                       );
         return GalleryResource::make($gallery->getResult());
+    }
+
+    public function show(ShowRequest $request, Gallery $wallpaper): GalleryResource
+    {
+        return GalleryResource::make($wallpaper);
     }
 }

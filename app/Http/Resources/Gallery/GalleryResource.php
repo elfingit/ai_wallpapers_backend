@@ -33,6 +33,13 @@ class GalleryResource extends JsonResource
     {
         /** @var Gallery $resource */
         $resource = $this->resource;
+
+        $views_count = $resource->view_count > 1000 ? $resource->view_count : random_int(1000, 2000);
+
+        if (!is_null($resource->user_id) || !is_null($resource->device_uuid)) {
+            $views_count = 1;
+        }
+
         /** @var User $user */
         $user = $request->user();
         $data = [
@@ -52,6 +59,7 @@ class GalleryResource extends JsonResource
             'user_id' => $resource->user_id,
             'device_uuid' => $resource->device_uuid,
             'is_featured' => $resource->featured,
+            'views' => \Number::abbreviate($views_count, precision: 2),
         ];
 
         return $data;

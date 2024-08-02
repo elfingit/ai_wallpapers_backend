@@ -13,7 +13,7 @@ final class UpdateDto
 	public array $titles;
 
     #[RequestParam('locale')]
-    #[ValidationArrayRule(['required', 'string', 'max:2', 'in:en,ru,pl,fr,hu,ro,uk'])]
+    #[ValidationArrayRule(['required', 'string', 'max:2', 'in:en,ru,pl,fr,hu,ro,uk,tr'])]
     public array $locales;
 
     public int $id;

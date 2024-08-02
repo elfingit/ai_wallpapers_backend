@@ -52,6 +52,7 @@ Route::group(
             function () {
 
                 Route::get('/', [MainController::class, 'index']);
+                Route::get('/dashboard', [MainController::class, 'adminDashboard']);
                 Route::get('/profile', [MainController::class, 'profile']);
 
                 //User registration
@@ -83,6 +84,8 @@ Route::group(
 
                 //Wallpaper
                 Route::post('/wallpaper', [WallpaperController::class, 'store']);
+                Route::get('/wallpaper/{wallpaper}', [WallpaperController::class, 'show'])
+                     ->where('wallpaper', '[0-9]+');
 
                 //User
                 Route::get('/user/balance', [UserController::class, 'balance']);
